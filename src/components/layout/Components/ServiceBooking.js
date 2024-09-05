@@ -12,14 +12,8 @@ import { useDispatch } from "react-redux";
 
 const ServiceBooking = ({
   showBookModal,
-  handleModalOpen,
   handleModalClose,
-  heading,
   amount,
-  colors,
-  session,
-  svg,
-  icon,
   service_type,
 }) => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -34,6 +28,8 @@ const ServiceBooking = ({
       setDisabled(false);
     }
   };
+  console.log("dsssssssssss", service_type);
+  console.log("ffffffffffffffffff", formData);
   const handleBooking = async (e) => {
     e.preventDefault();
 
@@ -53,6 +49,7 @@ const ServiceBooking = ({
       ...prevData,
       ["service_type"]: service_type,
     }));
+
     console.log(formData);
 
     handledisable();
@@ -83,7 +80,7 @@ const ServiceBooking = ({
   const handleOpen = async () => {
     // handleModalOpen();
     // const data = await getSlots(service_type);
-    const data = await getSlots("Post-ConcussionEvaluation");
+    const data = await getSlots(service_type);
 
     const res = await extractDates(data.dates);
     console.log("res", res);
@@ -208,7 +205,7 @@ const ServiceBooking = ({
                       <ServiceBookingform
                         date_data={datedata}
                         // service_type={service_type}
-                        service_type="Post-ConcussionEvaluation"
+                        service_type={service_type}
                         setFormData={setFormData}
                       />
                     </div>

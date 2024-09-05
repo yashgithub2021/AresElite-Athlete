@@ -149,6 +149,7 @@ const Drillstats = ({ data, ispaid }) => {
         showBookModal={showBookModal}
         handleModalOpen={() => setShowBookModal(true)}
         handleModalClose={() => setShowBookModal(false)}
+        service_type={serviceType}
       />
     </>
   );

@@ -67,9 +67,9 @@ const OnlineTele = ({
               <input
                 type="radio"
                 name="service-type"
-                value="offline"
+                value="OfflineVisit"
                 className="custom-radio-input"
-                checked={selectedService === "offline"}
+                checked={selectedService === "OfflineVisit"}
                 onChange={handleSelectedService}
               />
               <span className="custom-checkmark   "></span>
@@ -80,9 +80,9 @@ const OnlineTele = ({
               <input
                 type="radio"
                 name="service-type"
-                value="teleSession"
+                value="TeleSession"
                 className="custom-radio-input"
-                checked={selectedService === "teleSession"}
+                checked={selectedService === "TeleSession"}
                 onChange={handleSelectedService}
               />
               <span className="custom-checkmark"></span>
