@@ -26,7 +26,8 @@ import Card5 from "../components/layout/Components/card5";
 const AtheleDashboard = () => {
   const name = useSelector((state) => state.auth.userName)
   const plan = useSelector((state) => state.auth.plan)
-  const { is_Online } = useSelector((state) => state.auth)
+  const is_Online = useSelector((state) => state.auth.is_Online)
+  console.log(is_Online)
   const dispatch = useDispatch()
   const [userinfo, setuserinfo] = useState([])
   const [shiparray, setshiparray] = useState([])
