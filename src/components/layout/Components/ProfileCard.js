@@ -4,29 +4,29 @@ import { NavLink } from "react-router-dom";
 import { Modal, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { PasswordInput, Stack } from "@mantine/core";
-import {useSelector,useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { ResetPassword } from "../../../features/apiCall";
 import { logOut } from "../../../features/authSlice";
 const ProfileCard = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [visible, { toggle }] = useDisclosure(false);
   const [confirm, setConfirm] = useState(false);
-  const CloseModal = async() => {
-    
+  const CloseModal = async () => {
+
     close();
     setConfirm(false);
   };
-  const {userName,userEmail,phone}=useSelector((state)=>state.auth)
-  const dispatch=useDispatch()
-  const [newPassword,setnewPassword]=useState("")
-  const[ confirmPassword,setConfirmpass]=useState("")
-  const email=useSelector((state)=>state.auth.userEmail)
-  const handleChangePassword=async()=>{
- 
-       await ResetPassword(dispatch,{email,newPassword, confirmPassword})
-       close();
+  const { userName, userEmail, phone } = useSelector((state) => state.auth)
+  const dispatch = useDispatch()
+  const [newPassword, setnewPassword] = useState("")
+  const [confirmPassword, setConfirmpass] = useState("")
+  const email = useSelector((state) => state.auth.userEmail)
+  const handleChangePassword = async () => {
+
+    await ResetPassword(dispatch, { email, newPassword, confirmPassword })
+    close();
     setConfirm(false);
-  } 
+  }
   const handleLogout = async () => {
     await dispatch(logOut());
   };
@@ -103,25 +103,25 @@ const ProfileCard = () => {
               <Stack>
                 <PasswordInput
                   label="Password"
-                
+
                   visible={visible}
                   variant="filled"
                   visibilityToggleIcon={({ reveal }) =>
-                  reveal ? (
-                   <i class="fa-solid fa-eye"></i>
-                  ) : (
-                   <i class="fa-solid fa-eye-slash"></i>
-                  )
-                }
-                  onChange={(e)=>{setnewPassword(e.target.value)}}
+                    reveal ? (
+                      <i class="fa-solid fa-eye"></i>
+                    ) : (
+                      <i class="fa-solid fa-eye-slash"></i>
+                    )
+                  }
+                  onChange={(e) => { setnewPassword(e.target.value) }}
                 />
                 <PasswordInput
                   label="Confirm password"
-                  
+
                   visible={visible}
                   variant="filled"
                   onVisibilityChange={toggle}
-                  onChange={(e)=>{setConfirmpass(e.target.value)}}
+                  onChange={(e) => { setConfirmpass(e.target.value) }}
                 />
               </Stack>
               <div className="mt-3 ">
@@ -137,10 +137,10 @@ const ProfileCard = () => {
       <div
         style={{ background: "white", padding: "30px", borderRadius: "16px" }}
       >
-        <div style={{padding:"0px 20px"}}>
-        <p className="profile-header" style={{marginRight:"30px"}}>Profile</p>
+        <div style={{ padding: "0px 20px" }}>
+          <p className="profile-header" style={{ marginRight: "30px" }}>Profile</p>
         </div>
-       
+
         <div className="profile-card">
           <Avatar
             hiddenFrom="sm"
@@ -220,29 +220,30 @@ const ProfileCard = () => {
             </svg>
           </div>
         </div>
-
-        <div className="nav-links">
-          <div className="cont">
-            <p className="header">Term Of Use</p>
+        <NavLink to="/terms-of-use">
+          <div className="nav-links">
+            <div className="cont">
+              <p className="header">Term Of Use</p>
+            </div>
+            <div>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M8.48951 18.5303C8.17016 18.2374 8.17016 17.7626 8.48951 17.4697L13.875 12.5303C14.1944 12.2374 14.1944 11.7626 13.875 11.4697L8.48951 6.53033C8.17016 6.23744 8.17016 5.76256 8.48951 5.46967C8.80886 5.17678 9.32663 5.17678 9.64598 5.46967L15.0315 10.409C15.9895 11.2877 15.9895 12.7123 15.0315 13.591L9.64598 18.5303C9.32663 18.8232 8.80886 18.8232 8.48951 18.5303Z"
+                  fill="#060024"
+                />
+              </svg>
+            </div>
           </div>
-          <div>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M8.48951 18.5303C8.17016 18.2374 8.17016 17.7626 8.48951 17.4697L13.875 12.5303C14.1944 12.2374 14.1944 11.7626 13.875 11.4697L8.48951 6.53033C8.17016 6.23744 8.17016 5.76256 8.48951 5.46967C8.80886 5.17678 9.32663 5.17678 9.64598 5.46967L15.0315 10.409C15.9895 11.2877 15.9895 12.7123 15.0315 13.591L9.64598 18.5303C9.32663 18.8232 8.80886 18.8232 8.48951 18.5303Z"
-                fill="#060024"
-              />
-            </svg>
-          </div>
-        </div>
-        <NavLink to="/a-security">
+        </NavLink>
+        <NavLink to="/privacy-policy">
           <div className="nav-links">
             <div className="cont">
               <p className="header">Privacy Policy</p>
@@ -270,7 +271,7 @@ const ProfileCard = () => {
             <div className="cont" onClick={handleLogout}>
               <p className="header" style={{ color: "red" }}>
                 {" "}
-                <span style={{marginRight:"4px"}}>
+                <span style={{ marginRight: "4px" }}>
                   <svg
                     width="18"
                     height="18"
