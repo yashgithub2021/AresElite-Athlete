@@ -1,19 +1,29 @@
 import React, { useState } from "react";
 import { Avatar, RingProgress, LoadingOverlay } from "@mantine/core";
 import { Text } from "@mantine/core";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 import ServiceType from "../ServiceType";
 import ServiceBooking from "./ServiceBooking";
+import { hasAlreadyBookAppointment } from "../../../features/apiCall";
 
-const Drillstats = ({ data, ispaid }) => {
+const ErrorToastOptions = {
+  position: "bottom-center",
+  autoClose: 3000,
+  pauseOnHover: true,
+  draggable: true,
+  theme: "dark",
+};
+
+const Drillstats = ({ data, ispaid, userId }) => {
   const [showServiceType, setShowServiceType] = useState(false);
   const [serviceType, setServiceType] = useState("");
 
   const [showBookModal, setShowBookModal] = useState(false);
 
-  console.log("Selected service:", serviceType);
+  const dispatch = useDispatch();
 
-  console.log(data);
   const perc = ((data?.completedDrills / data?.totalDrills) * 100).toFixed(1);
   return (
     <>
@@ -49,7 +59,9 @@ const Drillstats = ({ data, ispaid }) => {
                 <tr>
                   <th style={{ color: "#3C3F53" }}>Tele Session</th>
                   <td style={{ color: "#8C90AA" }}>
-                    -{data?.totalDrills - data?.teleSession || 4}
+                    -
+                    {Number(data?.teleSessions?.offlineDrills) +
+                      Number(data?.teleSessions?.teleBookings)}
                   </td>
                 </tr>
               </table>
@@ -139,7 +151,28 @@ const Drillstats = ({ data, ispaid }) => {
         opened={showServiceType}
         handleClose={() => setShowServiceType(!showServiceType)}
         serviceType={serviceType}
-        handleServiceSelect={(value) => {
+        handleServiceSelect={async (value) => {
+          let erroMsg = "";
+
+          if (data?.teleSessions?.teleBookings < 1 && value === "TeleSession") {
+            erroMsg = `Tele Session's maximum booking exceeded`;
+            toast.error(erroMsg, ErrorToastOptions);
+            return;
+          }
+          if (
+            data?.teleSessions?.offlineDrills < 1 &&
+            value === "OfflineVisit"
+          ) {
+            erroMsg = `Offline Visit's maximum booking exceeded `;
+            toast.error(erroMsg, ErrorToastOptions);
+            return;
+          }
+
+          const res = await hasAlreadyBookAppointment(dispatch, userId);
+          if (!res) {
+            return;
+          }
+
           setServiceType(value);
           setShowBookModal(true);
         }}

@@ -5,7 +5,7 @@ import { Table } from "@mantine/core";
 import { NavLink } from "react-router-dom";
 import TransactionCard from "../components/TransactionCard";
 import BookingCard from "../components/layout/Components/BookingCard";
-import { GetRecentBookingsSearch } from "../features/apiCall";
+import { CancelBooking, GetRecentBookingsSearch } from "../features/apiCall";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { Select } from "@mantine/core";
@@ -16,6 +16,8 @@ import { Skeleton } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
 import PaymentForm from "../components/PaymentForm";
 import { stripestep1 } from "../features/apiCall";
+import { AiOutlineClose as CancelIcon } from "react-icons/ai";
+import { ActionIcon } from "@mantine/core";
 
 const AtheBookings = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -28,6 +30,8 @@ const AtheBookings = () => {
   const [selected, setSelected] = useState([]);
   const [date, setDate] = useState(null);
   const [value, setValue] = useState(null);
+  const [alertDialog, setAlertDialog] = useState(false);
+  const [bId, setBId] = useState("");
 
   const [bodyData, setBodyData] = useState({});
 
@@ -73,15 +77,12 @@ const AtheBookings = () => {
     setBookingData(appointments?.appointments);
 
     handleappointmentData(appointments);
-
-    console.log(appointments.appointments);
   };
   useEffect(() => {
     bookingDataHandler();
   }, [selected, date, value]);
   const url =
     "https://s3-alpha-sig.figma.com/img/63c4/be83/222c85e6c852819bc5d4b24a87a87fb6?Expires=1711324800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Y4SY5J0CmBpurLNdyssoFuDVIjUivt~TjdQaMbuLy9MqbOJzReqwYFykcxiFAm4wjnxQHbY0fBds-c8jJOuSEhxnIZytiS~EuxX~PytgwY6cobBUszo0gi-oqOTVUlJ89JtgK4fyyXVBeeavR9sisvIFpS740Bty68TTfxndSOlMBM4eOox~yT9ifL2JckNSFBj5WNjS7Cf0YAqIPr9DL4KVoE5gdsTtDmzobV4sVvo9mX9vwMMkr6hAh-NI07QoQlzioEP6B~vuit0ps5EsYwDDZpBmCN5CeU5SqRL-pbW2vNZNXPIm4IUe-bGgJZgdXVmpCnw3mPqykaekuBZ7kw__";
-  console.log("---->", bookingData.appointments);
 
   const makePayment = async (service_type, bookingid) => {
     var body;
@@ -105,7 +106,6 @@ const AtheBookings = () => {
       "Content-type": "application/json",
     };
 
-    console.log(body);
     setBodyData({ ...body.product, isPaid: true });
 
     const data = await stripestep1(dispatch, { body });
@@ -132,16 +132,31 @@ const AtheBookings = () => {
         </button>
       );
 
-      if (item.presId && item.status == "paid") {
+      const manualTypes = [
+        "TeleSession",
+        "OfflineVisit",
+        "AddTrainingSessions",
+      ];
+      const isManual = manualTypes.includes(item.service_type);
+
+      if (!isManual && item.presId && item.status == "paid") {
         buttoncomp = (
           <NavLink to={`/a-prescription/${item.presId}/${item._id}`}>
             <button className="fill">View Prescription</button>
           </NavLink>
         );
-      } else if (!item.presId && item.status == "paid") {
+      } else if (!isManual && !item.presId && item.status == "paid") {
         buttoncomp = (
           <NavLink>
             <button className="fill">Prescription Upcoming</button>
+          </NavLink>
+        );
+      }
+
+      if (isManual) {
+        buttoncomp = (
+          <NavLink>
+            <button className="fill">{item.service_status}</button>
           </NavLink>
         );
       }
@@ -156,6 +171,7 @@ const AtheBookings = () => {
             </div>
           </div>
         ),
+        _id: `${item._id}`,
         mass: `${item.service_type}`,
         symbol: `${date_dis}`,
         name: "Carbon",
@@ -167,7 +183,7 @@ const AtheBookings = () => {
 
     setShowData(apointmentData);
   };
-  console.log("showData", showData.length);
+
   const elements = [
     {
       Name: (
@@ -294,16 +310,31 @@ const AtheBookings = () => {
       status: <button className="empty">NA</button>,
     },
   ];
-  const rows = showData?.map((element) => (
-    <Table.Tr key={element.name}>
-      <Table.Td>{element.Name}</Table.Td>
-      <Table.Td>{element.mass}</Table.Td>
-      <Table.Td>{element.symbol}</Table.Td>
-      <Table.Td>{element.time}</Table.Td>
-      <Table.Td>{element.button}</Table.Td>
-      <Table.Td>{element.status}</Table.Td>
-    </Table.Tr>
-  ));
+  const rows = showData?.map((element) => {
+    return (
+      <Table.Tr key={element.name}>
+        <Table.Td>{element.Name}</Table.Td>
+        <Table.Td>{element.mass}</Table.Td>
+        <Table.Td>{element.symbol}</Table.Td>
+        <Table.Td>{element.time}</Table.Td>
+        <Table.Td>{element.button}</Table.Td>
+        <Table.Td>{element.status}</Table.Td>
+        <Table.Td className="text-center">
+          <ActionIcon
+            onClick={() => {
+              setAlertDialog(true);
+              setBId(element._id);
+            }}
+            variant="filled"
+            color="red"
+            aria-label="Settings"
+          >
+            <CancelIcon style={{ width: "70%", height: "70%" }} stroke={1.5} />
+          </ActionIcon>
+        </Table.Td>
+      </Table.Tr>
+    );
+  });
   return (
     <AtheleteMenu className="datepicker">
       <Modal.Root
@@ -451,6 +482,7 @@ const AtheBookings = () => {
                         <Table.Th>Time</Table.Th>
                         <Table.Th>Payment Status</Table.Th>
                         <Table.Th>Service Status</Table.Th>
+                        <Table.Th>Action</Table.Th>
                       </Table.Tr>
                     </Table.Thead>
                     <Table.Tbody>{rows}</Table.Tbody>
@@ -468,6 +500,49 @@ const AtheBookings = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        opened={alertDialog}
+        onClose={() => setAlertDialog(false)}
+        title=<span
+          className="ps-3 fw-semibold"
+          style={{ color: "#7257FF", fontSize: "1.3rem" }}
+        >
+          {" "}
+          Cancel Booking
+        </span>
+      >
+        <div className="d-flex flex-column gap-4 px-3 pb-2">
+          <div
+            className="fw-semiBold "
+            style={{ color: "gray", fontSize: "1.1rem" }}
+          >
+            {" "}
+            Are you sure , you want to cancel this booking?
+          </div>
+          <div className="d-flex gap-2 justify-content-end">
+            <Button
+              style={{ backgroundColor: "#7257FF" }}
+              onClick={async () => {
+                await CancelBooking(dispatch, bId);
+                setBId("");
+                setAlertDialog(false);
+                bookingDataHandler();
+              }}
+            >
+              Confirm
+            </Button>
+            <Button
+              style={{
+                backgroundColor: "#7257FF26",
+                color: "#7257FF",
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </AtheleteMenu>
   );
 };

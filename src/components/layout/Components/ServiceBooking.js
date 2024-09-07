@@ -28,8 +28,7 @@ const ServiceBooking = ({
       setDisabled(false);
     }
   };
-  console.log("dsssssssssss", service_type);
-  console.log("ffffffffffffffffff", formData);
+
   const handleBooking = async (e) => {
     e.preventDefault();
 
@@ -37,7 +36,6 @@ const ServiceBooking = ({
       ...prevData,
       ["service_type"]: service_type,
     }));
-    console.log("formData", formData);
 
     const res = await Bookappointment(dispatch, formData);
     if (res) {
@@ -49,8 +47,6 @@ const ServiceBooking = ({
       ...prevData,
       ["service_type"]: service_type,
     }));
-
-    console.log(formData);
 
     handledisable();
   }, [formData.app_time]);
@@ -83,11 +79,10 @@ const ServiceBooking = ({
     const data = await getSlots(service_type);
 
     const res = await extractDates(data.dates);
-    console.log("res", res);
+
     setDateData(res);
-    console.log(datedata);
   };
-  console.log("dates", datedata);
+
   const elements = [
     { position: <b>Ref Number</b>, mass: 12.011 },
     { position: <b>Payment Time</b>, mass: 12.011 },
@@ -207,6 +202,7 @@ const ServiceBooking = ({
                         // service_type={service_type}
                         service_type={service_type}
                         setFormData={setFormData}
+                        isTele={true}
                       />
                     </div>
                     {!disabled && (

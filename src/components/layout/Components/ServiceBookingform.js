@@ -10,7 +10,12 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { Loader } from "@mantine/core";
 
-const ServiceBookingform = ({ date_data = [], service_type, setFormData }) => {
+const ServiceBookingform = ({
+  date_data = [],
+  service_type,
+  setFormData,
+  isTele,
+}) => {
   const [date, setdate] = useState(new Date());
   const [add, setAdd] = useState("");
   const [alldata, setAllData] = useState([]);
@@ -30,8 +35,6 @@ const ServiceBookingform = ({ date_data = [], service_type, setFormData }) => {
     adddate();
   }, []);
 
-  console.log(date);
-  console.log("loc", location);
   const locationarray = async (json) => {
     const location = await json?.map((item) => item.address);
     if (location) {
@@ -69,7 +72,7 @@ const ServiceBookingform = ({ date_data = [], service_type, setFormData }) => {
     setDocs(["Loading.."]);
     setSlots([]);
     setdate(new Date(e));
-    console.log(date);
+
     setFormData((prevData) => ({
       ...prevData,
       ["app_date"]: new Date(e),
@@ -89,7 +92,7 @@ const ServiceBookingform = ({ date_data = [], service_type, setFormData }) => {
     const payload = `${date.getFullYear()}-${String(
       date.getMonth() + 1
     ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-    console.log(payload);
+
     const data = await getSlots(service_type, payload, doc);
     if (data.location) {
       setAllData(data.location);
@@ -97,14 +100,10 @@ const ServiceBookingform = ({ date_data = [], service_type, setFormData }) => {
       locationarray(data.location);
     }
 
-    console.log("Payload", payload);
-
     if (data.slots) {
       setSlots(data.slots);
     }
   };
-
-  console.log();
 
   useEffect(() => {
     askData();
@@ -146,7 +145,7 @@ const ServiceBookingform = ({ date_data = [], service_type, setFormData }) => {
           nothingFoundMessage="Nothing found..."
         />
       </div>
-      <div className="mt-5">
+      <div className="mt-1">
         <Skeleton visible={false}>
           <Select
             label="Location"
@@ -186,7 +185,7 @@ const ServiceBookingform = ({ date_data = [], service_type, setFormData }) => {
           />
         </Skeleton>
       </div>
-      <div>
+      <div className="mt-1">
         <Select
           label="Select Doctor/Trainer"
           variant="filled"
@@ -202,9 +201,11 @@ const ServiceBookingform = ({ date_data = [], service_type, setFormData }) => {
           }}
         />
       </div>
-      <div>
+      <div className="mt-1">
         <p>Appointment Time</p>
-        <p style={{ fontSize: "10px" }}>90 minutes meeting</p>
+        <p style={{ fontSize: "10px" }}>
+          {isTele ? "45" : "90"} minutes meeting
+        </p>
         <div className="appointment-container ">
           {loading && <Loader color="blue" />}
           {slots?.map((item) => {

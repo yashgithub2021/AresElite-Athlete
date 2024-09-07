@@ -9,46 +9,49 @@ import { current } from "@reduxjs/toolkit";
 import { getSlots } from "../features/apiCall";
 import { Bookappointment } from "../features/apiCall";
 import { useDispatch } from "react-redux";
-const ServiceModal = ({ heading, amount, colors, session, svg, icon, service_type }) => {
+const ServiceModal = ({
+  heading,
+  amount,
+  colors,
+  session,
+  svg,
+  icon,
+  service_type,
+}) => {
   const [opened, { open, close }] = useDisclosure(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [active, setActive] = useState(1);
-  const [datedata, setDateData] = useState([])
-  const [formData, setFormData] = useState([])
-  const [disabled, setDisabled] = useState(true)
+  const [datedata, setDateData] = useState([]);
+  const [formData, setFormData] = useState([]);
+  const [disabled, setDisabled] = useState(true);
 
   const handledisable = () => {
-
     if (formData.app_time) {
-
-      setDisabled(false)
+      setDisabled(false);
     }
-  }
+  };
   const handleBooking = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     setFormData((prevData) => ({
       ...prevData,
       ["service_type"]: service_type,
     }));
-    console.log("formData", formData)
+    console.log("formData", formData);
 
-    const res = await Bookappointment(dispatch, formData)
+    const res = await Bookappointment(dispatch, formData);
     if (res) {
-      nextStep()
+      nextStep();
     }
-
-  }
+  };
   useEffect(() => {
     setFormData((prevData) => ({
       ...prevData,
       ["service_type"]: service_type,
     }));
-    console.log(formData)
 
-    handledisable()
-
-  }, [formData.app_time])
+    handledisable();
+  }, [formData.app_time]);
 
   const nextStep = () => {
     setActive((current) => (current < 3 ? current + 1 : current));
@@ -62,7 +65,7 @@ const ServiceModal = ({ heading, amount, colors, session, svg, icon, service_typ
   };
 
   function extractDates(json) {
-    const dates = json.map(item => {
+    const dates = json.map((item) => {
       let dateObj = new Date(item.date);
       dateObj.setHours(0, 0, 0, 0); // Set hours to 0, minutes to 0, seconds to 0, milliseconds to 0
       return dateObj;
@@ -72,13 +75,13 @@ const ServiceModal = ({ heading, amount, colors, session, svg, icon, service_typ
   }
 
   const handleOpen = async () => {
-    open()
-    const data = await getSlots(service_type)
+    open();
+    const data = await getSlots(service_type);
 
     const res = await extractDates(data.dates);
-    setDateData(res)
-    console.log(datedata)
-  }
+    setDateData(res);
+    console.log(datedata);
+  };
   const elements = [
     { position: <b>Ref Number</b>, mass: 12.011 },
     { position: <b>Payment Time</b>, mass: 12.011 },
@@ -131,7 +134,14 @@ const ServiceModal = ({ heading, amount, colors, session, svg, icon, service_typ
                       <i class="fa-solid fa-arrow-left"></i>
                     </button>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", marginTop: "10px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                      marginTop: "10px",
+                    }}
+                  >
                     <h2>Appointment booking </h2>
 
                     <p>{service_type}</p>
@@ -177,16 +187,23 @@ const ServiceModal = ({ heading, amount, colors, session, svg, icon, service_typ
                         width: "100%",
                         height: "400px",
                         overflowY: "scroll",
-
                       }}
                     >
-                      <ServiceBookingform date_data={datedata} service_type={service_type} setFormData={setFormData} />
+                      <ServiceBookingform
+                        date_data={datedata}
+                        service_type={service_type}
+                        setFormData={setFormData}
+                      />
                     </div>
-                    {!disabled && <button className="continue-btn" disabled={disabled} onClick={handleBooking} >
-                      Continue
-                    </button>}
-
-
+                    {!disabled && (
+                      <button
+                        className="continue-btn"
+                        disabled={disabled}
+                        onClick={handleBooking}
+                      >
+                        Continue
+                      </button>
+                    )}
                   </div>
                 </Stepper.Step>
 
@@ -211,7 +228,9 @@ const ServiceModal = ({ heading, amount, colors, session, svg, icon, service_typ
                           </svg>
                         </div>
                       </div>
-                      <p style={{ fontSize: "26px", color: "#7257FF" }}>${amount}</p>
+                      <p style={{ fontSize: "26px", color: "#7257FF" }}>
+                        ${amount}
+                      </p>
                       <p>Booking Confirmed for {service_type} </p>
                     </div>
                     <div className="data-table ">
@@ -230,8 +249,16 @@ const ServiceModal = ({ heading, amount, colors, session, svg, icon, service_typ
           </Modal.Body>
         </Modal.Content>
       </Modal.Root>
-      <div className="svg-box" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>{svg}</div>
-
+      <div
+        className="svg-box"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {svg}
+      </div>
 
       <div
         style={{
@@ -242,10 +269,9 @@ const ServiceModal = ({ heading, amount, colors, session, svg, icon, service_typ
           display: "flex",
           justifyContent: "center",
           flexDirection: "column",
-          cursor: "pointer"
+          cursor: "pointer",
         }}
         className="serviceCard"
-
       >
         <h7 style={{ fontSize: "12px", color: `${colors?.heading}` }}>
           {heading}
