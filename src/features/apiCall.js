@@ -288,7 +288,7 @@ export const GetProfileDetails = async (dispatch) => {
 
   dispatch(Start());
   try {
-    const { data } = await axios.get("/api/doctor/get-profile", {
+    const { data } = await axios.get("/api/athlete/get-profile", {
       params: { email }, // Corrected: pass email as an object
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -573,5 +573,30 @@ export const UpdateProfile = async (dispatch, formdata) => {
     toast.error(errorMessage, ErrorToastOptions);
     dispatch(Failure(errorMessage));
     return false;
+  }
+};
+
+export const UpdateProfilePic = async (dispatch, { formData, userId }) => {
+  const email = localStorage.getItem("userEmail");
+  const token = localStorage.getItem("userToken");
+
+  dispatch(Start());
+  try {
+    const { data } = await axios.put(
+      `/api/athlete/update-profile-pic`,
+      formData,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    toast.success("Profile Image Updated Successfully!", successToastOptions);
+
+    dispatch(Success(data));
+    return data;
+  } catch (error) {
+    const errorMessage = parseError(error);
+    toast.error(errorMessage, ErrorToastOptions);
+    dispatch(Failure(errorMessage));
+    return false; // Return false to indicate that the request failed
   }
 };

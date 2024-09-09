@@ -52,6 +52,7 @@ const AtheleDashboard = () => {
   }
   // console.log("ship",shiparray[0]?.shipmentStatus.length)
 
+  // console.log(shiparray[0]?.shipmentStatus[0].startDate)
   useEffect(() => {
     getuserDetails()
   }, [])
@@ -82,7 +83,7 @@ const AtheleDashboard = () => {
             {/* <Card2/>
           <Card3/>  */}
             {(userinfo?.userDetails?.plan_payment == "paid" && (shiparray && shiparray[0]?.shipmentStatus && shiparray[0]?.shipmentStatus.length != 5)) &&
-              <Card3 len={shiparray[0]?.shipmentStatus.length} trackingid={shiparray[0]?.trackingId} />
+              <Card3 len={shiparray[0]?.shipmentStatus.length} trackingid={shiparray[0]?.trackingId} startDate={shiparray[0]?.shipmentStatus[0].startDate} endDate={shiparray[0]?.shipmentStatus[0].endDate} />
             }
             {(userinfo?.userDetails?.plan_payment == "paid" && (!shiparray || !shiparray[0]?.shipmentStatus)) &&
               <Card5 />

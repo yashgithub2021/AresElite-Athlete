@@ -13,7 +13,7 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux/es/exports";
 import { Bookappointment } from "../../../features/apiCall";
 
-const TeleSessions = ({ trainingdata, service_type = "TrainingSessions" }) => {
+const TeleSessions = ({ trainingdata, service_type = "AddTrainingSessions" }) => {
   const dispatch = useDispatch()
   const perc = (trainingdata?.completedSessions / trainingdata?.totalSessions) * 100
   const [clickedButton, setClickedButton] = useState(null);
@@ -91,7 +91,7 @@ const TeleSessions = ({ trainingdata, service_type = "TrainingSessions" }) => {
   useEffect(() => {
     setFormData((prevData) => ({
       ...prevData,
-      ["service_type"]: "TrainingSessions",
+      ["service_type"]: "AddTrainingSessions",
     }));
 
     handledisable()
