@@ -572,7 +572,6 @@ export const UpdateProfile = async (dispatch, formdata) => {
   }
 };
 
-<<<<<<< HEAD
 export const CancelBooking = async (dispatch, id) => {
   dispatch(Start());
   const token = localStorage.getItem("userToken");
@@ -612,7 +611,6 @@ export const hasAlreadyBookAppointment = async (dispatch, id) => {
     return false;
   }
 };
-=======
 export const UpdateProfilePic = async (dispatch, { formData, userId }) => {
   const email = localStorage.getItem("userEmail");
   const token = localStorage.getItem("userToken");
@@ -637,4 +635,3 @@ export const UpdateProfilePic = async (dispatch, { formData, userId }) => {
     return false; // Return false to indicate that the request failed
   }
 };
->>>>>>> fb37c7ce71cbb5c75952837dd28a1e8d17bc3790
