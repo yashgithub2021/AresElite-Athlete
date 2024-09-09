@@ -118,24 +118,19 @@ export const stripestep1 = async (dispatch, { body }) => {
   console.log(body);
   const token = localStorage.getItem("userToken");
   const { data } = await axios.post("/api/payments/createPaymentIntent", body, {
-
     headers: { Authorization: `Bearer ${token}` },
   });
-
-
 
   return data;
 };
 export const stripestep2 = async (dispatch, { body }) => {
   const token = localStorage.getItem("userToken");
-  console.log(body)
+  console.log(body);
   const { data } = await axios.put("/api/payments/updatePayment", body, {
-
     headers: { Authorization: `Bearer ${token}` },
   });
   return data;
-
-}
+};
 export const GetRecentBookingsSearch = async (
   dispatch,
   {
@@ -388,7 +383,7 @@ export const getAllBooking = async () => {
     });
     console.log(data);
     return data.sortedAppointments;
-  } catch (err) { }
+  } catch (err) {}
 };
 
 export const getSlots = async (service_type, date, doctor) => {
@@ -463,7 +458,7 @@ export const Plans = async (dispatch, { Name, phase, ClientId }) => {
   }
 };
 
-export const Bookappointment = async (dispatch, formData) => {
+export const Bookappointment = async (dispatch, formData, cost) => {
   const email = localStorage.getItem("userEmail");
   const token = localStorage.getItem("userToken");
   const client_id = localStorage.getItem("userId");
@@ -476,6 +471,7 @@ export const Bookappointment = async (dispatch, formData) => {
       `/api/doctor/book-appointment/${client_id}`,
       {
         ...formData,
+        cost,
       },
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -576,6 +572,45 @@ export const UpdateProfile = async (dispatch, formdata) => {
   }
 };
 
+export const CancelBooking = async (dispatch, id) => {
+  dispatch(Start());
+  const token = localStorage.getItem("userToken");
+
+  try {
+    const { data } = await axios.get(`/api/athlete/cancel-booking/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    toast.success("Booking cancelled successfully", successToastOptions);
+
+    return true;
+  } catch (error) {
+    console.log(error);
+    const errorMessage = parseError(error);
+    toast.error(errorMessage, ErrorToastOptions);
+    dispatch(Failure(errorMessage));
+    return false;
+  }
+};
+
+export const hasAlreadyBookAppointment = async (dispatch, id) => {
+  dispatch(Start());
+  const token = localStorage.getItem("userToken");
+
+  try {
+    const { data } = await axios.get(`/api/athlete/already-booked/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return true;
+  } catch (error) {
+    console.log(error);
+    const errorMessage = parseError(error);
+    toast.error(errorMessage, ErrorToastOptions);
+    dispatch(Failure(errorMessage));
+    return false;
+  }
+};
 export const UpdateProfilePic = async (dispatch, { formData, userId }) => {
   const email = localStorage.getItem("userEmail");
   const token = localStorage.getItem("userToken");

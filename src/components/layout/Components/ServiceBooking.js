@@ -4,18 +4,16 @@ import { Modal, Stepper, Button, Group } from "@mantine/core";
 import { Table } from "@mantine/core";
 
 import { Col } from "react-bootstrap";
-import ServiceBookingform from "./layout/Components/ServiceBookingform";
+import ServiceBookingform from "./ServiceBookingform";
 import { current } from "@reduxjs/toolkit";
-import { getSlots } from "../features/apiCall";
-import { Bookappointment } from "../features/apiCall";
+import { getSlots } from "../../../features/apiCall";
+import { Bookappointment } from "../../../features/apiCall";
 import { useDispatch } from "react-redux";
-const ServiceModal = ({
-  heading,
+
+const ServiceBooking = ({
+  showBookModal,
+  handleModalClose,
   amount,
-  colors,
-  session,
-  svg,
-  icon,
   service_type,
 }) => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -30,6 +28,7 @@ const ServiceModal = ({
       setDisabled(false);
     }
   };
+
   const handleBooking = async (e) => {
     e.preventDefault();
 
@@ -37,7 +36,6 @@ const ServiceModal = ({
       ...prevData,
       ["service_type"]: service_type,
     }));
-    console.log("formData", formData);
 
     const res = await Bookappointment(dispatch, formData);
     if (res) {
@@ -60,7 +58,8 @@ const ServiceModal = ({
   const prevStep = () =>
     setActive((current) => (current > 0 ? current - 1 : current));
   const handleClose = () => {
-    close();
+    // close();
+    handleClose();
     setActive(1);
   };
 
@@ -75,13 +74,15 @@ const ServiceModal = ({
   }
 
   const handleOpen = async () => {
-    open();
+    // handleModalOpen();
+    // const data = await getSlots(service_type);
     const data = await getSlots(service_type);
 
     const res = await extractDates(data.dates);
+
     setDateData(res);
-    console.log(datedata);
   };
+
   const elements = [
     { position: <b>Ref Number</b>, mass: 12.011 },
     { position: <b>Payment Time</b>, mass: 12.011 },
@@ -98,9 +99,16 @@ const ServiceModal = ({
       <Table.Td>{element.mass}</Table.Td>
     </Table.Tr>
   ));
+
+  useEffect(() => {
+    if (showBookModal) {
+      handleOpen();
+    }
+  }, [showBookModal]);
+
   return (
     <>
-      <Modal.Root opened={opened} onClose={close} size="lg">
+      <Modal.Root opened={showBookModal} onClose={handleModalClose} size="lg">
         <Modal.Overlay />
         <Modal.Content
           style={{ background: "transparent", overflow: "hidden" }}
@@ -116,7 +124,7 @@ const ServiceModal = ({
                 }}
               >
                 <Modal.Title>
-                  <div onClick={close}>
+                  <div onClick={handleModalClose}>
                     <button className="modal-close">
                       <i class="fa-solid fa-arrow-left"></i>
                     </button>
@@ -129,7 +137,7 @@ const ServiceModal = ({
             <Modal.Header style={{ background: "#7257FF", color: "white" }}>
               <Modal.Title>
                 <div className="modal-header gap-3">
-                  <div onClick={close}>
+                  <div onClick={handleModalClose}>
                     <button className="modal-close">
                       <i class="fa-solid fa-arrow-left"></i>
                     </button>
@@ -142,9 +150,9 @@ const ServiceModal = ({
                       marginTop: "10px",
                     }}
                   >
-                    <h2>Appointment booking </h2>
+                    <h2>Training Session Booking </h2>
 
-                    <p>{service_type}</p>
+                    <p>Tele Session</p>
                   </div>
                 </div>
               </Modal.Title>
@@ -191,8 +199,10 @@ const ServiceModal = ({
                     >
                       <ServiceBookingform
                         date_data={datedata}
+                        // service_type={service_type}
                         service_type={service_type}
                         setFormData={setFormData}
+                        isTele={true}
                       />
                     </div>
                     {!disabled && (
@@ -249,116 +259,8 @@ const ServiceModal = ({
           </Modal.Body>
         </Modal.Content>
       </Modal.Root>
-      <div
-        className="svg-box"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {svg}
-      </div>
-
-      <div
-        style={{
-          minWidth: "60%",
-          fontFamily: '"Poppins", sans-serif',
-          height: "100%",
-          paddingTop: "10px",
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-          cursor: "pointer",
-        }}
-        className="serviceCard"
-      >
-        <h7 style={{ fontSize: "12px", color: `${colors?.heading}` }}>
-          {heading}
-        </h7>
-        <div className="d-flex gap-3 mt-1 mb-2">
-          <div
-            className="d-flex"
-            style={{ color: `${colors?.text}`, fontSize: "12px" }}
-          >
-            <svg
-              width="18"
-              height="19"
-              viewBox="0 0 18 19"
-              fill="none"
-              stroke={colors?.text}
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g clip-path="url(#clip0_645_40639)">
-                <path
-                  d="M8.59952 14.2247C11.4289 14.2247 13.7225 11.9311 13.7225 9.10172C13.7225 6.27239 11.4289 3.97876 8.59952 3.97876C5.77019 3.97876 3.47656 6.27239 3.47656 9.10172C3.47656 11.9311 5.77019 14.2247 8.59952 14.2247Z"
-                  stroke={colors?.text}
-                  stroke-opacity="0.8"
-                  stroke-width="1.02459"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M8.60547 6.02417V9.09794L10.6547 10.1225"
-                  stroke={colors?.text}
-                  stroke-opacity="0.8"
-                  stroke-width="1.02459"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_645_40639">
-                  <rect
-                    width="12.2951"
-                    height="12.2951"
-                    stroke={colors?.text}
-                    fill={colors?.text}
-                    transform="translate(2.45312 2.95459)"
-                  />
-                </clipPath>
-              </defs>
-            </svg>
-            <p>90 mins Meeting</p>
-          </div>
-          <div
-            style={{
-              borderLeft: "solid",
-              borderWidth: "1px",
-              color: `${colors?.text}`,
-              paddingLeft: "4px",
-            }}
-          >
-            {amount && amount != 0 ? (
-              <p style={{ color: `${colors?.text}` }}>
-                ${amount} <span style={{ fontSize: "8px" }}>per session</span>{" "}
-              </p>
-            ) : (
-              <p>free</p>
-            )}
-          </div>
-        </div>
-        {session && (
-          <>
-            <hr style={{ marginTop: "-1px" }} />{" "}
-            <p
-              className="pulsate"
-              style={{
-                marginTop: "-9px",
-                fontSize: "10px",
-                color: `${colors?.text}`,
-              }}
-            >
-              Acivte session 8:30PM
-            </p>
-          </>
-        )}
-      </div>
-      <div onClick={handleOpen} style={{ cursor: "pointer" }}>
-        {icon}
-      </div>
     </>
   );
 };
 
-export default ServiceModal;
+export default ServiceBooking;

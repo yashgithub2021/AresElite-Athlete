@@ -1,64 +1,58 @@
 import { React, useState } from "react";
 import { DateInput, DatePickerProps } from "@mantine/dates";
 import { Select, Skeleton, Notification } from "@mantine/core";
-import { useDisclosure } from '@mantine/hooks';
-import { LoadingOverlay, Button, Group, Box } from '@mantine/core';
+import { useDisclosure } from "@mantine/hooks";
+import { LoadingOverlay, Button, Group, Box } from "@mantine/core";
 import { MultiSelect } from "@mantine/core";
-import { Indicator } from '@mantine/core';
+import { Indicator } from "@mantine/core";
 import { getSlots } from "../../../features/apiCall";
 import { useEffect } from "react";
-import { toast } from "react-toastify"
-import { Loader } from '@mantine/core';
+import { toast } from "react-toastify";
+import { Loader } from "@mantine/core";
 
-
-const ServiceBookingform = ({ date_data = [], service_type, setFormData }) => {
+const ServiceBookingform = ({
+  date_data = [],
+  service_type,
+  setFormData,
+  isTele,
+}) => {
   const [date, setdate] = useState(new Date());
-  const [add, setAdd] = useState("")
-  const [alldata, setAllData] = useState([])
-  const [location, setLocation] = useState([])
-  const [docs, setDocs] = useState([])
-  const [doc, setDoc] = useState("")
-  const [slots, setSlots] = useState([])
-  const [time, setTime] = useState([])
-  const [loading, setloading] = useState(false)
+  const [add, setAdd] = useState("");
+  const [alldata, setAllData] = useState([]);
+  const [location, setLocation] = useState([]);
+  const [docs, setDocs] = useState([]);
+  const [doc, setDoc] = useState("");
+  const [slots, setSlots] = useState([]);
+  const [time, setTime] = useState([]);
+  const [loading, setloading] = useState(false);
   const adddate = () => {
     setFormData((prevData) => ({
       ...prevData,
       ["app_date"]: new Date(),
-    }))
-  }
+    }));
+  };
   useEffect(() => {
-    adddate()
-  }, [])
+    adddate();
+  }, []);
 
-  console.log(date)
-  console.log("loc", location)
   const locationarray = async (json) => {
-
-
-    const location = await json?.map(item => item.address)
+    const location = await json?.map((item) => item.address);
     if (location) {
       const uniqueAddresses = Array.from(new Set(location));
-      setLocation(uniqueAddresses)
+      setLocation(uniqueAddresses);
       if (uniqueAddresses?.length == 0) {
-        toast.error(" No Doctor found Please select another date")
-      }
-      else {
+        toast.error(" No Doctor found Please select another date");
+      } else {
         if (uniqueAddresses?.length == 1) {
-
-          toast.success("Doctor available in 1 city")
-        }
-        else {
-
-          toast.success(`Doctors available in ${uniqueAddresses?.length} cities`)
+          toast.success("Doctor available in 1 city");
+        } else {
+          toast.success(
+            `Doctors available in ${uniqueAddresses?.length} cities`
+          );
         }
       }
-
-
     }
-
-
-  }
+  };
   //  const handleLocationChange=()=>{
   //     alert(option)
   //    setAdd(e)
@@ -67,78 +61,59 @@ const ServiceBookingform = ({ date_data = [], service_type, setFormData }) => {
 
   const selectDoc = async (e) => {
     // alert(add)
-    const DoctorList = alldata?.filter((item) => item.address == e)
-    const val = DoctorList?.map(item => item.doctor)
-    setDocs(val)
-
-
-
-  }
+    const DoctorList = alldata?.filter((item) => item.address == e);
+    const val = DoctorList?.map((item) => item.doctor);
+    setDocs(val);
+  };
   const handleDate = async (e) => {
-    setAdd(null)
-    setDoc(null)
-    setFormData([])
-    setDocs(["Loading.."])
-    setSlots([])
-    setdate(new Date(e))
-    console.log(date)
+    setAdd(null);
+    setDoc(null);
+    setFormData([]);
+    setDocs(["Loading.."]);
+    setSlots([]);
+    setdate(new Date(e));
+
     setFormData((prevData) => ({
       ...prevData,
       ["app_date"]: new Date(e),
-    }))
-
-
-  }
+    }));
+  };
 
   const hadnleAddress = (e) => {
-    setAdd(e)
+    setAdd(e);
     setFormData((prevData) => ({
       ...prevData,
       ["location"]: e,
-    }))
-    selectDoc(e)
-
-  }
-
+    }));
+    selectDoc(e);
+  };
 
   const askData = async () => {
+    const payload = `${date.getFullYear()}-${String(
+      date.getMonth() + 1
+    ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 
-    const payload = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-    console.log(payload)
-    const data = await getSlots(service_type, payload, doc)
+    const data = await getSlots(service_type, payload, doc);
     if (data.location) {
-      setAllData(data.location)
+      setAllData(data.location);
 
-      locationarray(data.location)
-
-
+      locationarray(data.location);
     }
-
 
     if (data.slots) {
-
-      setSlots(data.slots)
-
-
-
+      setSlots(data.slots);
     }
-
-
-
-  }
+  };
 
   useEffect(() => {
-    askData()
-  }, [date, doc])
+    askData();
+  }, [date, doc]);
   const getDayProps = (date) => {
-
-    const today = new Date()
+    const today = new Date();
 
     if (date < today) {
-
       return { disabled: true };
-    }
-    else {
+    } else {
       return { disabled: false };
     }
   };
@@ -168,22 +143,16 @@ const ServiceBookingform = ({ date_data = [], service_type, setFormData }) => {
           style={{ height: "70px" }}
           searchable
           nothingFoundMessage="Nothing found..."
-
         />
       </div>
-      <div className="mt-5"  >
-
-
+      <div className="mt-1">
         <Skeleton visible={false}>
-
           <Select
             label="Location"
             variant="filled"
             data={location}
             value={add}
-
             onChange={hadnleAddress}
-
             leftSection={
               <svg
                 width="24"
@@ -216,7 +185,7 @@ const ServiceBookingform = ({ date_data = [], service_type, setFormData }) => {
           />
         </Skeleton>
       </div>
-      <div>
+      <div className="mt-1">
         <Select
           label="Select Doctor/Trainer"
           variant="filled"
@@ -224,32 +193,41 @@ const ServiceBookingform = ({ date_data = [], service_type, setFormData }) => {
           data={docs}
           value={doc}
           onChange={(e) => {
-            setDoc(e); setFormData((prevData) => ({
+            setDoc(e);
+            setFormData((prevData) => ({
               ...prevData,
               ["doctor_trainer"]: e,
             }));
           }}
         />
       </div>
-      <div>
+      <div className="mt-1">
         <p>Appointment Time</p>
-        <p style={{ fontSize: "10px" }}>90 minutes meeting</p>
+        <p style={{ fontSize: "10px" }}>
+          {isTele ? "45" : "90"} minutes meeting
+        </p>
         <div className="appointment-container ">
           {loading && <Loader color="blue" />}
           {slots?.map((item) => {
             return (
-              <button className="appointment-buttons" onClick={() => {
-                setTime(item[0]); setFormData((prevData) => ({
-                  ...prevData,
-                  ["app_time"]: item[0],
-                })); setFormData((prevData) => ({
-                  ...prevData,
-                  ["end_time"]: item[1],
-                }));
-              }}>{item[0]}-{item[1]}</button>
-            )
+              <button
+                className="appointment-buttons"
+                onClick={() => {
+                  setTime(item[0]);
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    ["app_time"]: item[0],
+                  }));
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    ["end_time"]: item[1],
+                  }));
+                }}
+              >
+                {item[0]}-{item[1]}
+              </button>
+            );
           })}
-
         </div>
       </div>
     </div>
