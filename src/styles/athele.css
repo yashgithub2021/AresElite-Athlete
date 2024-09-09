@@ -1141,6 +1141,51 @@ thead {
   gap: 12px;
 }
 
+.profile-picture-container {
+  position: relative;
+  display: inline-block;
+}
+
+.upload-spinner {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+.camera-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ddd;
+  cursor: pointer;
+}
+
+.camera-icon input {
+  display: none;
+}
+
+.camera-icon svg {
+  color: #333;
+  font-size: 20px;
+}
+
 .addbtn {
   cursor: pointer;
   width: 103px;
@@ -1754,7 +1799,7 @@ thead {
 
 .profile-card {
   width: 100%;
-  height: 170px;
+  /* height: 170px; */
 
   padding: 30px;
   border-radius: 16px;

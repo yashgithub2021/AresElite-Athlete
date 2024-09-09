@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar } from "@mantine/core";
 import { NavLink } from "react-router-dom";
 import { Modal, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { PasswordInput, Stack } from "@mantine/core";
 import { useSelector, useDispatch } from "react-redux";
-import { ResetPassword } from "../../../features/apiCall";
+import { GetProfileDetails, ResetPassword, UpdateProfilePic } from "../../../features/apiCall";
 import { logOut } from "../../../features/authSlice";
+import { Spinner } from "react-bootstrap";
 const ProfileCard = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [visible, { toggle }] = useDisclosure(false);
@@ -16,6 +17,8 @@ const ProfileCard = () => {
     close();
     setConfirm(false);
   };
+  const [isUploading, setIsUploading] = useState(false);
+
   const { userName, userEmail, phone } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const [newPassword, setnewPassword] = useState("")
@@ -29,6 +32,43 @@ const ProfileCard = () => {
   }
   const handleLogout = async () => {
     await dispatch(logOut());
+  };
+  const [image, setImage] = useState(null);
+  useEffect(() => {
+    const fetchProfileDetails = async () => {
+      const data = await GetProfileDetails(dispatch);
+      console.log("Dataaa", data.athlete.profilePic)
+      if (data && data.athlete.profilePic) {
+        setImage(data.athlete.profilePic);
+      }
+      console.log("No data")
+    };
+    fetchProfileDetails();
+  }, [dispatch]);
+  const handleImageChange = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setIsUploading(true);
+      const formData = new FormData();
+      formData.append("profilePic", file);
+
+      try {
+        const result = await UpdateProfilePic(dispatch, { formData, userId: userEmail });
+
+        if (result) {
+          setImage(result.profilePicUrl);
+          localStorage.setItem("profilePic", result.profilePicUrl);
+          // toast.success("Profile picture updated successfully", successToastOptions);
+        } else {
+          // toast.error("Failed to upload image", ErrorToastOptions);
+        }
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        // toast.error("An error occurred while uploading the image", ErrorToastOptions);
+      } finally {
+        setIsUploading(false);
+      }
+    }
   };
   return (
     <>
@@ -142,22 +182,21 @@ const ProfileCard = () => {
         </div>
 
         <div className="profile-card">
-          <Avatar
-            hiddenFrom="sm"
-            src={
-              "https://s3-alpha-sig.figma.com/img/8ffb/4d8f/ddd7e2907c52f531b2d2d2f2583f3323?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=DvSkzrIw4EbMOeFr7RmlU5fZVz-YLjwN-HGAg9jQ1kyITCaZ7OaAqtekLTLMqN1JL0odIxnmZ1MvrwN9UODEXiziNcWFHBw-ne3zPL6HsVXbMKtaq9kCUXLL8SNPduDFmOlzsDU-TMZJVVSO5brC3CD9-vxUu7A6SBX96syChHplTWmxerfoViFrMuOY9WNaFH2qOtdcSePIA6dJHsRt7vSUUVkx2SEyG6-QD99hxfrGT1IEKUShFgR0RAGeMDQgYkaI0uITzzW8GuE4OM5SjtQg1GhJwlwreChznFRgIzwU~T0IO4s0OBY98wwnHxrFCK3LOG7VSiHr-qyQEwny1w__"
-            }
-            alt="no image here"
-            size="90px"
-          />
-          <Avatar
-            visibleFrom="md"
-            src={
-              "https://s3-alpha-sig.figma.com/img/8ffb/4d8f/ddd7e2907c52f531b2d2d2f2583f3323?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=DvSkzrIw4EbMOeFr7RmlU5fZVz-YLjwN-HGAg9jQ1kyITCaZ7OaAqtekLTLMqN1JL0odIxnmZ1MvrwN9UODEXiziNcWFHBw-ne3zPL6HsVXbMKtaq9kCUXLL8SNPduDFmOlzsDU-TMZJVVSO5brC3CD9-vxUu7A6SBX96syChHplTWmxerfoViFrMuOY9WNaFH2qOtdcSePIA6dJHsRt7vSUUVkx2SEyG6-QD99hxfrGT1IEKUShFgR0RAGeMDQgYkaI0uITzzW8GuE4OM5SjtQg1GhJwlwreChznFRgIzwU~T0IO4s0OBY98wwnHxrFCK3LOG7VSiHr-qyQEwny1w__"
-            }
-            alt="no image here"
-            size="130px"
-          />
+          <div className="profile-picture-container" style={{ marginRight: '20px', position: 'relative' }}>
+            {isUploading ? (
+              <div className="upload-spinner">
+                <Spinner animation="border" variant="primary" />
+              </div>
+            ) : (
+              <>
+                <img src={image} alt="Profile" className="profile-picture" />
+                <label className="camera-icon">
+                  <i className="fa-solid fa-camera" style={{ color: '#7257ff' }} />
+                  <input type="file" accept="image/*" onChange={handleImageChange} disabled={isUploading} />
+                </label>
+              </>
+            )}
+          </div>
           <div className="d-flex flex-column  justify-content-center text-left ">
             <h5>{userName}</h5>
             <div>

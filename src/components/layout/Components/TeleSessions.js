@@ -16,6 +16,7 @@ import {
   hasAlreadyBookAppointment,
 } from "../../../features/apiCall";
 
+<<<<<<< HEAD
 const TeleSessions = ({
   trainingdata,
   service_type = "AddTrainingSessions",
@@ -24,6 +25,11 @@ const TeleSessions = ({
   const dispatch = useDispatch();
   const perc =
     (trainingdata?.completedSessions / trainingdata?.totalSessions) * 100;
+=======
+const TeleSessions = ({ trainingdata, service_type = "AddTrainingSessions" }) => {
+  const dispatch = useDispatch()
+  const perc = (trainingdata?.completedSessions / trainingdata?.totalSessions) * 100
+>>>>>>> fb37c7ce71cbb5c75952837dd28a1e8d17bc3790
   const [clickedButton, setClickedButton] = useState(null);
   const [clickedButton2, setClickedButton2] = useState(null);
   const [formData, setFormData] = useState([]);
