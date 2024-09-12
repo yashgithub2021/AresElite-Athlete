@@ -134,7 +134,9 @@ const ServiceBooking = ({
             </>
           )}
           {active != 2 && (
-            <Modal.Header style={{ background: "#7257FF", color: "white" }}>
+            <Modal.Header
+              style={{ background: "var(--main-dark)", color: "white" }}
+            >
               <Modal.Title>
                 <div className="modal-header gap-3">
                   <div onClick={handleModalClose}>
@@ -174,7 +176,7 @@ const ServiceBooking = ({
                 active={active}
                 onStepClick={setActive}
                 size="xs"
-                color="#7257FF"
+                color="var(--main-dark)"
                 iconPosition="right"
               >
                 <Stepper.Step label="Select Service" />
@@ -233,12 +235,14 @@ const ServiceBooking = ({
                               stroke-width="5"
                               stroke-linecap="round"
                               stroke-linejoin="round"
-                              stroke="#7257FF"
+                              stroke="var(--main-dark)"
                             />
                           </svg>
                         </div>
                       </div>
-                      <p style={{ fontSize: "26px", color: "#7257FF" }}>
+                      <p
+                        style={{ fontSize: "26px", color: "var(--main-dark)" }}
+                      >
                         ${amount}
                       </p>
                       <p>Booking Confirmed for {service_type} </p>

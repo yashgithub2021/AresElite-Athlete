@@ -73,7 +73,7 @@ const OnlineTele = ({
                 onChange={handleSelectedService}
               />
               <span className="custom-checkmark   "></span>
-              Offline
+              In-Office
             </label>
 
             <label className="custom-radio-button d-flex fw-semibold align-items-center">
@@ -104,7 +104,7 @@ const OnlineTele = ({
               className="fill w-100  fw-semibold "
               style={{
                 backgroundColor: "#7257FF26",
-                color: "#7257FF",
+                color: "var(--main-dark)",
                 fontSize: "1.1rem",
               }}
               onClick={handleClose}

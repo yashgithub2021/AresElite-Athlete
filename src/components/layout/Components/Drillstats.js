@@ -77,7 +77,7 @@ const Drillstats = ({ data, ispaid, userId }) => {
                     {perc}%
                   </Text>
                 }
-                sections={[{ value: perc, color: "#7257FF" }]}
+                sections={[{ value: perc, color: "var(--main-dark)" }]}
               />
               <RingProgress
                 visibleFrom="sm"
@@ -89,7 +89,7 @@ const Drillstats = ({ data, ispaid, userId }) => {
                     {perc} %
                   </Text>
                 }
-                sections={[{ value: perc, color: "#7257FF" }]}
+                sections={[{ value: perc, color: "var(--main-dark)" }]}
               />
             </div>
           </div>
@@ -98,7 +98,7 @@ const Drillstats = ({ data, ispaid, userId }) => {
             className="px-4 py-2 fw-semibold rounded-3"
             style={{
               backgroundColor: "#7257FF26",
-              color: "#7257FF",
+              color: "var(--main-dark)",
               fontSize: "1.1rem",
             }}
             onClick={() => {

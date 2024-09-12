@@ -41,7 +41,7 @@ const AtheleHome = () => {
   ));
 
   const data = [
-    { name: "USA", value: 400, color: "#7257FF" },
+    { name: "USA", value: 400, color: "var(--main-dark)" },
     { name: "India", value: 300, color: "#7257FF26" },
   ];
   const [opened, { open, close }] = useDisclosure(false);
@@ -61,24 +61,22 @@ const AtheleHome = () => {
       </Modal>
 
       <section style={{ overflowY: "hidden" }} className="athel-home">
-       
         <Container style={{ height: "85%", width: "99%" }}>
-          
           <Row style={{ height: "100%" }} className="justify-content-around ">
             <Col sm={8} xs={12} className="d-grid  all-cont-width">
-            <p className="h4 " >
-          Hello,
-          <p className="font-weight-bold d-inline">
-            Colter! <img src="/images/icon/hi.svg" />
-          </p>
-        </p>
+              <p className="h4 ">
+                Hello,
+                <p className="font-weight-bold d-inline">
+                  Colter! <img src="/images/icon/hi.svg" />
+                </p>
+              </p>
               <Row className=" gap-2 flex-row" style={{ minHeight: "300px" }}>
                 <div
                   xs={6}
                   sm={6}
                   className="upper-card"
                   style={{
-                    background: "#7257FF",
+                    background: "var(--main-dark)",
                   }}
                 >
                   <div>
@@ -124,21 +122,27 @@ const AtheleHome = () => {
                     </div>
                   </div>
                   <div className="train-stat-cont flex-shift justify-content-between">
-                    <div style={{ width: "100%",display:"flex",alignItems:"center" }}>
-                      <table style={{ width: "100%"}}>
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <table style={{ width: "100%" }}>
                         <tr>
-                          <th style={{color:"#3C3F53"}}>Total</th>
+                          <th style={{ color: "#3C3F53" }}>Total</th>
                           <td>-0</td>
                         </tr>
                         <tr>
-                          <th style={{color:"#3C3F53"}}>Remaining</th>
+                          <th style={{ color: "#3C3F53" }}>Remaining</th>
                           <td>-0</td>
                         </tr>
                       </table>
                     </div>
                     <div className="d-flex justify-content-center items-start">
                       <RingProgress
-                      hiddenFrom="sm"
+                        hiddenFrom="sm"
                         size={100}
                         thickness={7}
                         roundCaps
@@ -147,10 +151,10 @@ const AtheleHome = () => {
                             40%
                           </Text>
                         }
-                        sections={[{ value: 40, color: "#7257FF" }]}
+                        sections={[{ value: 40, color: "var(--main-dark)" }]}
                       />
                       <RingProgress
-                       visibleFrom="sm"
+                        visibleFrom="sm"
                         size={150}
                         thickness={8}
                         roundCaps
@@ -159,19 +163,26 @@ const AtheleHome = () => {
                             40%
                           </Text>
                         }
-                        sections={[{ value: 40, color: "#7257FF" }]}
+                        sections={[{ value: 40, color: "var(--main-dark)" }]}
                       />
                     </div>
-                    
-                   
                   </div>
                   <div className="start-drill bg-alt">
                     <p>Add</p>
                   </div>
                 </Col>
               </Row>
-              <Row className="mobile" style={{background:"white",padding:"10px",marginBottom:"10px",maxWidth:"90vw",borderRadius:"10px"}}>
-                  <div className="calender-comp" >
+              <Row
+                className="mobile"
+                style={{
+                  background: "white",
+                  padding: "10px",
+                  marginBottom: "10px",
+                  maxWidth: "90vw",
+                  borderRadius: "10px",
+                }}
+              >
+                <div className="calender-comp">
                   <div>
                     <p>Calender</p>
                     <CalenderComp hiddenFrom="sm" />
@@ -210,7 +221,6 @@ const AtheleHome = () => {
                   <Row
                     className="justify-content-between "
                     style={{ maxWidth: "85vw" }}
-                    
                   >
                     <Col
                       sm={6}
@@ -336,12 +346,9 @@ const AtheleHome = () => {
                   <RecentBooking />
                 </Col>
               </Row>
-              
-            
             </Col>
-           
+
             <Col
-              
               class="col-md-auto dekstop "
               style={{
                 backgroundColor: "white",

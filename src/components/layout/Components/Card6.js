@@ -90,7 +90,7 @@ const Card6 = ({ drills }) => {
               style={{
                 color: "#ffffff",
                 borderRadius: "1rem",
-                backgroundColor: selectedSession === name && "#B1A4F4",
+                backgroundColor: selectedSession === name && "#7257ff26",
 
                 padding: "0.3rem 0.4rem",
               }}
@@ -195,8 +195,7 @@ const Card6 = ({ drills }) => {
                   style={{
                     borderRadius: "1rem",
                     color: selectedSession === name && "var(--main-dark)",
-                    backgroundColor:
-                      selectedSession === name && "var(--main-light)",
+                    backgroundColor: selectedSession === name && "#7257ff26",
 
                     padding: "0.3rem 0.7rem",
                   }}

@@ -113,7 +113,11 @@ const RecentBooking = () => {
           {notifs?.length != 0 && (
             <p
               onClick={open}
-              style={{ cursor: "pointer", color: "#7257FF", fontWeight: "700" }}
+              style={{
+                cursor: "pointer",
+                color: "var(--main-dark)",
+                fontWeight: "700",
+              }}
             >
               View All
             </p>

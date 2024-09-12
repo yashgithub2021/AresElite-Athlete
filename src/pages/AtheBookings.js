@@ -18,6 +18,7 @@ import PaymentForm from "../components/PaymentForm";
 import { stripestep1 } from "../features/apiCall";
 import { AiOutlineClose as CancelIcon } from "react-icons/ai";
 import { ActionIcon } from "@mantine/core";
+import { formatDateToMMDDYYY } from "../utils/functions";
 
 const AtheBookings = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -115,10 +116,11 @@ const AtheBookings = () => {
 
   const handleappointmentData = (arr) => {
     const apointmentData = arr?.appointments?.map((item, index) => {
-      const date = new Date(item.app_date);
-      const date_dis = `${date.getDate()}/${
-        date.getMonth() + 1
-      }/${date.getFullYear()}`;
+      // const date = new Date(item.app_date);
+      // const date_dis = `${date.getDate()}/${
+      //   date.getMonth() + 1
+      // }/${date.getFullYear()}`;
+      const date_dis = formatDateToMMDDYYY(item.app_date);
       var buttoncomp = (
         <button
           className="fill"
@@ -314,7 +316,11 @@ const AtheBookings = () => {
     return (
       <Table.Tr key={element.name}>
         <Table.Td>{element.Name}</Table.Td>
-        <Table.Td>{element.mass}</Table.Td>
+        <Table.Td>
+          {element.mass === "AddTrainingSessions"
+            ? "TrainingSessions"
+            : element.mass}
+        </Table.Td>
         <Table.Td>{element.symbol}</Table.Td>
         <Table.Td>{element.time}</Table.Td>
         <Table.Td>{element.button}</Table.Td>
@@ -506,7 +512,7 @@ const AtheBookings = () => {
         onClose={() => setAlertDialog(false)}
         title=<span
           className="ps-3 fw-semibold"
-          style={{ color: "#7257FF", fontSize: "1.3rem" }}
+          style={{ color: "var(--main-dark)", fontSize: "1.3rem" }}
         >
           {" "}
           Cancel Booking
@@ -522,7 +528,7 @@ const AtheBookings = () => {
           </div>
           <div className="d-flex gap-2 justify-content-end">
             <Button
-              style={{ backgroundColor: "#7257FF" }}
+              style={{ backgroundColor: "var(--main-dark)" }}
               onClick={async () => {
                 await CancelBooking(dispatch, bId);
                 setBId("");
@@ -535,7 +541,7 @@ const AtheBookings = () => {
             <Button
               style={{
                 backgroundColor: "#7257FF26",
-                color: "#7257FF",
+                color: "var(--main-dark)",
               }}
             >
               Cancel

@@ -1,8 +1,8 @@
 :root {
   --modal-radius: 10px !important;
   --modal-size: 300px I !important;
-  --main-dark: #7257ff;
-  --main-light: #7257ff26;
+  --main-dark: #241943;
+  --main-light: #5d3eb3;
 }
 
 .custom-scrollbar {
@@ -59,7 +59,7 @@
   border-radius: 12px;
   background-color: white;
   border: none;
-  color: #7257ff;
+  color: var(--main-dark);
 }
 
 .modal-close button:focus {
@@ -76,7 +76,7 @@
 }
 
 .athel-menu {
-  background-color: #7257ff;
+  background-color: var(--main-dark);
   padding-right: 20px;
   box-sizing: content-box;
 }
@@ -299,7 +299,7 @@ a:hover {
   justify-content: flex-end;
   align-items: center;
   gap: 60px;
-  color: #7257ff;
+  color: var(--main-dark);
   text-align: center;
   font-size: 12px;
 }
@@ -641,7 +641,7 @@ thead {
 
 .today-appoint-container .view-all {
   text-decoration: underline;
-  color: #7257ff;
+  color: var(--main-dark);
 }
 
 .terms-of-use h6,
@@ -664,7 +664,7 @@ thead {
 }
 
 .purple-text {
-  color: #7257ff;
+  color: var(--main-dark);
   font-weight: 600;
 }
 
@@ -706,9 +706,9 @@ thead {
 
 .bt-2 {
   border-radius: 53px;
-  border: 1px solid #7257ff;
+  border: 1px solid var(--main-dark);
   background: #fff;
-  color: #7257ff;
+  color: var(--main-dark);
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
@@ -721,8 +721,8 @@ thead {
 
 .bt-3 {
   border-radius: 53px;
-  border: 1px solid #7257ff;
-  background: var(--semantic-accent-moderate, #7257ff);
+  border: 1px solid var(--main-dark);
+  background: var(--semantic-accent-moderate, var(--main-dark));
   color: white;
 }
 
@@ -903,7 +903,7 @@ thead {
   }
 
   .bottom-nav-item:hover {
-    background: var(--semantic-accent-moderate, #7257ff);
+    background: var(--semantic-accent-moderate, var(--main-dark));
   }
 
   .btn:disabled,
@@ -1100,7 +1100,7 @@ thead {
   letter-spacing: 0em;
   text-align: left;
   color: #ffffffcc;
-  box-shadow: rgba(#7257ff, 0.4) 0px 48px 100px 0px;
+  box-shadow: rgba(var(--main-dark), 0.4) 0px 48px 100px 0px;
 }
 
 .upper-card h2 {
@@ -1183,7 +1183,7 @@ thead {
   height: 47x;
   padding: 17px, 30px, 17px, 30px;
   border-radius: 8px;
-  background: #7257ff;
+  background: var(--main-dark);
 
   font-size: 16px;
   font-weight: 600;
@@ -1206,7 +1206,7 @@ thead {
   line-height: 18px;
   letter-spacing: 0px;
   text-align: center;
-  color: #7257ff;
+  color: var(--main-dark);
 }
 
 .start-drill {
@@ -1220,7 +1220,7 @@ thead {
   padding: 17px, 30px, 30px, 30px;
   border-radius: 8px;
   background: #ffffff;
-  color: #7257ff;
+  color: var(--main-dark);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1236,7 +1236,7 @@ thead {
 }
 
 .bg-alt {
-  background-color: #7257ff !important;
+  background-color: var(--main-dark) !important;
   color: white;
 }
 
@@ -1309,7 +1309,7 @@ thead {
 .training-card {
   width: 400px;
   height: 290px;
-  box-shadow: rgba(#7257ff, 0.1) 0px 48px 100px 0px;
+  box-shadow: rgba(var(--main-dark), 0.1) 0px 48px 100px 0px;
   padding: 30px;
   border-radius: 16px;
   gap: 17.5px;
@@ -1333,7 +1333,7 @@ thead {
   line-height: 19px;
   letter-spacing: 0em;
   text-align: left;
-  color: #7257ff;
+  color: var(--main-dark);
 }
 
 .calender-comp {
@@ -1360,7 +1360,7 @@ thead {
   bottom: 0px;
   width: 100vw;
   height: 68px;
-  background-color: #7257ff;
+  background-color: var(--main-dark);
 }
 
 .upper-mast {
@@ -1396,7 +1396,7 @@ thead {
   .upper-mast {
     display: flex;
     height: 68px;
-    background-color: #7257ff;
+    background-color: var(--main-dark);
     position: absolute;
     top: 0;
     z-index: 3;
@@ -1580,7 +1580,7 @@ thead {
 
 .toggle-btn:hover {
   background-color: white;
-  color: #7257ff;
+  color: var(--main-dark);
 }
 
 .toggle-btn:hover .toggle-btn p {
@@ -1602,7 +1602,7 @@ thead {
   padding: 27px, 24px, 27px, 24px;
   border-radius: 8px;
   gap: 8px;
-  background: #7257ff;
+  background: var(--main-dark);
   color: white;
   z-index: 100;
   font-size: 15px;
@@ -1797,7 +1797,7 @@ thead {
 }
 
 .sticky-header {
-  background-color: #7257ff;
+  background-color: var(--main-dark);
   /* Set your background color */
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   /* Add a shadow for better visibility */
@@ -1857,7 +1857,7 @@ thead {
   grid-area: sidebar;
   height: 100vh;
   width: fit-content;
-  background-color: #7257ff;
+  background-color: var(--main-dark);
 }
 
 .body {
@@ -2022,7 +2022,7 @@ thead {
   border-radius: 8px;
   gap: 28px;
   background-color: #f4f4f4;
-  color: #7257ff;
+  color: var(--main-dark);
   display: flex;
   justify-content: center;
   align-items: center;

@@ -41,5 +41,5 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #7257ff;
+  background: var(--main-dark);
 }
