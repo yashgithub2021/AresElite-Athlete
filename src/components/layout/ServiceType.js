@@ -73,7 +73,7 @@ const OnlineTele = ({
                 onChange={handleSelectedService}
               />
               <span className="custom-checkmark   "></span>
-              Offline
+              In-Office
             </label>
 
             <label className="custom-radio-button d-flex fw-semibold align-items-center">

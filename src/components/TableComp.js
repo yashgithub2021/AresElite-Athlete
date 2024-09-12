@@ -27,7 +27,11 @@ const TableComp = ({ data }) => {
           </p>
         </Table.Td>
         <Table.Td>
-          <p>{data.service_type}</p>
+          <p>
+            {data.service_type === "AddTrainingSessions"
+              ? "TrainingSessions"
+              : data.service_type}
+          </p>
         </Table.Td>
         <Table.Td>
           <p>{dtstring}</p>

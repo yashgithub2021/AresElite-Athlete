@@ -382,9 +382,9 @@ const TeleSessions = ({
               <h2 style={{ fontSize: "700" }}>Training Session</h2>
             </div>
             <div>
-              <div className="view-all" onClick={open}>
+              {/* <div className="view-all" onClick={open}>
                 View All
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="train-stat-cont flex-shift gap-3">

@@ -72,51 +72,27 @@ const AtheleDashboard = () => {
             <p className="h4  ">
               Hello,
               <p className="font-weight-bold d-inline">{name}!</p>
-              {is_Online === "true" ? (
-                <span style={{ color: "#3C3F5399" }}>
-                  {" "}
-                  <span>
-                    <svg
-                      width="24"
-                      height="25"
-                      viewBox="0 0 24 25"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M9 18.5L15 12.5L9 6.5"
-                        stroke="#858698"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </span>{" "}
-                  Online
-                </span>
-              ) : (
-                <span style={{ color: "#3C3F5399" }}>
-                  {" "}
-                  <span>
-                    <svg
-                      width="24"
-                      height="25"
-                      viewBox="0 0 24 25"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M9 18.5L15 12.5L9 6.5"
-                        stroke="#858698"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </span>{" "}
-                  Offline
-                </span>
-              )}
+              <span style={{ color: "#3C3F5399" }}>
+                {" "}
+                <span>
+                  <svg
+                    width="24"
+                    height="25"
+                    viewBox="0 0 24 25"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9 18.5L15 12.5L9 6.5"
+                      stroke="#858698"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>{" "}
+                Ares Academy
+              </span>
             </p>
           </div>
           {/* This is row 1 contains your stat cards */}
@@ -186,7 +162,7 @@ const AtheleDashboard = () => {
             <h4 className=" text-shadow">Select Service</h4>
             <div className="services-cont text-shadow ">
               <div
-                style={{ backgroundColor: "#57315A", borderRadius: "10px" }}
+                style={{ backgroundColor: "#3B444B", borderRadius: "10px" }}
                 className=" service-box text-light mb-4 d-flex justify-content-between  align-items-center box-shadow-drop-bottom "
               >
                 <ServiceModal
@@ -575,7 +551,7 @@ const AtheleDashboard = () => {
               </div>
               <div
                 sm={6}
-                style={{ backgroundColor: "#FF8989", borderRadius: "10px" }}
+                style={{ backgroundColor: "#848482", borderRadius: "10px" }}
                 className=" service-box text-light mb-4 d-flex justify-content-between align-items-center box-shadow-drop-bottom "
               >
                 <ServiceModal
