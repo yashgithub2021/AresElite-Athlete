@@ -10,13 +10,13 @@ const PlanCard = ({ price, features, Name, phases }) => {
   const [selectedPlan, setSelectedPlan] = useState();
   const [clickedButton, setClickedButton] = useState(null);
   const [selectedPhaseCost, setSelectedPhaseCost] = useState(null);
-  const [selectedPhaseIndex, setselectedPhaseIndex] = useState("")
+  const [selectedPhaseIndex, setselectedPhaseIndex] = useState("");
   const changeColor = (buttonId, service) => {
     setClickedButton(buttonId);
   };
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const handleSubmit = async () => {
-    const ClientId = localStorage.getItem("userId")
+    const ClientId = localStorage.getItem("userId");
     if (selectedPhaseIndex !== null) {
       const selectedPhase = phases[selectedPhaseIndex];
 
@@ -29,9 +29,8 @@ const PlanCard = ({ price, features, Name, phases }) => {
       try {
         const data = await Plans(dispatch, params);
         if (data) {
-
         }
-      } catch (error) { }
+      } catch (error) {}
     } else {
       // Handle case where no phase is selected
       console.log("No phase selected");
@@ -83,7 +82,9 @@ const PlanCard = ({ price, features, Name, phases }) => {
                   </svg>
                 </div>
               </div>
-              <p style={{ fontSize: "26px", color: "#7257FF" }}>${selectedPhaseCost}</p>
+              <p style={{ fontSize: "26px", color: "var(--main-dark)" }}>
+                ${selectedPhaseCost}
+              </p>
               <p>Booking Confirmed for {Name} Plan </p>
             </div>
             <div className="data-table ">
@@ -98,7 +99,7 @@ const PlanCard = ({ price, features, Name, phases }) => {
                   style={{
                     width: "100%",
                     padding: "12px 24px 12px 24px",
-                    background: "#7257FF",
+                    background: "var(--main-dark)",
                     color: "white",
                     borderRadius: "8px",
                   }}
@@ -119,7 +120,7 @@ const PlanCard = ({ price, features, Name, phases }) => {
         <Modal.Content style={{ background: "transparent" }}>
           <Modal.Header
             style={{
-              background: "#7257FF",
+              background: "var(--main-dark)",
               color: "white",
             }}
           >
@@ -145,11 +146,10 @@ const PlanCard = ({ price, features, Name, phases }) => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-
             }}
           >
             <div style={{ maxWidth: "100%" }}>
-              <div  >
+              <div>
                 <svg
                   width="317"
                   height="58"
@@ -177,107 +177,110 @@ const PlanCard = ({ price, features, Name, phases }) => {
                       width: "100%",
                     }}
                   >
-                    {
-                      phases.map((item, idx) => {
-                        return (
-                          <button
-
-                            id={`button${idx + 1}`}
-                            style={{
-                              display: "flex",
-                              gap: "10px",
-                              height: "112px",
-                              backgroundColor:
-                                clickedButton === `button${idx + 1}` ? "#7257FF26" : "#F4F4F4",
-                              color:
-                                clickedButton === `button${idx + 1}` ? "#7257FF" : "black",
-                              padding: "27px 27px 30px 27px",
-                              border:
-                                clickedButton === `button${idx + 1}` ? "solid 1px" : "none",
-                              cursor: "pointer",
-                              borderRadius: "12px",
-                            }}
-                            onClick={() => {
-                              changeColor(`button${idx + 1}`, "In office");
-                              setselectedPhaseIndex(idx)
-                              setSelectedPhaseCost(item.cost);
-                            }}
-                          >
+                    {phases.map((item, idx) => {
+                      return (
+                        <button
+                          id={`button${idx + 1}`}
+                          style={{
+                            display: "flex",
+                            gap: "10px",
+                            height: "112px",
+                            backgroundColor:
+                              clickedButton === `button${idx + 1}`
+                                ? "#7257FF26"
+                                : "#F4F4F4",
+                            color:
+                              clickedButton === `button${idx + 1}`
+                                ? "var(--main-dark)"
+                                : "black",
+                            padding: "27px 27px 30px 27px",
+                            border:
+                              clickedButton === `button${idx + 1}`
+                                ? "solid 1px"
+                                : "none",
+                            cursor: "pointer",
+                            borderRadius: "12px",
+                          }}
+                          onClick={() => {
+                            changeColor(`button${idx + 1}`, "In office");
+                            setselectedPhaseIndex(idx);
+                            setSelectedPhaseCost(item.cost);
+                          }}
+                        >
+                          <div>
+                            {clickedButton === `button${idx + 1}` ? (
+                              <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <rect
+                                  x="0.5"
+                                  y="0.5"
+                                  width="23"
+                                  height="23"
+                                  rx="3.5"
+                                  fill="var(--main-dark)"
+                                />
+                                <rect
+                                  x="0.5"
+                                  y="0.5"
+                                  width="23"
+                                  height="23"
+                                  rx="3.5"
+                                  stroke="var(--main-dark)"
+                                />
+                                <path
+                                  d="M17 8.84375L11.0089 14.8349C10.5207 15.323 9.72927 15.323 9.24112 14.8349L7 12.5938"
+                                  stroke="white"
+                                  stroke-width="1.5"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                              </svg>
+                            ) : (
+                              <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <rect
+                                  x="0.5"
+                                  y="0.5"
+                                  width="23"
+                                  height="23"
+                                  rx="3.5"
+                                  stroke="var(--main-dark)"
+                                />
+                              </svg>
+                            )}
+                          </div>
+                          <div style={{ textAlign: "left" }}>
+                            <div className="d-flex gap-4">
+                              <p style={{ margin: "0px" }}>{item.name}</p>
+                              <p style={{ margin: "0px" }}>${item.cost}</p>
+                            </div>
                             <div>
-                              {clickedButton === `button${idx + 1}` ? (
-                                <svg
-                                  width="24"
-                                  height="24"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <rect
-                                    x="0.5"
-                                    y="0.5"
-                                    width="23"
-                                    height="23"
-                                    rx="3.5"
-                                    fill="#7257FF"
-                                  />
-                                  <rect
-                                    x="0.5"
-                                    y="0.5"
-                                    width="23"
-                                    height="23"
-                                    rx="3.5"
-                                    stroke="#7257FF"
-                                  />
-                                  <path
-                                    d="M17 8.84375L11.0089 14.8349C10.5207 15.323 9.72927 15.323 9.24112 14.8349L7 12.5938"
-                                    stroke="white"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                  />
-                                </svg>
-                              ) : (
-                                <svg
-                                  width="24"
-                                  height="24"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <rect
-                                    x="0.5"
-                                    y="0.5"
-                                    width="23"
-                                    height="23"
-                                    rx="3.5"
-                                    stroke="#7257FF"
-                                  />
-                                </svg>
-                              )}
+                              <p style={{ fontSize: "12px" }}>
+                                Lorem ipsum dolor sit amet consectetur.
+                                Scelerisque nisl lectus sed odio adipiscing et.
+                              </p>
                             </div>
-                            <div style={{ textAlign: "left" }}>
-                              <div className="d-flex gap-4">
-                                <p style={{ margin: "0px" }}>{item.name}</p>
-                                <p style={{ margin: "0px" }}>${item.cost}</p>
-                              </div>
-                              <div >
-                                <p style={{ fontSize: "12px" }}>
-                                  Lorem ipsum dolor sit amet consectetur. Scelerisque
-                                  nisl lectus sed odio adipiscing et.
-                                </p>
-                              </div>
-                            </div>
-                          </button>
-                        )
-                      })
-                    }
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
 
                   <button
                     style={{
                       width: "100%",
                       padding: "15px 24px 15px 24px",
-                      background: "#7257FF",
+                      background: "var(--main-dark)",
                       color: "white",
                       borderRadius: "8px",
                       marginTop: "10px",
@@ -285,13 +288,12 @@ const PlanCard = ({ price, features, Name, phases }) => {
                     onClick={() => {
                       close();
                       successHandler.open();
-                      handleSubmit()
+                      handleSubmit();
                     }}
                   >
                     Select Plan
                   </button>
                 </div>
-
               </div>
             </div>
           </Modal.Body>
@@ -308,25 +310,45 @@ const PlanCard = ({ price, features, Name, phases }) => {
           flexDirection: "column",
           justifyContent: "space-between",
           cursor: "pointer",
-          userSelect: "none"
+          userSelect: "none",
         }}
       >
         <div>
           <p style={{ fontWeight: "600", fontSize: "x-large" }}>{Name}</p>
-          <div className="d-flex">
-
-          </div>
+          <div className="d-flex"></div>
           <div>
             {features.map((item, index) => {
               return (
-                <div className="d-flex gap-3 " key={index} style={{ margin: "4px 0px" }}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="24" height="24" rx="12" fill="#7257FF" fill-opacity="0.15" />
-                    <path d="M17.3334 8.26672L10 15.6001L6.66669 12.2667" stroke="#7257FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <div
+                  className="d-flex gap-3 "
+                  key={index}
+                  style={{ margin: "4px 0px" }}
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      width="24"
+                      height="24"
+                      rx="12"
+                      fill="var(--main-dark)"
+                      fill-opacity="0.15"
+                    />
+                    <path
+                      d="M17.3334 8.26672L10 15.6001L6.66669 12.2667"
+                      stroke="var(--main-dark)"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
                   </svg>
                   <p style={{ color: "#8C90AA" }}>{item}</p>
                 </div>
-              )
+              );
             })}
           </div>
         </div>
@@ -335,7 +357,7 @@ const PlanCard = ({ price, features, Name, phases }) => {
           onClick={open}
           style={{
             width: "90%",
-            background: "#7257FF",
+            background: "var(--main-dark)",
             color: "white",
             borderRadius: "16px",
             padding: "10px 53px 10px 53px",

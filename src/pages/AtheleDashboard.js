@@ -123,7 +123,7 @@ const AtheleDashboard = () => {
           <div className="d-flex row1 grow1 upper-card-cont">
             {!userinfo?.userDetails && (
               <>
-                <Loadercard color="#7257FF" />
+                <Loadercard color="var(--main-dark)" />
               </>
             )}
             {userinfo?.userDetails &&

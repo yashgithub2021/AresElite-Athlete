@@ -75,10 +75,10 @@
     0px 12px 16px -4px rgba(16, 24, 40, 0.08);
 }
 .color-purple {
-  color: #7257ff;
+  color: var(--main-dark);
 }
 .text-gradient {
-  background: -webkit-linear-gradient(#7257ff, #333);
+  background: -webkit-linear-gradient(var(--main-dark), #333);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

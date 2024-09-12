@@ -506,7 +506,7 @@ const AtheBookings = () => {
         onClose={() => setAlertDialog(false)}
         title=<span
           className="ps-3 fw-semibold"
-          style={{ color: "#7257FF", fontSize: "1.3rem" }}
+          style={{ color: "var(--main-dark)", fontSize: "1.3rem" }}
         >
           {" "}
           Cancel Booking
@@ -522,7 +522,7 @@ const AtheBookings = () => {
           </div>
           <div className="d-flex gap-2 justify-content-end">
             <Button
-              style={{ backgroundColor: "#7257FF" }}
+              style={{ backgroundColor: "var(--main-dark)" }}
               onClick={async () => {
                 await CancelBooking(dispatch, bId);
                 setBId("");
@@ -535,7 +535,7 @@ const AtheBookings = () => {
             <Button
               style={{
                 backgroundColor: "#7257FF26",
-                color: "#7257FF",
+                color: "var(--main-dark)",
               }}
             >
               Cancel

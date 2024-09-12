@@ -41,7 +41,7 @@ const TableComp = ({ data }) => {
               {data.status == "paid" && (
                 <Button
                   variant="filled"
-                  color="#7257FF"
+                  color="var(--main-dark)"
                   style={{ fontSize: "12px", borderRadius: "12px" }}
                   onClick={() => {
                     naviagte(`/a-drill`);
@@ -56,7 +56,7 @@ const TableComp = ({ data }) => {
                   color="#7257FF26"
                   style={{
                     fontSize: "12px",
-                    color: "#7257FF",
+                    color: "var(--main-dark)",
                     borderRadius: "12px",
                   }}
                 >

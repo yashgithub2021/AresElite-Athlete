@@ -140,7 +140,7 @@ const TeleSessions = ({
     handledisable();
   }, [setFormData]);
   const data = [
-    { name: "USA", value: 400, color: "#7257FF" },
+    { name: "USA", value: 400, color: "var(--main-dark)" },
     { name: "India", value: 300, color: "#FD8E1F" },
   ];
   const secondModalHandler = () => {
@@ -196,7 +196,9 @@ const TeleSessions = ({
             </>
           )}
           {active != 2 && (
-            <Modal.Header style={{ background: "#7257FF", color: "white" }}>
+            <Modal.Header
+              style={{ background: "var(--main-dark)", color: "white" }}
+            >
               <Modal.Title>
                 <div className="modal-header gap-3">
                   <div onClick={close}>
@@ -236,7 +238,7 @@ const TeleSessions = ({
                 active={active}
                 onStepClick={setActive}
                 size="xs"
-                color="#7257FF"
+                color="var(--main-dark)"
                 iconPosition="right"
               >
                 <Stepper.Step label="Select Service" />
@@ -298,7 +300,11 @@ const TeleSessions = ({
                           </svg>
                         </div>
                       </div>
-                      <p style={{ fontSize: "26px", color: "#7257FF" }}>$0</p>
+                      <p
+                        style={{ fontSize: "26px", color: "var(--main-dark)" }}
+                      >
+                        $0
+                      </p>
                       <p>Booking Confirmed for {service_type} </p>
                     </div>
                     <div className="data-table ">
@@ -351,7 +357,7 @@ const TeleSessions = ({
                     0 %
                   </Text>
                 }
-                sections={[{ value: `0`, color: "#7257FF" }]}
+                sections={[{ value: `0`, color: "var(--main-dark)" }]}
               />
               <RingProgress
                 visibleFrom="sm"
@@ -363,7 +369,7 @@ const TeleSessions = ({
                     0 %
                   </Text>
                 }
-                sections={[{ value: `0`, color: "#7257FF" }]}
+                sections={[{ value: `0`, color: "var(--main-dark)" }]}
               />
             </div>
           </div>
@@ -413,7 +419,7 @@ const TeleSessions = ({
                     {perc?.toFixed(1)} %
                   </Text>
                 }
-                sections={[{ value: `${perc}`, color: "#7257FF" }]}
+                sections={[{ value: `${perc}`, color: "var(--main-dark)" }]}
               />
               <RingProgress
                 visibleFrom="sm"
@@ -425,7 +431,7 @@ const TeleSessions = ({
                     {perc?.toFixed(1)} %
                   </Text>
                 }
-                sections={[{ value: `${perc}`, color: "#7257FF" }]}
+                sections={[{ value: `${perc}`, color: "var(--main-dark)" }]}
               />
             </div>
           </div>

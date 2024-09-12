@@ -161,7 +161,7 @@ function ViewDrill({ openModal, handleCloseModal, clickedDrill, isMobile }) {
           <button
             style={{
               backgroundColor: "#EAE6FF",
-              color: "#7257FF",
+              color: "var(--main-dark)",
               width: isMobile ? "7rem" : "8rem",
 
               padding: "0.5rem 0",
@@ -177,7 +177,7 @@ function ViewDrill({ openModal, handleCloseModal, clickedDrill, isMobile }) {
           <button
             style={{
               backgroundColor: "#EAE6FF",
-              color: "#7257FF",
+              color: "var(--main-dark)",
               width: isMobile ? "7rem" : "8rem",
               padding: "0.5rem 0",
             }}

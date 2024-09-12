@@ -8,27 +8,26 @@ import {
   Row,
   Spinner,
 } from "react-bootstrap";
-import { PasswordInput } from '@mantine/core';
+import { PasswordInput } from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { login } from "../../features/apiCall";
 import AuthLayout from "./AuthLayout";
-import { Input } from '@mantine/core';
-import { Select } from '@mantine/core';
+import { Input } from "@mantine/core";
+import { Select } from "@mantine/core";
 import { format } from "date-fns";
 
-import { DateInput } from '@mantine/dates';
+import { DateInput } from "@mantine/dates";
 import { Register } from "../../features/apiCall";
 
 const SignUp = () => {
-  
   const [value, setValue] = useState(null);
 
   const { isFetching, error, errMsg, token } = useSelector(
     (state) => state.auth
   );
   const [isLoogedIn, setIsLoogedIn] = useState(false);
-  const [isOnline, setisOnline] = useState(false)
+  const [isOnline, setisOnline] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const ErrorToastOptions = {
@@ -40,24 +39,23 @@ const SignUp = () => {
   };
 
   const [values, setValues] = useState({
-    firstName:"",
-    lastName:"",
-    suffix:"",
-    email:"",
-    city:"",
-    phone:"",
-    state:"",
-    dob:"02/10/1999",
-    gender:"",
-    address:"",
-    zip:"",
-    password:"",
-    confirmpass:"",
-    is_online:true,
-    dob:"06/10/11"
+    firstName: "",
+    lastName: "",
+    suffix: "",
+    email: "",
+    city: "",
+    phone: "",
+    state: "",
+    dob: "02/10/1999",
+    gender: "",
+    address: "",
+    zip: "",
+    password: "",
+    confirmpass: "",
+    is_online: true,
+    dob: "06/10/11",
   });
 
-  
   const handleTogglePassword = () => {
     setValues((prevValues) => ({
       ...prevValues,
@@ -71,31 +69,25 @@ const SignUp = () => {
     }
   }, [navigate, token, error, isFetching, isLoogedIn]);
 
-  
   const handleChange = (e) => {
     var { name, value } = e.target;
-   
-   
+
     if (name === "dob") {
       const formattedDate = format(new Date(value), "dd/MM/yyyy");
       setValues({ ...values, [name]: formattedDate });
     } else {
-
       setValues({ ...values, [name]: value });
     }
-   
   };
 
-
-
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    console.log(values)
-    if(values.password!=values.confirmpass){
-       alert("Passwords do not match")
-       return ;
+    e.preventDefault();
+    console.log(values);
+    if (values.password != values.confirmpass) {
+      alert("Passwords do not match");
+      return;
     }
-    await Register(dispatch,values)
+    await Register(dispatch, values);
   };
   useEffect(() => {
     if (error && !isFetching && isLoogedIn) {
@@ -104,205 +96,375 @@ const SignUp = () => {
     }
   }, [error, isFetching, isLoogedIn, errMsg]);
   return (
-   <>
-      {
-        isOnline? <AuthLayout><div className="signUp-container">
-        <div className="auth-haeder" style={{display:"flex",gap:"9px",alignItems:"center"}}>
-        <svg onClick={()=>{setisOnline(false)}}width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0 19.2C0 12.4794 0 9.11905 1.30792 6.55211C2.4584 4.29417 4.29417 2.4584 6.55211 1.30792C9.11905 0 12.4794 0 19.2 0H20.8C27.5206 0 30.8809 0 33.4479 1.30792C35.7058 2.4584 37.5416 4.29417 38.6921 6.55211C40 9.11905 40 12.4794 40 19.2V20.8C40 27.5206 40 30.8809 38.6921 33.4479C37.5416 35.7058 35.7058 37.5416 33.4479 38.6921C30.8809 40 27.5206 40 20.8 40H19.2C12.4794 40 9.11905 40 6.55211 38.6921C4.29417 37.5416 2.4584 35.7058 1.30792 33.4479C0 30.8809 0 27.5206 0 20.8V19.2Z" fill="#1C1C1C" fill-opacity="0.05"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M22.9254 14.5581C23.1915 14.8021 23.1915 15.1979 22.9254 15.4419L18.4375 19.5581C18.1714 19.8021 18.1714 20.1979 18.4375 20.4419L22.9254 24.5581C23.1915 24.8021 23.1915 25.1979 22.9254 25.4419C22.6593 25.686 22.2278 25.686 21.9617 25.4419L17.4738 21.3258C16.6754 20.5936 16.6754 19.4064 17.4738 18.6742L21.9617 14.5581C22.2278 14.314 22.6593 14.314 22.9254 14.5581Z" fill="#1C1C1C"/>
-</svg>
-         <h2 style={{margin:"0px"}}>Sign Up</h2>
-        </div>
-        <form onSubmit={handleSubmit}>
-     <div className="form-row">
-       <div className="form-group col-md-6">
-         <label>First Name</label>
-         <Input variant="filled" placeholder="Input component" name="firstName" onChange={handleChange} />
-       </div>
-       <div className="form-group col-md-6">
-         <label>Last Name</label>
-         <Input variant="filled" placeholder="Input component" name="lastName"  onChange={handleChange}/>
-       </div>
-     </div>
-     <div className="form-row">
-       <div className="form-group col-md-6">
-         <label htmlFor="inputEmail4">Suffix</label>
-         <Input variant="filled" placeholder="Input component" name="suffix"  onChange={handleChange} />
-       </div>
-       <div className="form-group col-md-6">
-         <label htmlFor="inputPassword4">Email</label>
-         <Input variant="filled" placeholder="Input component" name="email"  onChange={handleChange}/>
-       </div>
-     </div>
-     <div className="form-row">
-       <div className="form-group col-md-6">
-         <label htmlFor="inputEmail4" >Date of birth</label>
-         <DateInput
-       value={value}
-       variant="filled"
-       name="dob"
-       onChange={(e)=>{setValue(e); setValues({...values,["dob"]:e})}}
-       rightSection={<i class="fa-solid fa-calendar"></i>}
-       placeholder="Choose your date of birth"
-       
-     />
-       </div>
-       <div className="form-group col-md-6">
-         <label htmlFor="inputPassword4">Gender</label>
-         <div className="d-flex " style={{width:"100%"}}>
-           <Select variant="filled"   data={['Male','Female']} onChange={(value)=>{setValues({ ...values, ["gender"]:value })}}/>
-           {/* <select name="gender" onChange={handleChange} >
+    <>
+      {isOnline ? (
+        <AuthLayout>
+          <div className="signUp-container">
+            <div
+              className="auth-haeder"
+              style={{ display: "flex", gap: "9px", alignItems: "center" }}
+            >
+              <svg
+                onClick={() => {
+                  setisOnline(false);
+                }}
+                width="40"
+                height="40"
+                viewBox="0 0 40 40"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 19.2C0 12.4794 0 9.11905 1.30792 6.55211C2.4584 4.29417 4.29417 2.4584 6.55211 1.30792C9.11905 0 12.4794 0 19.2 0H20.8C27.5206 0 30.8809 0 33.4479 1.30792C35.7058 2.4584 37.5416 4.29417 38.6921 6.55211C40 9.11905 40 12.4794 40 19.2V20.8C40 27.5206 40 30.8809 38.6921 33.4479C37.5416 35.7058 35.7058 37.5416 33.4479 38.6921C30.8809 40 27.5206 40 20.8 40H19.2C12.4794 40 9.11905 40 6.55211 38.6921C4.29417 37.5416 2.4584 35.7058 1.30792 33.4479C0 30.8809 0 27.5206 0 20.8V19.2Z"
+                  fill="#1C1C1C"
+                  fill-opacity="0.05"
+                />
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M22.9254 14.5581C23.1915 14.8021 23.1915 15.1979 22.9254 15.4419L18.4375 19.5581C18.1714 19.8021 18.1714 20.1979 18.4375 20.4419L22.9254 24.5581C23.1915 24.8021 23.1915 25.1979 22.9254 25.4419C22.6593 25.686 22.2278 25.686 21.9617 25.4419L17.4738 21.3258C16.6754 20.5936 16.6754 19.4064 17.4738 18.6742L21.9617 14.5581C22.2278 14.314 22.6593 14.314 22.9254 14.5581Z"
+                  fill="#1C1C1C"
+                />
+              </svg>
+              <h2 style={{ margin: "0px" }}>Sign Up</h2>
+            </div>
+            <form onSubmit={handleSubmit}>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <label>First Name</label>
+                  <Input
+                    variant="filled"
+                    placeholder="Input component"
+                    name="firstName"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group col-md-6">
+                  <label>Last Name</label>
+                  <Input
+                    variant="filled"
+                    placeholder="Input component"
+                    name="lastName"
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputEmail4">Suffix</label>
+                  <Input
+                    variant="filled"
+                    placeholder="Input component"
+                    name="suffix"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputPassword4">Email</label>
+                  <Input
+                    variant="filled"
+                    placeholder="Input component"
+                    name="email"
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputEmail4">Date of birth</label>
+                  <DateInput
+                    value={value}
+                    variant="filled"
+                    name="dob"
+                    onChange={(e) => {
+                      setValue(e);
+                      setValues({ ...values, ["dob"]: e });
+                    }}
+                    rightSection={<i class="fa-solid fa-calendar"></i>}
+                    placeholder="Choose your date of birth"
+                  />
+                </div>
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputPassword4">Gender</label>
+                  <div className="d-flex " style={{ width: "100%" }}>
+                    <Select
+                      variant="filled"
+                      data={["Male", "Female"]}
+                      onChange={(value) => {
+                        setValues({ ...values, ["gender"]: value });
+                      }}
+                    />
+                    {/* <select name="gender" onChange={handleChange} >
              <option>Male</option>
              <option>Female</option>
              </select> */}
-         
-         </div>
-       
-       </div>
-     </div>
-     <div className="form-row">
-       <div className="form-group col-md-12">
-         <label htmlFor="inputEmail4">Adress </label>
-         <Input variant="filled" placeholder="Input component" name="address" onChange={handleChange} />
-       </div>
-       <div className="form-group col-md-6">
-         <label htmlFor="inputPassword4">Phone Number</label>
-         <div className="d-flex " style={{width:"100%"}}>
-          
-         <Input variant="filled" placeholder="Phone Number" style={{width:"100%"}}  name="phone" onChange={handleChange}/>
-         </div>
-       
-       </div>
-       
-     </div>
-     <div className="form-row">
-       <div className="form-group col-md-4">
-         <label htmlFor="inputEmail4">City</label>
-         <Input variant="filled" placeholder="Input component" name="city" onChange={handleChange} />
-       </div>
-       <div className="form-group col-md-4">
-         <label htmlFor="inputPassword4">State</label>
-         <Input variant="filled" placeholder="Input component" name="state" onChange={handleChange} />
-       </div>
-       <div className="form-group col-md-4">
-         <label htmlFor="inputPassword4">Zip Code</label>
-         <Input variant="filled" placeholder="Input component" name="zip" onChange={handleChange} />
-       </div>
-     </div>
-     <div className="form-row">
-       <div className="form-group col-md-6">
-         <label htmlFor="inputEmail4">Password</label>
-         <PasswordInput
-      variant="filled"
-       placeholder="Create Password"
-       name="password"
-       onChange={handleChange}
-       visibilityToggleIcon={({ reveal }) =>
-       reveal ? (
-        <i class="fa-solid fa-eye"></i>
-       ) : (
-        <i class="fa-solid fa-eye-slash"></i>
-       )
-     }
-     />
-       </div>
-       <div className="form-group col-md-6">
-         <label htmlFor="inputPassword4">Confirm Password</label>
-         <PasswordInput
-       variant="filled"
-       placeholder="Confirm"
-       name="confirmpass"
-       onChange={handleChange}
-       visibilityToggleIcon={({ reveal }) =>
-       reveal ? (
-        <i class="fa-solid fa-eye"></i>
-       ) : (
-        <i class="fa-solid fa-eye-slash"></i>
-       )
-     }
-       
-     />
-       </div>
-     </div>
-     
-     
-  
-  
-   <div className="auth-footer d-flex justify-content-between items-center">
-   {isFetching ? (
-           <Button type="submit" className="signup-button ">
-             <Spinner animation="border" variant="light" />
-           </Button>
-         ) : (
-           <Button type="submit" className="signup-button  ">
-             Sign Up
-           </Button>
-         )}
-       <div>
-        <NavLink
-           className="d-block w-100  mb-2 text-decoration-none purple-text"
-           to="/signin"
-         >
-           Already an user?
-         </NavLink>
-       </div>
-       
-   </div>
-   </form> 
-   </div></AuthLayout>:<>
-   <AuthLayout>
-    <div style={{padding:"20px"}}>
-    <div style={{width:"100%",textAlign:"left"}}>
-      <h3 style={{fontWeight:"500"}}><span style={{marginRight:"6px"}}><svg onClick={()=>{navigate(-1)}}width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0 19.2C0 12.4794 0 9.11905 1.30792 6.55211C2.4584 4.29417 4.29417 2.4584 6.55211 1.30792C9.11905 0 12.4794 0 19.2 0H20.8C27.5206 0 30.8809 0 33.4479 1.30792C35.7058 2.4584 37.5416 4.29417 38.6921 6.55211C40 9.11905 40 12.4794 40 19.2V20.8C40 27.5206 40 30.8809 38.6921 33.4479C37.5416 35.7058 35.7058 37.5416 33.4479 38.6921C30.8809 40 27.5206 40 20.8 40H19.2C12.4794 40 9.11905 40 6.55211 38.6921C4.29417 37.5416 2.4584 35.7058 1.30792 33.4479C0 30.8809 0 27.5206 0 20.8V19.2Z" fill="#1C1C1C" fill-opacity="0.05"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M22.9254 14.5581C23.1915 14.8021 23.1915 15.1979 22.9254 15.4419L18.4375 19.5581C18.1714 19.8021 18.1714 20.1979 18.4375 20.4419L22.9254 24.5581C23.1915 24.8021 23.1915 25.1979 22.9254 25.4419C22.6593 25.686 22.2278 25.686 21.9617 25.4419L17.4738 21.3258C16.6754 20.5936 16.6754 19.4064 17.4738 18.6742L21.9617 14.5581C22.2278 14.314 22.6593 14.314 22.9254 14.5581Z" fill="#1C1C1C"/>
-</svg>
-</span>Select Modes</h3>
-    </div>
-    <div style={{ display:"flex" ,justifyContent:"center",alignItems:"center" ,gap:"10px"}}>
-    <div style={{height:"60vh",width:"318px",background:"#F4F4F4",borderRadius:"20px"}} onClick={()=>{setisOnline(true);}} className="typecard">
-      <div style={{widith:"100%",display:"flex",alignItems:"center",padding:"30px"}}>
-      <svg width="100" height="80" viewBox="0 0 186 135" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="30" cy="30" r="30" fill="#7257FF" fill-opacity="0.08"/>
-<g clip-path="url(#clip0_1783_25026)">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M30 20C35.523 20 40 24.477 40 30C40 35.523 35.523 40 30 40C24.477 40 20 35.523 20 30C20 24.477 24.477 20 30 20ZM31.482 34.94C30.4956 35.0205 29.5044 35.0205 28.518 34.94C28.611 35.337 28.715 35.705 28.828 36.042C29.079 36.797 29.358 37.335 29.618 37.664C29.745 37.826 29.848 37.912 29.918 37.954L29.969 37.982L29.999 37.99L30.031 37.982L30.082 37.955C30.198 37.8764 30.2995 37.7783 30.382 37.665C30.642 37.335 30.921 36.797 31.172 36.042C31.285 35.705 31.389 35.337 31.482 34.94ZM22.807 33.505C23.7151 35.3641 25.3061 36.8007 27.248 37.515C27.1301 37.2397 27.024 36.9594 26.93 36.675C26.7119 36.0096 26.5381 35.3304 26.41 34.642C25.1722 34.3914 23.9644 34.0103 22.807 33.505ZM37.194 33.505C36.049 34.005 34.843 34.388 33.589 34.642C33.4614 35.3309 33.2877 36.0104 33.069 36.676C32.973 36.966 32.867 37.248 32.751 37.514C34.6936 36.8001 36.2853 35.3635 37.194 33.504V33.505ZM31.976 28.871C30.6643 29.0439 29.3357 29.0439 28.024 28.871C27.9669 30.2143 28.0141 31.56 28.165 32.896C29.3844 33.0351 30.6156 33.0351 31.835 32.896C31.9459 31.9347 32.001 30.9677 32 30C32 29.616 31.992 29.24 31.976 28.87V28.871ZM22.568 27.032C22.0791 28.2547 21.9004 29.5794 22.048 30.888C23.3215 31.6189 24.6902 32.1698 26.115 32.525C25.9921 31.1776 25.9673 29.823 26.041 28.472C24.8272 28.1404 23.6603 27.6566 22.568 27.032ZM37.432 27.032C36.3397 27.6566 35.1728 28.1404 33.959 28.472C34.0327 29.823 34.008 31.1776 33.885 32.525C35.3094 32.1698 36.6778 31.6189 37.951 30.888C38.0984 29.5798 37.9197 28.2554 37.431 27.033L37.432 27.032ZM30.016 22.012L30.005 22.01L29.985 22.013L29.947 22.028C29.8191 22.1092 29.7072 22.2133 29.617 22.335C29.357 22.665 29.079 23.203 28.827 23.957C28.557 24.765 28.339 25.757 28.194 26.876C29.3922 27.0425 30.6078 27.0425 31.806 26.876C31.661 25.756 31.442 24.765 31.173 23.957C30.921 23.203 30.643 22.664 30.383 22.335C30.3002 22.222 30.1987 22.1239 30.083 22.045L30.016 22.012ZM27.248 22.486C25.7625 23.032 24.4717 24.0051 23.538 25.283C24.381 25.767 25.284 26.159 26.233 26.446C26.393 25.282 26.63 24.223 26.93 23.324C27.027 23.033 27.133 22.752 27.248 22.486ZM32.752 22.486C32.867 22.752 32.972 23.033 33.07 23.324C33.37 24.224 33.607 25.282 33.767 26.446C34.7066 26.1619 35.6107 25.7717 36.462 25.283C35.5284 24.0051 34.2375 23.0319 32.752 22.486Z" fill="#7257FF"/>
-</g>
-<path d="M50.284 105.31C50.284 108.49 49.754 111.44 48.694 114.16C47.654 116.86 46.174 119.2 44.254 121.18C42.334 123.16 40.024 124.71 37.324 125.83C34.624 126.93 31.624 127.48 28.324 127.48C25.044 127.48 22.054 126.93 19.354 125.83C16.654 124.71 14.334 123.16 12.394 121.18C10.474 119.2 8.98398 116.86 7.92398 114.16C6.86398 111.44 6.33398 108.49 6.33398 105.31C6.33398 102.13 6.86398 99.19 7.92398 96.49C8.98398 93.77 10.474 91.42 12.394 89.44C14.334 87.46 16.654 85.92 19.354 84.82C22.054 83.7 25.044 83.14 28.324 83.14C30.524 83.14 32.594 83.4 34.534 83.92C36.474 84.42 38.254 85.14 39.874 86.08C41.494 87 42.944 88.13 44.224 89.47C45.524 90.79 46.624 92.27 47.524 93.91C48.424 95.55 49.104 97.33 49.564 99.25C50.044 101.17 50.284 103.19 50.284 105.31ZM42.034 105.31C42.034 102.93 41.714 100.8 41.074 98.92C40.434 97.02 39.524 95.41 38.344 94.09C37.164 92.77 35.724 91.76 34.024 91.06C32.344 90.36 30.444 90.01 28.324 90.01C26.204 90.01 24.294 90.36 22.594 91.06C20.914 91.76 19.474 92.77 18.274 94.09C17.094 95.41 16.184 97.02 15.544 98.92C14.904 100.8 14.584 102.93 14.584 105.31C14.584 107.69 14.904 109.83 15.544 111.73C16.184 113.61 17.094 115.21 18.274 116.53C19.474 117.83 20.914 118.83 22.594 119.53C24.294 120.23 26.204 120.58 28.324 120.58C30.444 120.58 32.344 120.23 34.024 119.53C35.724 118.83 37.164 117.83 38.344 116.53C39.524 115.21 40.434 113.61 41.074 111.73C41.714 109.83 42.034 107.69 42.034 105.31ZM62.6037 100C63.2237 99.38 63.8737 98.81 64.5537 98.29C65.2537 97.75 65.9837 97.3 66.7437 96.94C67.5237 96.56 68.3537 96.27 69.2337 96.07C70.1137 95.85 71.0737 95.74 72.1137 95.74C73.7937 95.74 75.2837 96.03 76.5837 96.61C77.8837 97.17 78.9637 97.97 79.8237 99.01C80.7037 100.03 81.3637 101.26 81.8037 102.7C82.2637 104.12 82.4937 105.69 82.4937 107.41V127H75.0837V107.41C75.0837 105.53 74.6537 104.08 73.7937 103.06C72.9337 102.02 71.6237 101.5 69.8637 101.5C68.5837 101.5 67.3837 101.79 66.2637 102.37C65.1437 102.95 64.0837 103.74 63.0837 104.74V127H55.6737V96.22H60.2037C61.1637 96.22 61.7937 96.67 62.0937 97.57L62.6037 100ZM97.0409 82.42V127H89.6309V82.42H97.0409ZM112.104 96.22V127H104.664V96.22H112.104ZM113.124 87.25C113.124 87.89 112.994 88.49 112.734 89.05C112.474 89.61 112.124 90.1 111.684 90.52C111.264 90.94 110.764 91.28 110.184 91.54C109.604 91.78 108.984 91.9 108.324 91.9C107.684 91.9 107.074 91.78 106.494 91.54C105.934 91.28 105.444 90.94 105.024 90.52C104.604 90.1 104.264 89.61 104.004 89.05C103.764 88.49 103.644 87.89 103.644 87.25C103.644 86.59 103.764 85.97 104.004 85.39C104.264 84.81 104.604 84.31 105.024 83.89C105.444 83.47 105.934 83.14 106.494 82.9C107.074 82.64 107.684 82.51 108.324 82.51C108.984 82.51 109.604 82.64 110.184 82.9C110.764 83.14 111.264 83.47 111.684 83.89C112.124 84.31 112.474 84.81 112.734 85.39C112.994 85.97 113.124 86.59 113.124 87.25ZM126.588 100C127.208 99.38 127.858 98.81 128.538 98.29C129.238 97.75 129.968 97.3 130.728 96.94C131.508 96.56 132.338 96.27 133.218 96.07C134.098 95.85 135.058 95.74 136.098 95.74C137.778 95.74 139.268 96.03 140.568 96.61C141.868 97.17 142.948 97.97 143.808 99.01C144.688 100.03 145.348 101.26 145.788 102.7C146.248 104.12 146.478 105.69 146.478 107.41V127H139.068V107.41C139.068 105.53 138.638 104.08 137.778 103.06C136.918 102.02 135.608 101.5 133.848 101.5C132.568 101.5 131.368 101.79 130.248 102.37C129.128 102.95 128.068 103.74 127.068 104.74V127H119.658V96.22H124.188C125.148 96.22 125.778 96.67 126.078 97.57L126.588 100ZM173.355 108.07C173.355 107.11 173.215 106.21 172.935 105.37C172.675 104.51 172.275 103.76 171.735 103.12C171.195 102.48 170.505 101.98 169.665 101.62C168.845 101.24 167.885 101.05 166.785 101.05C164.645 101.05 162.955 101.66 161.715 102.88C160.495 104.1 159.715 105.83 159.375 108.07H173.355ZM159.225 112.54C159.345 114.12 159.625 115.49 160.065 116.65C160.505 117.79 161.085 118.74 161.805 119.5C162.525 120.24 163.375 120.8 164.355 121.18C165.355 121.54 166.455 121.72 167.655 121.72C168.855 121.72 169.885 121.58 170.745 121.3C171.625 121.02 172.385 120.71 173.025 120.37C173.685 120.03 174.255 119.72 174.735 119.44C175.235 119.16 175.715 119.02 176.175 119.02C176.795 119.02 177.255 119.25 177.555 119.71L179.685 122.41C178.865 123.37 177.945 124.18 176.925 124.84C175.905 125.48 174.835 126 173.715 126.4C172.615 126.78 171.485 127.05 170.325 127.21C169.185 127.37 168.075 127.45 166.995 127.45C164.855 127.45 162.865 127.1 161.025 126.4C159.185 125.68 157.585 124.63 156.225 123.25C154.865 121.85 153.795 120.13 153.015 118.09C152.235 116.03 151.845 113.65 151.845 110.95C151.845 108.85 152.185 106.88 152.865 105.04C153.545 103.18 154.515 101.57 155.775 100.21C157.055 98.83 158.605 97.74 160.425 96.94C162.265 96.14 164.335 95.74 166.635 95.74C168.575 95.74 170.365 96.05 172.005 96.67C173.645 97.29 175.055 98.2 176.235 99.4C177.415 100.58 178.335 102.04 178.995 103.78C179.675 105.5 180.015 107.47 180.015 109.69C180.015 110.81 179.895 111.57 179.655 111.97C179.415 112.35 178.955 112.54 178.275 112.54H159.225Z" fill="#7257FF"/>
-<defs>
-<clipPath id="clip0_1783_25026">
-<rect width="24" height="24" fill="white" transform="translate(18 18)"/>
-</clipPath>
-</defs>
-</svg>
+                  </div>
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-12">
+                  <label htmlFor="inputEmail4">Adress </label>
+                  <Input
+                    variant="filled"
+                    placeholder="Input component"
+                    name="address"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputPassword4">Phone Number</label>
+                  <div className="d-flex " style={{ width: "100%" }}>
+                    <Input
+                      variant="filled"
+                      placeholder="Phone Number"
+                      style={{ width: "100%" }}
+                      name="phone"
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-4">
+                  <label htmlFor="inputEmail4">City</label>
+                  <Input
+                    variant="filled"
+                    placeholder="Input component"
+                    name="city"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group col-md-4">
+                  <label htmlFor="inputPassword4">State</label>
+                  <Input
+                    variant="filled"
+                    placeholder="Input component"
+                    name="state"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group col-md-4">
+                  <label htmlFor="inputPassword4">Zip Code</label>
+                  <Input
+                    variant="filled"
+                    placeholder="Input component"
+                    name="zip"
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputEmail4">Password</label>
+                  <PasswordInput
+                    variant="filled"
+                    placeholder="Create Password"
+                    name="password"
+                    onChange={handleChange}
+                    visibilityToggleIcon={({ reveal }) =>
+                      reveal ? (
+                        <i class="fa-solid fa-eye"></i>
+                      ) : (
+                        <i class="fa-solid fa-eye-slash"></i>
+                      )
+                    }
+                  />
+                </div>
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputPassword4">Confirm Password</label>
+                  <PasswordInput
+                    variant="filled"
+                    placeholder="Confirm"
+                    name="confirmpass"
+                    onChange={handleChange}
+                    visibilityToggleIcon={({ reveal }) =>
+                      reveal ? (
+                        <i class="fa-solid fa-eye"></i>
+                      ) : (
+                        <i class="fa-solid fa-eye-slash"></i>
+                      )
+                    }
+                  />
+                </div>
+              </div>
 
-      </div>
-    </div>
-    <div style={{height:"60vh",width:"318px",background:"#F4F4F4",borderRadius:"20px"}} className="typecard" onClick={()=>{setisOnline(true); setValues({ ...values, ["is_online"]: false });}}>
-      <div>
-      <div style={{widith:"100%",display:"flex",alignItems:"center",padding:"30px"}}>
-      <svg width="100" height="80" viewBox="0 0 189 135" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="30" cy="30" r="30" fill="#7257FF" fill-opacity="0.08"/>
-<path d="M39.9753 37.6903C38.69 35.4344 36.6829 33.6767 34.2772 32.7C35.4735 31.8028 36.3572 30.5518 36.8031 29.1244C37.249 27.6971 37.2344 26.1656 36.7615 24.7469C36.2887 23.3282 35.3814 22.0943 34.1682 21.2199C32.9551 20.3455 31.4976 19.875 30.0022 19.875C28.5068 19.875 27.0493 20.3455 25.8361 21.2199C24.623 22.0943 23.7157 23.3282 23.2428 24.7469C22.7699 26.1656 22.7554 27.6971 23.2013 29.1244C23.6472 30.5518 24.5308 31.8028 25.7272 32.7C23.3215 33.6767 21.3144 35.4344 20.0291 37.6903C19.9494 37.8184 19.8963 37.9611 19.873 38.1101C19.8496 38.2591 19.8564 38.4113 19.893 38.5576C19.9297 38.7039 19.9953 38.8413 20.0861 38.9618C20.1769 39.0822 20.291 39.1831 20.4216 39.2585C20.5522 39.334 20.6966 39.3824 20.8463 39.4009C20.9959 39.4194 21.1478 39.4077 21.2928 39.3663C21.4379 39.325 21.5731 39.2549 21.6905 39.1602C21.8079 39.0656 21.9051 38.9483 21.9762 38.8153C23.675 35.8791 26.675 34.1278 30.0022 34.1278C33.3294 34.1278 36.3294 35.88 38.0281 38.8153C38.1823 39.0633 38.427 39.2416 38.7103 39.3125C38.9936 39.3834 39.2934 39.3414 39.5462 39.1953C39.7991 39.0492 39.9853 38.8105 40.0653 38.5296C40.1454 38.2488 40.1131 37.9478 39.9753 37.6903ZM25.1272 27.0028C25.1272 26.0386 25.4131 25.0961 25.9488 24.2944C26.4844 23.4927 27.2458 22.8679 28.1366 22.4989C29.0274 22.1299 30.0076 22.0334 30.9532 22.2215C31.8989 22.4096 32.7675 22.8739 33.4493 23.5557C34.1311 24.2374 34.5954 25.1061 34.7835 26.0517C34.9716 26.9974 34.8751 27.9776 34.5061 28.8684C34.1371 29.7592 33.5123 30.5206 32.7106 31.0562C31.9089 31.5919 30.9664 31.8778 30.0022 31.8778C28.7097 31.8763 27.4706 31.3622 26.5567 30.4483C25.6428 29.5344 25.1287 28.2953 25.1272 27.0028Z" fill="#7257FF"/>
-<path d="M48.0047 105.31C48.0047 108.49 47.4747 111.44 46.4147 114.16C45.3747 116.86 43.8947 119.2 41.9747 121.18C40.0547 123.16 37.7447 124.71 35.0447 125.83C32.3447 126.93 29.3447 127.48 26.0447 127.48C22.7647 127.48 19.7747 126.93 17.0747 125.83C14.3747 124.71 12.0547 123.16 10.1147 121.18C8.19469 119.2 6.70469 116.86 5.64469 114.16C4.58469 111.44 4.05469 108.49 4.05469 105.31C4.05469 102.13 4.58469 99.19 5.64469 96.49C6.70469 93.77 8.19469 91.42 10.1147 89.44C12.0547 87.46 14.3747 85.92 17.0747 84.82C19.7747 83.7 22.7647 83.14 26.0447 83.14C28.2447 83.14 30.3147 83.4 32.2547 83.92C34.1947 84.42 35.9747 85.14 37.5947 86.08C39.2147 87 40.6647 88.13 41.9447 89.47C43.2447 90.79 44.3447 92.27 45.2447 93.91C46.1447 95.55 46.8247 97.33 47.2847 99.25C47.7647 101.17 48.0047 103.19 48.0047 105.31ZM39.7547 105.31C39.7547 102.93 39.4347 100.8 38.7947 98.92C38.1547 97.02 37.2447 95.41 36.0647 94.09C34.8847 92.77 33.4447 91.76 31.7447 91.06C30.0647 90.36 28.1647 90.01 26.0447 90.01C23.9247 90.01 22.0147 90.36 20.3147 91.06C18.6347 91.76 17.1947 92.77 15.9947 94.09C14.8147 95.41 13.9047 97.02 13.2647 98.92C12.6247 100.8 12.3047 102.93 12.3047 105.31C12.3047 107.69 12.6247 109.83 13.2647 111.73C13.9047 113.61 14.8147 115.21 15.9947 116.53C17.1947 117.83 18.6347 118.83 20.3147 119.53C22.0147 120.23 23.9247 120.58 26.0447 120.58C28.1647 120.58 30.0647 120.23 31.7447 119.53C33.4447 118.83 34.8847 117.83 36.0647 116.53C37.2447 115.21 38.1547 113.61 38.7947 111.73C39.4347 109.83 39.7547 107.69 39.7547 105.31ZM55.7302 127V101.8L53.0602 101.38C52.4802 101.26 52.0102 101.06 51.6502 100.78C51.3102 100.48 51.1402 100.06 51.1402 99.52V96.49H55.7302V94.75C55.7302 92.99 55.9902 91.41 56.5102 90.01C57.0502 88.61 57.8102 87.42 58.7902 86.44C59.7902 85.46 61.0002 84.71 62.4202 84.19C63.8402 83.67 65.4402 83.41 67.2202 83.41C68.6402 83.41 69.9602 83.6 71.1802 83.98L71.0302 87.67C71.0102 87.95 70.9302 88.18 70.7902 88.36C70.6502 88.54 70.4602 88.68 70.2202 88.78C70.0002 88.86 69.7402 88.92 69.4402 88.96C69.1402 88.98 68.8202 88.99 68.4802 88.99C67.6002 88.99 66.8102 89.09 66.1102 89.29C65.4302 89.47 64.8502 89.8 64.3702 90.28C63.8902 90.74 63.5202 91.36 63.2602 92.14C63.0202 92.9 62.9002 93.85 62.9002 94.99V96.49H75.1702V95.2C75.1702 93.56 75.4302 91.99 75.9502 90.49C76.4702 88.99 77.2602 87.67 78.3202 86.53C79.3802 85.37 80.7202 84.45 82.3402 83.77C83.9602 83.07 85.8702 82.72 88.0702 82.72C89.8902 82.72 91.6202 82.78 93.2602 82.9C94.9002 83.02 96.5302 83.08 98.1502 83.08H102.29V127H94.9102V88.24C93.8502 88.2 92.8102 88.15 91.7902 88.09C90.7902 88.03 89.9402 88 89.2402 88C87.0002 88 85.2902 88.63 84.1102 89.89C82.9302 91.13 82.3402 92.9 82.3402 95.2V96.49H90.3202V101.77H82.5802V127H75.1702V101.77H63.1402V127H55.7302ZM117.383 96.22V127H109.943V96.22H117.383ZM118.403 87.25C118.403 87.89 118.273 88.49 118.013 89.05C117.753 89.61 117.403 90.1 116.963 90.52C116.543 90.94 116.043 91.28 115.463 91.54C114.883 91.78 114.263 91.9 113.603 91.9C112.963 91.9 112.353 91.78 111.773 91.54C111.213 91.28 110.723 90.94 110.303 90.52C109.883 90.1 109.543 89.61 109.283 89.05C109.043 88.49 108.923 87.89 108.923 87.25C108.923 86.59 109.043 85.97 109.283 85.39C109.543 84.81 109.883 84.31 110.303 83.89C110.723 83.47 111.213 83.14 111.773 82.9C112.353 82.64 112.963 82.51 113.603 82.51C114.263 82.51 114.883 82.64 115.463 82.9C116.043 83.14 116.543 83.47 116.963 83.89C117.403 84.31 117.753 84.81 118.013 85.39C118.273 85.97 118.403 86.59 118.403 87.25ZM131.867 100C132.487 99.38 133.137 98.81 133.817 98.29C134.517 97.75 135.247 97.3 136.007 96.94C136.787 96.56 137.617 96.27 138.497 96.07C139.377 95.85 140.337 95.74 141.377 95.74C143.057 95.74 144.547 96.03 145.847 96.61C147.147 97.17 148.227 97.97 149.087 99.01C149.967 100.03 150.627 101.26 151.067 102.7C151.527 104.12 151.757 105.69 151.757 107.41V127H144.347V107.41C144.347 105.53 143.917 104.08 143.057 103.06C142.197 102.02 140.887 101.5 139.127 101.5C137.847 101.5 136.647 101.79 135.527 102.37C134.407 102.95 133.347 103.74 132.347 104.74V127H124.937V96.22H129.467C130.427 96.22 131.057 96.67 131.357 97.57L131.867 100ZM178.635 108.07C178.635 107.11 178.495 106.21 178.215 105.37C177.955 104.51 177.555 103.76 177.015 103.12C176.475 102.48 175.785 101.98 174.945 101.62C174.125 101.24 173.165 101.05 172.065 101.05C169.925 101.05 168.235 101.66 166.995 102.88C165.775 104.1 164.995 105.83 164.655 108.07H178.635ZM164.505 112.54C164.625 114.12 164.905 115.49 165.345 116.65C165.785 117.79 166.365 118.74 167.085 119.5C167.805 120.24 168.655 120.8 169.635 121.18C170.635 121.54 171.735 121.72 172.935 121.72C174.135 121.72 175.165 121.58 176.025 121.3C176.905 121.02 177.665 120.71 178.305 120.37C178.965 120.03 179.535 119.72 180.015 119.44C180.515 119.16 180.995 119.02 181.455 119.02C182.075 119.02 182.535 119.25 182.835 119.71L184.965 122.41C184.145 123.37 183.225 124.18 182.205 124.84C181.185 125.48 180.115 126 178.995 126.4C177.895 126.78 176.765 127.05 175.605 127.21C174.465 127.37 173.355 127.45 172.275 127.45C170.135 127.45 168.145 127.1 166.305 126.4C164.465 125.68 162.865 124.63 161.505 123.25C160.145 121.85 159.075 120.13 158.295 118.09C157.515 116.03 157.125 113.65 157.125 110.95C157.125 108.85 157.465 106.88 158.145 105.04C158.825 103.18 159.795 101.57 161.055 100.21C162.335 98.83 163.885 97.74 165.705 96.94C167.545 96.14 169.615 95.74 171.915 95.74C173.855 95.74 175.645 96.05 177.285 96.67C178.925 97.29 180.335 98.2 181.515 99.4C182.695 100.58 183.615 102.04 184.275 103.78C184.955 105.5 185.295 107.47 185.295 109.69C185.295 110.81 185.175 111.57 184.935 111.97C184.695 112.35 184.235 112.54 183.555 112.54H164.505Z" fill="#7257FF"/>
-</svg>
-
-
-      </div>
-      </div>
-    </div>
-    
-   </div>
-   <div>
-    
-   </div>
-   </div>
-   </AuthLayout>
-   </>
-      }
-      
-      </>
-   
+              <div className="auth-footer d-flex justify-content-between items-center">
+                {isFetching ? (
+                  <Button type="submit" className="signup-button ">
+                    <Spinner animation="border" variant="light" />
+                  </Button>
+                ) : (
+                  <Button type="submit" className="signup-button  ">
+                    Sign Up
+                  </Button>
+                )}
+                <div>
+                  <NavLink
+                    className="d-block w-100  mb-2 text-decoration-none purple-text"
+                    to="/signin"
+                  >
+                    Already an user?
+                  </NavLink>
+                </div>
+              </div>
+            </form>
+          </div>
+        </AuthLayout>
+      ) : (
+        <>
+          <AuthLayout>
+            <div style={{ padding: "20px" }}>
+              <div style={{ width: "100%", textAlign: "left" }}>
+                <h3 style={{ fontWeight: "500" }}>
+                  <span style={{ marginRight: "6px" }}>
+                    <svg
+                      onClick={() => {
+                        navigate(-1);
+                      }}
+                      width="40"
+                      height="40"
+                      viewBox="0 0 40 40"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 19.2C0 12.4794 0 9.11905 1.30792 6.55211C2.4584 4.29417 4.29417 2.4584 6.55211 1.30792C9.11905 0 12.4794 0 19.2 0H20.8C27.5206 0 30.8809 0 33.4479 1.30792C35.7058 2.4584 37.5416 4.29417 38.6921 6.55211C40 9.11905 40 12.4794 40 19.2V20.8C40 27.5206 40 30.8809 38.6921 33.4479C37.5416 35.7058 35.7058 37.5416 33.4479 38.6921C30.8809 40 27.5206 40 20.8 40H19.2C12.4794 40 9.11905 40 6.55211 38.6921C4.29417 37.5416 2.4584 35.7058 1.30792 33.4479C0 30.8809 0 27.5206 0 20.8V19.2Z"
+                        fill="#1C1C1C"
+                        fill-opacity="0.05"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M22.9254 14.5581C23.1915 14.8021 23.1915 15.1979 22.9254 15.4419L18.4375 19.5581C18.1714 19.8021 18.1714 20.1979 18.4375 20.4419L22.9254 24.5581C23.1915 24.8021 23.1915 25.1979 22.9254 25.4419C22.6593 25.686 22.2278 25.686 21.9617 25.4419L17.4738 21.3258C16.6754 20.5936 16.6754 19.4064 17.4738 18.6742L21.9617 14.5581C22.2278 14.314 22.6593 14.314 22.9254 14.5581Z"
+                        fill="#1C1C1C"
+                      />
+                    </svg>
+                  </span>
+                  Select Modes
+                </h3>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
+              >
+                <div
+                  style={{
+                    height: "60vh",
+                    width: "318px",
+                    background: "#F4F4F4",
+                    borderRadius: "20px",
+                  }}
+                  onClick={() => {
+                    setisOnline(true);
+                  }}
+                  className="typecard"
+                >
+                  <div
+                    style={{
+                      widith: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      padding: "30px",
+                    }}
+                  >
+                    <svg
+                      width="100"
+                      height="80"
+                      viewBox="0 0 186 135"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        cx="30"
+                        cy="30"
+                        r="30"
+                        fill="var(--main-dark)"
+                        fill-opacity="0.08"
+                      />
+                      <g clip-path="url(#clip0_1783_25026)">
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M30 20C35.523 20 40 24.477 40 30C40 35.523 35.523 40 30 40C24.477 40 20 35.523 20 30C20 24.477 24.477 20 30 20ZM31.482 34.94C30.4956 35.0205 29.5044 35.0205 28.518 34.94C28.611 35.337 28.715 35.705 28.828 36.042C29.079 36.797 29.358 37.335 29.618 37.664C29.745 37.826 29.848 37.912 29.918 37.954L29.969 37.982L29.999 37.99L30.031 37.982L30.082 37.955C30.198 37.8764 30.2995 37.7783 30.382 37.665C30.642 37.335 30.921 36.797 31.172 36.042C31.285 35.705 31.389 35.337 31.482 34.94ZM22.807 33.505C23.7151 35.3641 25.3061 36.8007 27.248 37.515C27.1301 37.2397 27.024 36.9594 26.93 36.675C26.7119 36.0096 26.5381 35.3304 26.41 34.642C25.1722 34.3914 23.9644 34.0103 22.807 33.505ZM37.194 33.505C36.049 34.005 34.843 34.388 33.589 34.642C33.4614 35.3309 33.2877 36.0104 33.069 36.676C32.973 36.966 32.867 37.248 32.751 37.514C34.6936 36.8001 36.2853 35.3635 37.194 33.504V33.505ZM31.976 28.871C30.6643 29.0439 29.3357 29.0439 28.024 28.871C27.9669 30.2143 28.0141 31.56 28.165 32.896C29.3844 33.0351 30.6156 33.0351 31.835 32.896C31.9459 31.9347 32.001 30.9677 32 30C32 29.616 31.992 29.24 31.976 28.87V28.871ZM22.568 27.032C22.0791 28.2547 21.9004 29.5794 22.048 30.888C23.3215 31.6189 24.6902 32.1698 26.115 32.525C25.9921 31.1776 25.9673 29.823 26.041 28.472C24.8272 28.1404 23.6603 27.6566 22.568 27.032ZM37.432 27.032C36.3397 27.6566 35.1728 28.1404 33.959 28.472C34.0327 29.823 34.008 31.1776 33.885 32.525C35.3094 32.1698 36.6778 31.6189 37.951 30.888C38.0984 29.5798 37.9197 28.2554 37.431 27.033L37.432 27.032ZM30.016 22.012L30.005 22.01L29.985 22.013L29.947 22.028C29.8191 22.1092 29.7072 22.2133 29.617 22.335C29.357 22.665 29.079 23.203 28.827 23.957C28.557 24.765 28.339 25.757 28.194 26.876C29.3922 27.0425 30.6078 27.0425 31.806 26.876C31.661 25.756 31.442 24.765 31.173 23.957C30.921 23.203 30.643 22.664 30.383 22.335C30.3002 22.222 30.1987 22.1239 30.083 22.045L30.016 22.012ZM27.248 22.486C25.7625 23.032 24.4717 24.0051 23.538 25.283C24.381 25.767 25.284 26.159 26.233 26.446C26.393 25.282 26.63 24.223 26.93 23.324C27.027 23.033 27.133 22.752 27.248 22.486ZM32.752 22.486C32.867 22.752 32.972 23.033 33.07 23.324C33.37 24.224 33.607 25.282 33.767 26.446C34.7066 26.1619 35.6107 25.7717 36.462 25.283C35.5284 24.0051 34.2375 23.0319 32.752 22.486Z"
+                          fill="var(--main-dark)"
+                        />
+                      </g>
+                      <path
+                        d="M50.284 105.31C50.284 108.49 49.754 111.44 48.694 114.16C47.654 116.86 46.174 119.2 44.254 121.18C42.334 123.16 40.024 124.71 37.324 125.83C34.624 126.93 31.624 127.48 28.324 127.48C25.044 127.48 22.054 126.93 19.354 125.83C16.654 124.71 14.334 123.16 12.394 121.18C10.474 119.2 8.98398 116.86 7.92398 114.16C6.86398 111.44 6.33398 108.49 6.33398 105.31C6.33398 102.13 6.86398 99.19 7.92398 96.49C8.98398 93.77 10.474 91.42 12.394 89.44C14.334 87.46 16.654 85.92 19.354 84.82C22.054 83.7 25.044 83.14 28.324 83.14C30.524 83.14 32.594 83.4 34.534 83.92C36.474 84.42 38.254 85.14 39.874 86.08C41.494 87 42.944 88.13 44.224 89.47C45.524 90.79 46.624 92.27 47.524 93.91C48.424 95.55 49.104 97.33 49.564 99.25C50.044 101.17 50.284 103.19 50.284 105.31ZM42.034 105.31C42.034 102.93 41.714 100.8 41.074 98.92C40.434 97.02 39.524 95.41 38.344 94.09C37.164 92.77 35.724 91.76 34.024 91.06C32.344 90.36 30.444 90.01 28.324 90.01C26.204 90.01 24.294 90.36 22.594 91.06C20.914 91.76 19.474 92.77 18.274 94.09C17.094 95.41 16.184 97.02 15.544 98.92C14.904 100.8 14.584 102.93 14.584 105.31C14.584 107.69 14.904 109.83 15.544 111.73C16.184 113.61 17.094 115.21 18.274 116.53C19.474 117.83 20.914 118.83 22.594 119.53C24.294 120.23 26.204 120.58 28.324 120.58C30.444 120.58 32.344 120.23 34.024 119.53C35.724 118.83 37.164 117.83 38.344 116.53C39.524 115.21 40.434 113.61 41.074 111.73C41.714 109.83 42.034 107.69 42.034 105.31ZM62.6037 100C63.2237 99.38 63.8737 98.81 64.5537 98.29C65.2537 97.75 65.9837 97.3 66.7437 96.94C67.5237 96.56 68.3537 96.27 69.2337 96.07C70.1137 95.85 71.0737 95.74 72.1137 95.74C73.7937 95.74 75.2837 96.03 76.5837 96.61C77.8837 97.17 78.9637 97.97 79.8237 99.01C80.7037 100.03 81.3637 101.26 81.8037 102.7C82.2637 104.12 82.4937 105.69 82.4937 107.41V127H75.0837V107.41C75.0837 105.53 74.6537 104.08 73.7937 103.06C72.9337 102.02 71.6237 101.5 69.8637 101.5C68.5837 101.5 67.3837 101.79 66.2637 102.37C65.1437 102.95 64.0837 103.74 63.0837 104.74V127H55.6737V96.22H60.2037C61.1637 96.22 61.7937 96.67 62.0937 97.57L62.6037 100ZM97.0409 82.42V127H89.6309V82.42H97.0409ZM112.104 96.22V127H104.664V96.22H112.104ZM113.124 87.25C113.124 87.89 112.994 88.49 112.734 89.05C112.474 89.61 112.124 90.1 111.684 90.52C111.264 90.94 110.764 91.28 110.184 91.54C109.604 91.78 108.984 91.9 108.324 91.9C107.684 91.9 107.074 91.78 106.494 91.54C105.934 91.28 105.444 90.94 105.024 90.52C104.604 90.1 104.264 89.61 104.004 89.05C103.764 88.49 103.644 87.89 103.644 87.25C103.644 86.59 103.764 85.97 104.004 85.39C104.264 84.81 104.604 84.31 105.024 83.89C105.444 83.47 105.934 83.14 106.494 82.9C107.074 82.64 107.684 82.51 108.324 82.51C108.984 82.51 109.604 82.64 110.184 82.9C110.764 83.14 111.264 83.47 111.684 83.89C112.124 84.31 112.474 84.81 112.734 85.39C112.994 85.97 113.124 86.59 113.124 87.25ZM126.588 100C127.208 99.38 127.858 98.81 128.538 98.29C129.238 97.75 129.968 97.3 130.728 96.94C131.508 96.56 132.338 96.27 133.218 96.07C134.098 95.85 135.058 95.74 136.098 95.74C137.778 95.74 139.268 96.03 140.568 96.61C141.868 97.17 142.948 97.97 143.808 99.01C144.688 100.03 145.348 101.26 145.788 102.7C146.248 104.12 146.478 105.69 146.478 107.41V127H139.068V107.41C139.068 105.53 138.638 104.08 137.778 103.06C136.918 102.02 135.608 101.5 133.848 101.5C132.568 101.5 131.368 101.79 130.248 102.37C129.128 102.95 128.068 103.74 127.068 104.74V127H119.658V96.22H124.188C125.148 96.22 125.778 96.67 126.078 97.57L126.588 100ZM173.355 108.07C173.355 107.11 173.215 106.21 172.935 105.37C172.675 104.51 172.275 103.76 171.735 103.12C171.195 102.48 170.505 101.98 169.665 101.62C168.845 101.24 167.885 101.05 166.785 101.05C164.645 101.05 162.955 101.66 161.715 102.88C160.495 104.1 159.715 105.83 159.375 108.07H173.355ZM159.225 112.54C159.345 114.12 159.625 115.49 160.065 116.65C160.505 117.79 161.085 118.74 161.805 119.5C162.525 120.24 163.375 120.8 164.355 121.18C165.355 121.54 166.455 121.72 167.655 121.72C168.855 121.72 169.885 121.58 170.745 121.3C171.625 121.02 172.385 120.71 173.025 120.37C173.685 120.03 174.255 119.72 174.735 119.44C175.235 119.16 175.715 119.02 176.175 119.02C176.795 119.02 177.255 119.25 177.555 119.71L179.685 122.41C178.865 123.37 177.945 124.18 176.925 124.84C175.905 125.48 174.835 126 173.715 126.4C172.615 126.78 171.485 127.05 170.325 127.21C169.185 127.37 168.075 127.45 166.995 127.45C164.855 127.45 162.865 127.1 161.025 126.4C159.185 125.68 157.585 124.63 156.225 123.25C154.865 121.85 153.795 120.13 153.015 118.09C152.235 116.03 151.845 113.65 151.845 110.95C151.845 108.85 152.185 106.88 152.865 105.04C153.545 103.18 154.515 101.57 155.775 100.21C157.055 98.83 158.605 97.74 160.425 96.94C162.265 96.14 164.335 95.74 166.635 95.74C168.575 95.74 170.365 96.05 172.005 96.67C173.645 97.29 175.055 98.2 176.235 99.4C177.415 100.58 178.335 102.04 178.995 103.78C179.675 105.5 180.015 107.47 180.015 109.69C180.015 110.81 179.895 111.57 179.655 111.97C179.415 112.35 178.955 112.54 178.275 112.54H159.225Z"
+                        fill="var(--main-dark)"
+                      />
+                      <defs>
+                        <clipPath id="clip0_1783_25026">
+                          <rect
+                            width="24"
+                            height="24"
+                            fill="white"
+                            transform="translate(18 18)"
+                          />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    height: "60vh",
+                    width: "318px",
+                    background: "#F4F4F4",
+                    borderRadius: "20px",
+                  }}
+                  className="typecard"
+                  onClick={() => {
+                    setisOnline(true);
+                    setValues({ ...values, ["is_online"]: false });
+                  }}
+                >
+                  <div>
+                    <div
+                      style={{
+                        widith: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        padding: "30px",
+                      }}
+                    >
+                      <svg
+                        width="100"
+                        height="80"
+                        viewBox="0 0 189 135"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          cx="30"
+                          cy="30"
+                          r="30"
+                          fill="var(--main-dark)"
+                          fill-opacity="0.08"
+                        />
+                        <path
+                          d="M39.9753 37.6903C38.69 35.4344 36.6829 33.6767 34.2772 32.7C35.4735 31.8028 36.3572 30.5518 36.8031 29.1244C37.249 27.6971 37.2344 26.1656 36.7615 24.7469C36.2887 23.3282 35.3814 22.0943 34.1682 21.2199C32.9551 20.3455 31.4976 19.875 30.0022 19.875C28.5068 19.875 27.0493 20.3455 25.8361 21.2199C24.623 22.0943 23.7157 23.3282 23.2428 24.7469C22.7699 26.1656 22.7554 27.6971 23.2013 29.1244C23.6472 30.5518 24.5308 31.8028 25.7272 32.7C23.3215 33.6767 21.3144 35.4344 20.0291 37.6903C19.9494 37.8184 19.8963 37.9611 19.873 38.1101C19.8496 38.2591 19.8564 38.4113 19.893 38.5576C19.9297 38.7039 19.9953 38.8413 20.0861 38.9618C20.1769 39.0822 20.291 39.1831 20.4216 39.2585C20.5522 39.334 20.6966 39.3824 20.8463 39.4009C20.9959 39.4194 21.1478 39.4077 21.2928 39.3663C21.4379 39.325 21.5731 39.2549 21.6905 39.1602C21.8079 39.0656 21.9051 38.9483 21.9762 38.8153C23.675 35.8791 26.675 34.1278 30.0022 34.1278C33.3294 34.1278 36.3294 35.88 38.0281 38.8153C38.1823 39.0633 38.427 39.2416 38.7103 39.3125C38.9936 39.3834 39.2934 39.3414 39.5462 39.1953C39.7991 39.0492 39.9853 38.8105 40.0653 38.5296C40.1454 38.2488 40.1131 37.9478 39.9753 37.6903ZM25.1272 27.0028C25.1272 26.0386 25.4131 25.0961 25.9488 24.2944C26.4844 23.4927 27.2458 22.8679 28.1366 22.4989C29.0274 22.1299 30.0076 22.0334 30.9532 22.2215C31.8989 22.4096 32.7675 22.8739 33.4493 23.5557C34.1311 24.2374 34.5954 25.1061 34.7835 26.0517C34.9716 26.9974 34.8751 27.9776 34.5061 28.8684C34.1371 29.7592 33.5123 30.5206 32.7106 31.0562C31.9089 31.5919 30.9664 31.8778 30.0022 31.8778C28.7097 31.8763 27.4706 31.3622 26.5567 30.4483C25.6428 29.5344 25.1287 28.2953 25.1272 27.0028Z"
+                          fill="var(--main-dark)"
+                        />
+                        <path
+                          d="M48.0047 105.31C48.0047 108.49 47.4747 111.44 46.4147 114.16C45.3747 116.86 43.8947 119.2 41.9747 121.18C40.0547 123.16 37.7447 124.71 35.0447 125.83C32.3447 126.93 29.3447 127.48 26.0447 127.48C22.7647 127.48 19.7747 126.93 17.0747 125.83C14.3747 124.71 12.0547 123.16 10.1147 121.18C8.19469 119.2 6.70469 116.86 5.64469 114.16C4.58469 111.44 4.05469 108.49 4.05469 105.31C4.05469 102.13 4.58469 99.19 5.64469 96.49C6.70469 93.77 8.19469 91.42 10.1147 89.44C12.0547 87.46 14.3747 85.92 17.0747 84.82C19.7747 83.7 22.7647 83.14 26.0447 83.14C28.2447 83.14 30.3147 83.4 32.2547 83.92C34.1947 84.42 35.9747 85.14 37.5947 86.08C39.2147 87 40.6647 88.13 41.9447 89.47C43.2447 90.79 44.3447 92.27 45.2447 93.91C46.1447 95.55 46.8247 97.33 47.2847 99.25C47.7647 101.17 48.0047 103.19 48.0047 105.31ZM39.7547 105.31C39.7547 102.93 39.4347 100.8 38.7947 98.92C38.1547 97.02 37.2447 95.41 36.0647 94.09C34.8847 92.77 33.4447 91.76 31.7447 91.06C30.0647 90.36 28.1647 90.01 26.0447 90.01C23.9247 90.01 22.0147 90.36 20.3147 91.06C18.6347 91.76 17.1947 92.77 15.9947 94.09C14.8147 95.41 13.9047 97.02 13.2647 98.92C12.6247 100.8 12.3047 102.93 12.3047 105.31C12.3047 107.69 12.6247 109.83 13.2647 111.73C13.9047 113.61 14.8147 115.21 15.9947 116.53C17.1947 117.83 18.6347 118.83 20.3147 119.53C22.0147 120.23 23.9247 120.58 26.0447 120.58C28.1647 120.58 30.0647 120.23 31.7447 119.53C33.4447 118.83 34.8847 117.83 36.0647 116.53C37.2447 115.21 38.1547 113.61 38.7947 111.73C39.4347 109.83 39.7547 107.69 39.7547 105.31ZM55.7302 127V101.8L53.0602 101.38C52.4802 101.26 52.0102 101.06 51.6502 100.78C51.3102 100.48 51.1402 100.06 51.1402 99.52V96.49H55.7302V94.75C55.7302 92.99 55.9902 91.41 56.5102 90.01C57.0502 88.61 57.8102 87.42 58.7902 86.44C59.7902 85.46 61.0002 84.71 62.4202 84.19C63.8402 83.67 65.4402 83.41 67.2202 83.41C68.6402 83.41 69.9602 83.6 71.1802 83.98L71.0302 87.67C71.0102 87.95 70.9302 88.18 70.7902 88.36C70.6502 88.54 70.4602 88.68 70.2202 88.78C70.0002 88.86 69.7402 88.92 69.4402 88.96C69.1402 88.98 68.8202 88.99 68.4802 88.99C67.6002 88.99 66.8102 89.09 66.1102 89.29C65.4302 89.47 64.8502 89.8 64.3702 90.28C63.8902 90.74 63.5202 91.36 63.2602 92.14C63.0202 92.9 62.9002 93.85 62.9002 94.99V96.49H75.1702V95.2C75.1702 93.56 75.4302 91.99 75.9502 90.49C76.4702 88.99 77.2602 87.67 78.3202 86.53C79.3802 85.37 80.7202 84.45 82.3402 83.77C83.9602 83.07 85.8702 82.72 88.0702 82.72C89.8902 82.72 91.6202 82.78 93.2602 82.9C94.9002 83.02 96.5302 83.08 98.1502 83.08H102.29V127H94.9102V88.24C93.8502 88.2 92.8102 88.15 91.7902 88.09C90.7902 88.03 89.9402 88 89.2402 88C87.0002 88 85.2902 88.63 84.1102 89.89C82.9302 91.13 82.3402 92.9 82.3402 95.2V96.49H90.3202V101.77H82.5802V127H75.1702V101.77H63.1402V127H55.7302ZM117.383 96.22V127H109.943V96.22H117.383ZM118.403 87.25C118.403 87.89 118.273 88.49 118.013 89.05C117.753 89.61 117.403 90.1 116.963 90.52C116.543 90.94 116.043 91.28 115.463 91.54C114.883 91.78 114.263 91.9 113.603 91.9C112.963 91.9 112.353 91.78 111.773 91.54C111.213 91.28 110.723 90.94 110.303 90.52C109.883 90.1 109.543 89.61 109.283 89.05C109.043 88.49 108.923 87.89 108.923 87.25C108.923 86.59 109.043 85.97 109.283 85.39C109.543 84.81 109.883 84.31 110.303 83.89C110.723 83.47 111.213 83.14 111.773 82.9C112.353 82.64 112.963 82.51 113.603 82.51C114.263 82.51 114.883 82.64 115.463 82.9C116.043 83.14 116.543 83.47 116.963 83.89C117.403 84.31 117.753 84.81 118.013 85.39C118.273 85.97 118.403 86.59 118.403 87.25ZM131.867 100C132.487 99.38 133.137 98.81 133.817 98.29C134.517 97.75 135.247 97.3 136.007 96.94C136.787 96.56 137.617 96.27 138.497 96.07C139.377 95.85 140.337 95.74 141.377 95.74C143.057 95.74 144.547 96.03 145.847 96.61C147.147 97.17 148.227 97.97 149.087 99.01C149.967 100.03 150.627 101.26 151.067 102.7C151.527 104.12 151.757 105.69 151.757 107.41V127H144.347V107.41C144.347 105.53 143.917 104.08 143.057 103.06C142.197 102.02 140.887 101.5 139.127 101.5C137.847 101.5 136.647 101.79 135.527 102.37C134.407 102.95 133.347 103.74 132.347 104.74V127H124.937V96.22H129.467C130.427 96.22 131.057 96.67 131.357 97.57L131.867 100ZM178.635 108.07C178.635 107.11 178.495 106.21 178.215 105.37C177.955 104.51 177.555 103.76 177.015 103.12C176.475 102.48 175.785 101.98 174.945 101.62C174.125 101.24 173.165 101.05 172.065 101.05C169.925 101.05 168.235 101.66 166.995 102.88C165.775 104.1 164.995 105.83 164.655 108.07H178.635ZM164.505 112.54C164.625 114.12 164.905 115.49 165.345 116.65C165.785 117.79 166.365 118.74 167.085 119.5C167.805 120.24 168.655 120.8 169.635 121.18C170.635 121.54 171.735 121.72 172.935 121.72C174.135 121.72 175.165 121.58 176.025 121.3C176.905 121.02 177.665 120.71 178.305 120.37C178.965 120.03 179.535 119.72 180.015 119.44C180.515 119.16 180.995 119.02 181.455 119.02C182.075 119.02 182.535 119.25 182.835 119.71L184.965 122.41C184.145 123.37 183.225 124.18 182.205 124.84C181.185 125.48 180.115 126 178.995 126.4C177.895 126.78 176.765 127.05 175.605 127.21C174.465 127.37 173.355 127.45 172.275 127.45C170.135 127.45 168.145 127.1 166.305 126.4C164.465 125.68 162.865 124.63 161.505 123.25C160.145 121.85 159.075 120.13 158.295 118.09C157.515 116.03 157.125 113.65 157.125 110.95C157.125 108.85 157.465 106.88 158.145 105.04C158.825 103.18 159.795 101.57 161.055 100.21C162.335 98.83 163.885 97.74 165.705 96.94C167.545 96.14 169.615 95.74 171.915 95.74C173.855 95.74 175.645 96.05 177.285 96.67C178.925 97.29 180.335 98.2 181.515 99.4C182.695 100.58 183.615 102.04 184.275 103.78C184.955 105.5 185.295 107.47 185.295 109.69C185.295 110.81 185.175 111.57 184.935 111.97C184.695 112.35 184.235 112.54 183.555 112.54H164.505Z"
+                          fill="var(--main-dark)"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div></div>
+            </div>
+          </AuthLayout>
+        </>
+      )}
+    </>
   );
 };
 

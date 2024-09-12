@@ -1,111 +1,98 @@
-.sidenav-wrapper{
-     min-height: 100vh;
-     width: 100%;
-     background-color: #7257FF;
-     padding-left:29px ;
-     padding-right:29px ;
-     padding-top: 30px;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     position: relative;
-   
+.sidenav-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--main-dark);
+  padding-left: 29px;
+  padding-right: 29px;
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 }
 
-.sidenav-logo img{
-      height: 120px;
-
-      
+.sidenav-logo img {
+  height: 120px;
 }
-.sidenav-buttons-wrapper{
-     margin-top: 30px;
-     display: flex;
-     flex-direction: column;
-     gap:18px
+.sidenav-buttons-wrapper {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-.sidenav-button{
-     margin-bottom: 10px;
-     display: flex;
-     gap:4px;
-    
-     width: 200px;
-     border-radius: 10px;
-     align-items: flex-end;
-     padding-left: 20px;
-     padding-top:8px ;
-     padding-bottom:8px ;
-     color:white;
-    
+.sidenav-button {
+  margin-bottom: 10px;
+  display: flex;
+  gap: 4px;
+
+  width: 200px;
+  border-radius: 10px;
+  align-items: flex-end;
+  padding-left: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: white;
 }
 
 .sidenav-button:hover {
-      background-color: white;
-      color:#7257FF;
-      stroke: #7257FF;
+  background-color: white;
+  color: var(--main-dark);
+  stroke: var(--main-dark);
 }
 
+.sidenav-button p {
+  font-size: 15px;
+  font-weight: 600;
 
-     
+  text-align: left;
 
-.sidenav-button p{
- 
-font-size: 15px;
-font-weight: 600;
-
-text-align: left;
-
-text-align: center;
-margin: 0 !important;
-
-
+  text-align: center;
+  margin: 0 !important;
 }
 
-.sidenav-button p path{
-stroke: white;
+.sidenav-button p path {
+  stroke: white;
 }
 
-.sidenav-button:hover  .sidenav-icon{
-     stroke: #7257FF !important;
-     fill:#7257FF ;
+.sidenav-button:hover .sidenav-icon {
+  stroke: var(--main-dark) !important;
+  fill: var(--main-dark);
 }
 
-
-.logout-button-wrapper{
-      position:absolute;
-      bottom: 10px;
-      color:white
+.logout-button-wrapper {
+  position: absolute;
+  bottom: 10px;
+  color: white;
 }
-.logout-button-wrapper p{
-     color: white;
-}
-
-
-.bg-white-btn{
-     background-color: white;
-     color:#7257FF;
-     stroke: #7257FF;
-  }
-
-  .bg-white-btn  .sidenav-icon{
-     stroke: #7257FF !important;
-     fill:#7257FF ;
-
+.logout-button-wrapper p {
+  color: white;
 }
 
-.tablet-sidenav-wrapper{
-     min-height: 100vh;
-     width: 100%;
-     background-color: #7257FF;
-     padding-left:39px ;
-     padding-right:39px ;
-     padding-top: 30px;
-     display: flex;
-     flex-direction: column;
-   
-     position: relative;
+.bg-white-btn {
+  background-color: white;
+  color: var(--main-dark);
+  stroke: var(--main-dark);
 }
 
-.tablet-sidenav{
-     display: none;
+.bg-white-btn .sidenav-icon {
+  stroke: var(--main-dark) !important;
+  fill: var(--main-dark);
+}
+
+.tablet-sidenav-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--main-dark);
+  padding-left: 39px;
+  padding-right: 39px;
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+}
+
+.tablet-sidenav {
+  display: none;
 }

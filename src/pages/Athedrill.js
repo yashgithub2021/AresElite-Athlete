@@ -8,13 +8,13 @@ import DrillForm from "../components/DrillForm";
 
 import { useParams } from "react-router-dom";
 import { LoadingOverlay } from "@mantine/core";
-import { Carousel } from '@mantine/carousel';
-import { useDisclosure } from '@mantine/hooks';
-import { Modal } from '@mantine/core';
-import {useNavigate} from  "react-router-dom"
+import { Carousel } from "@mantine/carousel";
+import { useDisclosure } from "@mantine/hooks";
+import { Modal } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
 
 const Athedrill = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const [opened, { open, close }] = useDisclosure(false);
   const [totalWeeks, setTotalWeeks] = useState("");
   const [completePercentage, setCompletePercentage] = useState("");
@@ -24,7 +24,7 @@ const Athedrill = () => {
   const [selectedIndex, setIndex] = useState(null);
   const [totalActivities, setTotal] = useState(null);
   const [visible, { toggle }] = useDisclosure(false);
-  const[imageurl,setimageurl]=useState("")
+  const [imageurl, setimageurl] = useState("");
   const dispatch = useDispatch();
   const [drill_week_details, setDrillWeekDetails] = useState(null);
   const clientId = localStorage.getItem("userId");
@@ -47,11 +47,10 @@ const Athedrill = () => {
   useEffect(() => {
     fetchDirlls();
   }, [selectedWeek, dispatch]);
-  const handleimag=(value)=>{
-     open();
-     setimageurl(value)
-
-  }
+  const handleimag = (value) => {
+    open();
+    setimageurl(value);
+  };
   const handleLabelClick = (activity, index, total) => {
     console.log(activity);
     setSelectedActivity(activity);
@@ -182,41 +181,55 @@ const Athedrill = () => {
                 <div className="task-title-cont">
                   {" "}
                   <div>
-                    {
-                      
-                      !(activity?.isComplete) ?  
+                    {!activity?.isComplete ? (
                       <svg
-                      width="19"
-                      height="18"
-                      viewBox="0 0 19 18"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect
-                        x="1.21021"
-                        y="0.5"
-                        width="17"
-                        height="17"
-                        rx="3.5"
-                        fill="white"
-                      />
-                      <rect
-                        x="1.21021"
-                        y="0.5"
-                        width="17"
-                        height="17"
-                        rx="3.5"
-                        stroke="#7257FF"
-                      />
-                    </svg>:
-                    <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="0.710938" width="17" height="17" rx="4" fill="#7257FF"/>
-                    <path d="M14.5234 5.93799L8.39844 12.0627L5.33594 9.00049" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    
-                    
-                    }
-                   
+                        width="19"
+                        height="18"
+                        viewBox="0 0 19 18"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          x="1.21021"
+                          y="0.5"
+                          width="17"
+                          height="17"
+                          rx="3.5"
+                          fill="white"
+                        />
+                        <rect
+                          x="1.21021"
+                          y="0.5"
+                          width="17"
+                          height="17"
+                          rx="3.5"
+                          stroke="var(--main-dark)"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        width="19"
+                        height="18"
+                        viewBox="0 0 19 18"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          x="0.710938"
+                          width="17"
+                          height="17"
+                          rx="4"
+                          fill="var(--main-dark)"
+                        />
+                        <path
+                          d="M14.5234 5.93799L8.39844 12.0627L5.33594 9.00049"
+                          stroke="white"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    )}
                   </div>
                   <p className="task-title">
                     {index + 1}.{activity.activityName}
@@ -268,11 +281,21 @@ const Athedrill = () => {
   ));
   return (
     <AtheleteMenu>
-      <Modal.Root opened={opened} onClose={close} size={"70rem"} transitionProps={{ transition: 'fade', duration: 600, timingFunction: 'linear' }}>
+      <Modal.Root
+        opened={opened}
+        onClose={close}
+        size={"70rem"}
+        transitionProps={{
+          transition: "fade",
+          duration: 600,
+          timingFunction: "linear",
+        }}
+      >
         <Modal.Overlay />
         <Modal.Content>
-          
-          <Modal.Body style={{padding:"0px",borderRadius:"30px"}} ><img src={imageurl} style={{height:"100%",width:"100%"}}/></Modal.Body>
+          <Modal.Body style={{ padding: "0px", borderRadius: "30px" }}>
+            <img src={imageurl} style={{ height: "100%", width: "100%" }} />
+          </Modal.Body>
         </Modal.Content>
       </Modal.Root>
 
@@ -314,7 +337,16 @@ const Athedrill = () => {
             })}
           </div>
           <div>
-          {completePercentage==100 && <button className="upgrade-plan" onClick={()=>{navigate("/a-plans")}}>Upgrade Plan</button>}
+            {completePercentage == 100 && (
+              <button
+                className="upgrade-plan"
+                onClick={() => {
+                  navigate("/a-plans");
+                }}
+              >
+                Upgrade Plan
+              </button>
+            )}
           </div>
         </div>
         <div className="drill-main-box video-cont">
@@ -329,44 +361,68 @@ const Athedrill = () => {
               )}
             </h5>
             <div
-              style={{ height: "400px", display: "flex", alignItems: "center" ,flexDirection:"column",alignItems:"center"}}
+              style={{
+                height: "400px",
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             >
-              {selectedActivity &&  selectedActivity?.fileLinks?.map((item)=>{
-               
-                if(item.type=="video"){
-                  return(
-                    <video width="90%" controls style={{ borderRadius: "26.78px" }}>
-                     <source src={item.link} type="video/mp4" />
-                   </video>
-                   )
+              {selectedActivity &&
+                selectedActivity?.fileLinks?.map((item) => {
+                  if (item.type == "video") {
+                    return (
+                      <video
+                        width="90%"
+                        controls
+                        style={{ borderRadius: "26.78px" }}
+                      >
+                        <source src={item.link} type="video/mp4" />
+                      </video>
+                    );
+                  }
+                })}
 
-                }
-               
-              })
-                  
-}
-             
-             
-              <div style={{minWidth:"100%",height:"100%",display:"flex",alignItems:"center"}}>
-              <Carousel   slideSize="33.333333%" 
-      slideGap="40px"
-      loop
-      align="start"
-      slidesToScroll={3}
-      withControls={false}
->
-{selectedActivity &&  selectedActivity?.fileLinks?.map((item)=>{
-                if(item.type=="image"){
-                  return(
-                    <Carousel.Slide><div><img src={item.link} style={{widht:"80px",height:"80px",borderRadius:"10px"}} onClick={()=>{handleimag(item.link)}}/ ></div></Carousel.Slide>
-                   )
-
-                }
-               
-              })
-                  
-}
-{/* { selectedActivity &&  selectedActivity?.fileLinks?.map((item)=>{
+              <div
+                style={{
+                  minWidth: "100%",
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <Carousel
+                  slideSize="33.333333%"
+                  slideGap="40px"
+                  loop
+                  align="start"
+                  slidesToScroll={3}
+                  withControls={false}
+                >
+                  {selectedActivity &&
+                    selectedActivity?.fileLinks?.map((item) => {
+                      if (item.type == "image") {
+                        return (
+                          <Carousel.Slide>
+                            <div>
+                              <img
+                                src={item.link}
+                                style={{
+                                  widht: "80px",
+                                  height: "80px",
+                                  borderRadius: "10px",
+                                }}
+                                onClick={() => {
+                                  handleimag(item.link);
+                                }}
+                              />
+                            </div>
+                          </Carousel.Slide>
+                        );
+                      }
+                    })}
+                  {/* { selectedActivity &&  selectedActivity?.fileLinks?.map((item)=>{
       if(item.type="image"){
         return(
           <Carousel.Slide><div><img src={item.link} style={{widht:"80px",height:"80px",borderRadius:"10px"}} onClick={()=>{handleimag(item.link)}}/ ></div></Carousel.Slide>
@@ -374,9 +430,7 @@ const Athedrill = () => {
       }
        
       })} */}
-     
-      
-    </Carousel>
+                </Carousel>
               </div>
             </div>
           </div>
@@ -387,7 +441,8 @@ const Athedrill = () => {
                 <h4>Drill Contents</h4>
                 <p style={{ color: "green" }}>
                   {" "}
-                  {completePercentage && completePercentage?.toFixed(1)}% Completed
+                  {completePercentage && completePercentage?.toFixed(1)}%
+                  Completed
                 </p>
               </div>
               <Progress
