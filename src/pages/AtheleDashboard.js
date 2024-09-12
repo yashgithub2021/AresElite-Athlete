@@ -23,6 +23,7 @@ import Drillstats from "../components/layout/Components/Drillstats";
 import { useState } from "react";
 import Loadercard from "../components/layout/Components/Loadercard";
 import Card5 from "../components/layout/Components/card5";
+import Card6 from "../components/layout/Components/Card6";
 
 const AtheleDashboard = () => {
   const name = useSelector((state) => state.auth.userName);
@@ -62,6 +63,7 @@ const AtheleDashboard = () => {
   }, []);
 
   console.log("--> dwd", plan);
+  console.log("useInfo:", userinfo);
   return (
     <AtheleteMenu>
       <section class="layout2">
@@ -125,7 +127,7 @@ const AtheleDashboard = () => {
               </>
             )}
             {userinfo?.userDetails &&
-              is_Online &&
+              is_Online === "true" &&
               userinfo?.userDetails?.plan_payment == "paid" &&
               shiparray &&
               shiparray[0]?.shipmentStatus.length == 5 && (
@@ -147,6 +149,15 @@ const AtheleDashboard = () => {
                   endDate={shiparray[0]?.shipmentStatus[0].endDate}
                 />
               )}
+
+            {userinfo?.userDetails?.plan_payment === "paid" &&
+              is_Online === "false" &&
+              shiparray &&
+              shiparray[0]?.shipmentStatus &&
+              shiparray[0]?.shipmentStatus.length === 5 && (
+                <Card6 drills={userinfo?.drills} />
+              )}
+
             {userinfo?.userDetails?.plan_payment == "paid" &&
               (!shiparray || !shiparray[0]?.shipmentStatus) && <Card5 />}
 

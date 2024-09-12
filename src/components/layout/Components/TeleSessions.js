@@ -138,7 +138,7 @@ const TeleSessions = ({
     }));
 
     handledisable();
-  }, [formData]);
+  }, [setFormData]);
   const data = [
     { name: "USA", value: 400, color: "#7257FF" },
     { name: "India", value: 300, color: "#FD8E1F" },
@@ -148,6 +148,17 @@ const TeleSessions = ({
     acheivementHandler.open();
   };
   const [bookstep1Choice, setbookstep1Choice] = useState("");
+
+  const handelFormData = (data) => {
+    setFormData(data);
+    // handledisable();
+  };
+
+  useEffect(() => {
+    if (formData.app_time) {
+      setDisabled(false);
+    }
+  }, [formData.app_time]);
   return (
     <>
       {/* Payment Confirmed Modal */}
@@ -251,7 +262,8 @@ const TeleSessions = ({
                       <ServiceBookingform
                         date_data={datedata}
                         service_type={service_type}
-                        setFormData={setFormData}
+                        setFormData={handelFormData}
+                        isTele={true}
                       />
                     </div>
                     {!disabled && (
