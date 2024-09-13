@@ -20,6 +20,33 @@ const Notifications = () => {
   useEffect(() => {
     fecthNoticiations();
   }, []);
+
+  let btnName = "Pay now";
+  let btnRedirect = "/a-transactions";
+
+  const updateBtn = (item) => {
+    switch (item.title) {
+      case "Session Completed":
+        btnName = "";
+        btnRedirect = "";
+        break;
+
+      case "Incomplete Drill":
+        btnName = "Continue";
+        btnRedirect = "/a-drill";
+        break;
+
+      case "Upcoming Drill":
+        btnName = "";
+        btnRedirect = "";
+        break;
+
+      default:
+        btnName = "Pay now";
+        btnRedirect = "/a-transactions";
+    }
+  };
+
   return (
     <div>
       <Modal.Root opened={opened} onClose={close} size={"33rem"}>
@@ -48,6 +75,7 @@ const Notifications = () => {
             {Notifs?.length > 0 ? (
               <>
                 {Notifs.map((item) => {
+                  updateBtn(item);
                   return (
                     <>
                       <div className="d-flex flex-start flex-row mt-2 gap-3">
@@ -78,20 +106,24 @@ const Notifications = () => {
                         <p style={{ fontSize: "13px", marginLeft: "50px" }}>
                           {item.text}
                         </p>
-                        <button
-                          style={{
-                            backgroundColor: "var(--main-dark)",
-                            padding: "6px 9px 6px",
-                            borderRadius: "10px",
-                            color: "white",
-                            fontSize: "smaller",
-                          }}
-                          onClick={() => {
-                            navigate("/a-transactions");
-                          }}
-                        >
-                          Pay Now
-                        </button>
+                        {btnName && (
+                          <button
+                            style={{
+                              backgroundColor: "var(--main-dark)",
+                              padding: "6px 9px 6px",
+                              borderRadius: "10px",
+                              color: "white",
+                              fontSize: "smaller",
+                            }}
+                            onClick={() => {
+                              updateBtn(item);
+
+                              navigate(btnRedirect);
+                            }}
+                          >
+                            {btnName}
+                          </button>
+                        )}
                       </div>
                     </>
                   );
@@ -142,6 +174,7 @@ const Notifications = () => {
           <>
             {Notifs?.map((item, id) => {
               if (id < 2) {
+                updateBtn(item);
                 return (
                   <>
                     <div className="d-flex flex-start flex-row mt-2 gap-3">
@@ -172,20 +205,23 @@ const Notifications = () => {
                       <p style={{ fontSize: "13px", marginLeft: "50px" }}>
                         {item.text}
                       </p>
-                      <button
-                        style={{
-                          backgroundColor: "var(--main-dark)",
-                          padding: "6px 9px 6px",
-                          borderRadius: "10px",
-                          color: "white",
-                          fontSize: "smaller",
-                        }}
-                        onClick={() => {
-                          navigate("/a-transactions");
-                        }}
-                      >
-                        Pay Now
-                      </button>
+                      {btnName && (
+                        <button
+                          style={{
+                            backgroundColor: "var(--main-dark)",
+                            padding: "6px 9px 6px",
+                            borderRadius: "10px",
+                            color: "white",
+                            fontSize: "smaller",
+                          }}
+                          onClick={() => {
+                            updateBtn(item);
+                            navigate(btnRedirect);
+                          }}
+                        >
+                          {btnName}
+                        </button>
+                      )}
                     </div>
                   </>
                 );
