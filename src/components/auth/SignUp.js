@@ -398,7 +398,7 @@ const SignUp = () => {
                   }}
                   className="typecard"
                   onClick={() => {
-                    setisOnline(false);
+                    setisOnline(true);
                     setValues({ ...values, is_online: false });
                   }}
                 >

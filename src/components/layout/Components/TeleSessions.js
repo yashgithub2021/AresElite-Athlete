@@ -30,6 +30,8 @@ const TeleSessions = ({
   const [datedata, setDateData] = useState([]);
   const [disabled, setDisabled] = useState(true);
 
+  // console.log("sdsd", Object.keys(trainingdata).length);
+
   const changeColor = (buttonId, service) => {
     // Generate a random color
 
@@ -324,7 +326,7 @@ const TeleSessions = ({
         </Modal.Content>
       </Modal.Root>
 
-      {!trainingdata && (
+      {(!trainingdata || (trainingdata && !trainingdata?.totalSessions)) && (
         <div xs={6} sm={6} className="training-card text-shadow">
           <div className="d-flex  flex-wrap justify-content-between upper-train  ">
             <div>
@@ -375,7 +377,7 @@ const TeleSessions = ({
           </div>
         </div>
       )}
-      {trainingdata && (
+      {trainingdata && trainingdata?.totalSessions && (
         <div xs={6} sm={6} className="training-card text-shadow">
           <div className="d-flex  flex-wrap justify-content-between upper-train  ">
             <div>

@@ -64,6 +64,9 @@ function ViewDrill({ openModal, handleCloseModal, clickedDrill, isMobile }) {
     }
     return val;
   };
+
+  const isNeeded = (index) =>
+    drillInputs.length % 2 === 0 && index === drillInputs.length - 2;
   return (
     <Modal.Root
       opened={openModal}
@@ -86,7 +89,7 @@ function ViewDrill({ openModal, handleCloseModal, clickedDrill, isMobile }) {
       <Modal.Overlay />
       <Modal.Content style={{ height: "100vh" }} radius={"1rem"}>
         <Modal.Body
-          className="d-flex flex-column justify-content-between pb-4"
+          className="d-flex flex-column justify-content-between "
           style={{ height: "100%" }}
         >
           <div>
@@ -155,67 +158,81 @@ function ViewDrill({ openModal, handleCloseModal, clickedDrill, isMobile }) {
               <div className="drill-box mt-2">
                 {drillInputs?.map((input, index) => {
                   return (
-                    <div
-                      className="drill-item"
-                      key={index}
-                      style={{ width: input.key === "notes" && "100%" }}
-                    >
-                      <div style={{ fontSize: "1rem", fontWeight: 500 }}>
-                        {" "}
-                        {camelToNormalString(input.key)}{" "}
-                      </div>
+                    <>
                       <div
-                        className="py-2 px-2"
-                        style={{
-                          fontSize: "0.9rem",
-                          border: "1px solid #dbcdcd",
-                          color: "#0E0057B2",
-                          borderRadius: "0.2rem",
-                          height: input.key === "notes" && "5rem",
-                          overflowY: input.key === "notes" && "auto",
-                        }}
+                        className="drill-item"
+                        key={index}
+                        style={{ width: input.key === "notes" && "100%" }}
                       >
-                        {" "}
-                        {inputArray(input.value)}{" "}
+                        <div style={{ fontSize: "1rem", fontWeight: 500 }}>
+                          {" "}
+                          {camelToNormalString(input.key)}{" "}
+                        </div>
+                        <div
+                          className="py-2 px-2"
+                          style={{
+                            fontSize: "0.9rem",
+                            border: "1px solid #dbcdcd",
+                            color: "#0E0057B2",
+                            borderRadius: "0.2rem",
+                            height: input.key === "notes" && "5rem",
+                            overflowY: input.key === "notes" && "auto",
+                          }}
+                        >
+                          {" "}
+                          {inputArray(input.value)}{" "}
+                        </div>
                       </div>
-                    </div>
+
+                      {isNeeded(index) && (
+                        <div
+                          className="drill-item "
+                          style={{ visibility: "hidden" }}
+                          key={index}
+                        ></div>
+                      )}
+                    </>
                   );
                 })}
               </div>
             </div>
           </div>
 
-          <div className="d-flex justify-content-center gap-2 mt-auto">
-            <button
-              style={{
-                backgroundColor: "#EAE6FF",
-                color: "var(--main-dark)",
-                width: isMobile ? "7rem" : "8rem",
+          <div className="d-flex flex-column mt-2">
+            <div className="d-flex justify-content-center gap-2 mt-auto">
+              <button
+                style={{
+                  backgroundColor: "#EAE6FF",
+                  color: "var(--main-dark)",
+                  width: isMobile ? "7rem" : "8rem",
 
-                padding: "0.5rem 0",
-              }}
-              onClick={goBackAction}
-            >
-              <div className="d-flex justify-content-center align-items-center gap-2 ">
-                <LeftArrow />
-                <div>Previous</div>
-              </div>
-            </button>
+                  padding: "0.5rem 0",
+                }}
+                onClick={goBackAction}
+              >
+                <div className="d-flex justify-content-center align-items-center gap-2 ">
+                  <LeftArrow />
+                  <div>Previous</div>
+                </div>
+              </button>
 
-            <button
-              style={{
-                backgroundColor: "#EAE6FF",
-                color: "var(--main-dark)",
-                width: isMobile ? "7rem" : "8rem",
-                padding: "0.5rem 0",
-              }}
-              onClick={goNextAction}
-            >
-              <div className="d-flex justify-content-center align-items-center gap-2 ">
-                <div>Next</div>
-                <RightArrow />
-              </div>
-            </button>
+              <button
+                style={{
+                  backgroundColor: "#EAE6FF",
+                  color: "var(--main-dark)",
+                  width: isMobile ? "7rem" : "8rem",
+                  padding: "0.5rem 0",
+                }}
+                onClick={goNextAction}
+              >
+                <div className="d-flex justify-content-center align-items-center gap-2 ">
+                  <div>Next</div>
+                  <RightArrow />
+                </div>
+              </button>
+            </div>
+
+            <div className="mt-4 visually-hidden"></div>
           </div>
         </Modal.Body>
       </Modal.Content>

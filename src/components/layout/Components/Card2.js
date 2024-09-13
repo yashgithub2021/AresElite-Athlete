@@ -191,7 +191,7 @@ const Card2 = ({ is_Online }) => {
           className="circle-img"
           src="https://cdni.iconscout.com/illustration/premium/thumb/win-sports-competition-4981299-4145076.png?f=webp"
         />
-        {is_Online && (
+        {is_Online === "true" && (
           <div className="flex-shift justify-content-between  ">
             <div>
               <h2 style={{ fontWeight: "700" }}>Select your plan</h2>
@@ -217,11 +217,11 @@ const Card2 = ({ is_Online }) => {
             </NavLink>
           </div>
         )}
-        {!is_Online && (
+        {is_Online === "false" && (
           <div className="flex-shift justify-content-between  ">
             <div>
               <h2 style={{ fontWeight: "700" }}>
-                Welcome to <br /> Ares Elite (Offline)
+                Welcome to <br /> Ares Elite (In-Office)
               </h2>
               <div>
                 <p
