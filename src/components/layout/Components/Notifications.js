@@ -41,6 +41,11 @@ const Notifications = () => {
         btnRedirect = "";
         break;
 
+      case "Signup Successfully":
+        btnName = "";
+        btnRedirect = "";
+        break;
+
       default:
         btnName = "Pay now";
         btnRedirect = "/a-transactions";

@@ -47,11 +47,11 @@ const TableComp = ({ data }) => {
                   variant="filled"
                   color="var(--main-dark)"
                   style={{ fontSize: "12px", borderRadius: "12px" }}
-                  onClick={() => {
-                    naviagte(`/a-drill`);
-                  }}
+                  // onClick={() => {
+                  //   naviagte(`/a-drill`);
+                  // }}
                 >
-                  Start Drill{" "}
+                  Paid{" "}
                 </Button>
               )}
               {data.status != "paid" && (
@@ -63,6 +63,7 @@ const TableComp = ({ data }) => {
                     color: "var(--main-dark)",
                     borderRadius: "12px",
                   }}
+                  onClick={() => naviagte("/a-transactions")}
                 >
                   Pay
                 </Button>

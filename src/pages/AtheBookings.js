@@ -501,31 +501,33 @@ const AtheBookings = () => {
             </>
           )}
 
-          {bookingData?.map((data) => (
-            <BookingCard
-              name={data.client?.firstName + " " + data.client?.lastName}
-              serviceType={data.service_type}
-              date={formatDateToMMDDYYY(data.app_date)}
-              time={data.app_time}
-              pStatus={data.service_status}
-              cancelBtn={
-                <ActionIcon
-                  onClick={() => {
-                    setAlertDialog(true);
-                    setBId(data._id);
-                  }}
-                  variant="filled"
-                  color="red"
-                  aria-label="Settings"
-                >
-                  <CancelIcon
-                    style={{ width: "70%", height: "70%" }}
-                    stroke={1.5}
-                  />
-                </ActionIcon>
-              }
-            />
-          ))}
+          <div className="mobile-cont">
+            {bookingData?.map((data) => (
+              <BookingCard
+                name={data.client?.firstName + " " + data.client?.lastName}
+                serviceType={data.service_type}
+                date={formatDateToMMDDYYY(data.app_date)}
+                time={data.app_time}
+                pStatus={data.service_status}
+                cancelBtn={
+                  <ActionIcon
+                    onClick={() => {
+                      setAlertDialog(true);
+                      setBId(data._id);
+                    }}
+                    variant="filled"
+                    color="red"
+                    aria-label="Settings"
+                  >
+                    <CancelIcon
+                      style={{ width: "70%", height: "70%" }}
+                      stroke={1.5}
+                    />
+                  </ActionIcon>
+                }
+              />
+            ))}
+          </div>
           {/* <div className="mobile-cont">
             <BookingCard name={showData?.name} />
             <BookingCard />

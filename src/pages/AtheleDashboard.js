@@ -33,8 +33,6 @@ const AtheleDashboard = () => {
   // const is_Online = online === "false" ? false : true;
   // console.log("isOnline", is_Online);
 
-  console.log("afggfffffd", name, userId, plan, is_Online, typeof is_Online);
-
   const dispatch = useDispatch();
   const [userinfo, setuserinfo] = useState([]);
   const [shiparray, setshiparray] = useState([]);
@@ -129,14 +127,10 @@ const AtheleDashboard = () => {
               )}
 
             {userinfo?.userDetails?.plan_payment === "paid" &&
-              is_Online === "false" &&
-              shiparray &&
-              shiparray[0]?.shipmentStatus &&
-              shiparray[0]?.shipmentStatus.length === 5 && (
-                <Card6 drills={userinfo?.drills} />
-              )}
+              is_Online === "false" && <Card6 drills={userinfo?.drills} />}
 
             {userinfo?.userDetails?.plan_payment == "paid" &&
+              is_Online === "true" &&
               (!shiparray || !shiparray[0]?.shipmentStatus) && <Card5 />}
 
             {userinfo?.userDetails &&
