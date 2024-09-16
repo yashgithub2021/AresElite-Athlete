@@ -33,6 +33,8 @@ const AtheleDashboard = () => {
   // const is_Online = online === "false" ? false : true;
   // console.log("isOnline", is_Online);
 
+  console.log("afggfffffd", name, userId, plan, is_Online, typeof is_Online);
+
   const dispatch = useDispatch();
   const [userinfo, setuserinfo] = useState([]);
   const [shiparray, setshiparray] = useState([]);
