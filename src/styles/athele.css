@@ -2032,12 +2032,12 @@ thead {
 }
 
 .appointment-buttons:hover {
-  background-color: #7d64ff;
+  background-color: var(--main-dark);
   color: white;
 }
 
 .appointment-buttons:focus {
-  background-color: #7d64ff;
+  background-color: var(--main-dark);
   color: white;
 }
 

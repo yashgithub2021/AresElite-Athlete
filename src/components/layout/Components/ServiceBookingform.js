@@ -93,7 +93,9 @@ const ServiceBookingform = ({
       date.getMonth() + 1
     ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 
+    setloading(true);
     const data = await getSlots(service_type, payload, doc);
+    setloading(false);
     if (data.location) {
       setAllData(data.location);
 
@@ -206,8 +208,13 @@ const ServiceBookingform = ({
         <p style={{ fontSize: "10px" }}>
           {isTele ? "45" : "90"} minutes meeting
         </p>
+
+        {loading && (
+          <div className="d-flex justify-content-center mt-3">
+            <Loader color="var(--main-dark)" />
+          </div>
+        )}
         <div className="appointment-container ">
-          {loading && <Loader color="blue" />}
           {slots?.map((item) => {
             return (
               <button
