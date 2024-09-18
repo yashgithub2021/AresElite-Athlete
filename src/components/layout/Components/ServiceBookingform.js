@@ -15,6 +15,7 @@ const ServiceBookingform = ({
   service_type,
   setFormData,
   isTele,
+  serviceTime,
 }) => {
   const [date, setdate] = useState(new Date());
   const [add, setAdd] = useState("");
@@ -206,7 +207,7 @@ const ServiceBookingform = ({
       <div className="mt-1">
         <p>Appointment Time</p>
         <p style={{ fontSize: "10px" }}>
-          {isTele ? "45" : "90"} minutes meeting
+          {serviceTime ? serviceTime : isTele ? "45" : "90"} minutes meeting
         </p>
 
         {loading && (

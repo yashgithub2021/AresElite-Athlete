@@ -73,6 +73,15 @@ const AtheTransactions = () => {
           isPaid: true,
         },
       };
+    } else if (service_type === "trainingSession") {
+      body = {
+        product: {
+          type: service_type,
+          userId: localStorage.getItem("userId"),
+          tId: bookingid,
+          isPaid: true,
+        },
+      };
     } else {
       body = {
         product: {
@@ -112,7 +121,11 @@ const AtheTransactions = () => {
           <button
             className="fill"
             onClick={() => {
-              makePayment(item.service_type, item.bookingId);
+              let id = item.bookingId;
+              if (item.service_type === "trainingSession") {
+                id = String(item._id);
+              }
+              makePayment(item.service_type, id);
               setmainheading("Appointment");
               setsubheading(`${date_dis}`);
             }}

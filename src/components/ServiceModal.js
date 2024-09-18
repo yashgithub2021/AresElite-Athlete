@@ -9,6 +9,7 @@ import { current } from "@reduxjs/toolkit";
 import { getSlots } from "../features/apiCall";
 import { Bookappointment } from "../features/apiCall";
 import { useDispatch } from "react-redux";
+
 const ServiceModal = ({
   heading,
   amount,
@@ -17,6 +18,7 @@ const ServiceModal = ({
   svg,
   icon,
   service_type,
+  meetingTime,
 }) => {
   const [opened, { open, close }] = useDisclosure(false);
   const dispatch = useDispatch();
@@ -195,6 +197,7 @@ const ServiceModal = ({
                         date_data={datedata}
                         service_type={service_type}
                         setFormData={setFormData}
+                        serviceTime={meetingTime}
                       />
                     </div>
                     {!disabled && (
@@ -261,7 +264,15 @@ const ServiceModal = ({
           alignItems: "center",
         }}
       >
-        {svg}
+        {/* {svg} */}
+        <img
+          src={svg}
+          alt={heading}
+          width="70"
+          height="70"
+          fill="none"
+          style={{ borderRadius: "50%" }}
+        />
       </div>
 
       <div
@@ -323,7 +334,7 @@ const ServiceModal = ({
                 </clipPath>
               </defs>
             </svg>
-            <p>90 mins Meeting</p>
+            <p>{meetingTime ? meetingTime : "90"} mins Meeting</p>
           </div>
           <div
             style={{
