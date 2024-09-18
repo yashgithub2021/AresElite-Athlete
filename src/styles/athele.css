@@ -1262,6 +1262,7 @@ thead {
   top: 130.28px;
   left: 320px;
   z-index: 0;
+  padding-top: 4rem;
 }
 
 .data-table {
