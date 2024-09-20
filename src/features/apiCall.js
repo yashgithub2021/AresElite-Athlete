@@ -497,7 +497,7 @@ export const SubmitClientForm = async (dispatch, { formData }) => {
       {
         first_name: formData.firstName,
         last_name: formData.lastName,
-        suffix: formData.suffix,
+        prefix: formData.prefix,
         birthday: formData.dob,
         gender: formData.gender,
         email: formData.email,

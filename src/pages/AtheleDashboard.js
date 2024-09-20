@@ -323,67 +323,71 @@ const AtheleDashboard = () => {
                 />
               </div>
 
-              <div
-                sm={6}
-                xs={12}
-                style={{ backgroundColor: "#907F9F", borderRadius: "10px" }}
-                className=" service-box text-light  mb-4 d-flex justify-content-between  align-items-center box-shadow-drop-bottom "
-              >
-                <ServiceModal
-                  service_type={"GlassesExam"}
-                  svg={GlassesExam}
-                  icon={
-                    <svg
-                      width="25"
-                      height="24"
-                      viewBox="0 0 25 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M8.98951 18.5303C8.67016 18.2374 8.67016 17.7626 8.98951 17.4697L14.375 12.5303C14.6943 12.2374 14.6944 11.7626 14.375 11.4697L8.98951 6.53033C8.67016 6.23744 8.67016 5.76256 8.98951 5.46967C9.30886 5.17678 9.82663 5.17678 10.146 5.46967L15.5315 10.409C16.4895 11.2877 16.4895 12.7123 15.5315 13.591L10.146 18.5303C9.82663 18.8232 9.30886 18.8232 8.98951 18.5303Z"
-                        fill="#060024"
-                      />
-                    </svg>
-                  }
-                  heading={"Glasses Exam"}
-                  amount={getServiceConf(true, "GlassesExam")}
-                  meetingTime={getServiceConf(false, "GlassesExam")}
-                  divors={{ heading: "white", text: "#FFFFFFCC" }}
-                />
-              </div>
-              <div
-                sm={6}
-                style={{ backgroundColor: "#6F7D8C", borderRadius: "10px" }}
-                className="service-box text-light  mb-4 d-flex justify-content-between  align-items-center box-shadow-drop-bottom "
-              >
-                <ServiceModal
-                  service_type={"ContactLensExam"}
-                  svg={ContactLens}
-                  icon={
-                    <svg
-                      width="25"
-                      height="24"
-                      viewBox="0 0 25 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M8.98951 18.5303C8.67016 18.2374 8.67016 17.7626 8.98951 17.4697L14.375 12.5303C14.6943 12.2374 14.6944 11.7626 14.375 11.4697L8.98951 6.53033C8.67016 6.23744 8.67016 5.76256 8.98951 5.46967C9.30886 5.17678 9.82663 5.17678 10.146 5.46967L15.5315 10.409C16.4895 11.2877 16.4895 12.7123 15.5315 13.591L10.146 18.5303C9.82663 18.8232 9.30886 18.8232 8.98951 18.5303Z"
-                        fill="#060024"
-                      />
-                    </svg>
-                  }
-                  heading={"Contact Lens Exam"}
-                  amount={getServiceConf(true, "ContactLensExam")}
-                  meetingTime={getServiceConf(false, "ContactLensExam")}
-                  divors={{ heading: "white", text: "#FFFFFFCC" }}
-                />
-              </div>
+              {is_Online === "false" && (
+                <div
+                  sm={6}
+                  xs={12}
+                  style={{ backgroundColor: "#907F9F", borderRadius: "10px" }}
+                  className=" service-box text-light  mb-4 d-flex justify-content-between  align-items-center box-shadow-drop-bottom "
+                >
+                  <ServiceModal
+                    service_type={"GlassesExam"}
+                    svg={GlassesExam}
+                    icon={
+                      <svg
+                        width="25"
+                        height="24"
+                        viewBox="0 0 25 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M8.98951 18.5303C8.67016 18.2374 8.67016 17.7626 8.98951 17.4697L14.375 12.5303C14.6943 12.2374 14.6944 11.7626 14.375 11.4697L8.98951 6.53033C8.67016 6.23744 8.67016 5.76256 8.98951 5.46967C9.30886 5.17678 9.82663 5.17678 10.146 5.46967L15.5315 10.409C16.4895 11.2877 16.4895 12.7123 15.5315 13.591L10.146 18.5303C9.82663 18.8232 9.30886 18.8232 8.98951 18.5303Z"
+                          fill="#060024"
+                        />
+                      </svg>
+                    }
+                    heading={"Glasses Exam"}
+                    amount={getServiceConf(true, "GlassesExam")}
+                    meetingTime={getServiceConf(false, "GlassesExam")}
+                    divors={{ heading: "white", text: "#FFFFFFCC" }}
+                  />
+                </div>
+              )}
+              {is_Online === "false" && (
+                <div
+                  sm={6}
+                  style={{ backgroundColor: "#6F7D8C", borderRadius: "10px" }}
+                  className="service-box text-light  mb-4 d-flex justify-content-between  align-items-center box-shadow-drop-bottom "
+                >
+                  <ServiceModal
+                    service_type={"ContactLensExam"}
+                    svg={ContactLens}
+                    icon={
+                      <svg
+                        width="25"
+                        height="24"
+                        viewBox="0 0 25 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M8.98951 18.5303C8.67016 18.2374 8.67016 17.7626 8.98951 17.4697L14.375 12.5303C14.6943 12.2374 14.6944 11.7626 14.375 11.4697L8.98951 6.53033C8.67016 6.23744 8.67016 5.76256 8.98951 5.46967C9.30886 5.17678 9.82663 5.17678 10.146 5.46967L15.5315 10.409C16.4895 11.2877 16.4895 12.7123 15.5315 13.591L10.146 18.5303C9.82663 18.8232 9.30886 18.8232 8.98951 18.5303Z"
+                          fill="#060024"
+                        />
+                      </svg>
+                    }
+                    heading={"Contact Lens Exam"}
+                    amount={getServiceConf(true, "ContactLensExam")}
+                    meetingTime={getServiceConf(false, "ContactLensExam")}
+                    divors={{ heading: "white", text: "#FFFFFFCC" }}
+                  />
+                </div>
+              )}
             </div>
           </div>
           {/* ----------------- */}
