@@ -43,7 +43,7 @@ const SignUp = () => {
   const [values, setValues] = useState({
     firstName: "",
     lastName: "",
-    suffix: "",
+    prefix: "",
     email: "",
     city: "",
     phone: "",
@@ -153,11 +153,11 @@ const SignUp = () => {
               </div>
               <div className="form-row">
                 <div className="form-group col-md-6">
-                  <label htmlFor="inputEmail4">Suffix</label>
+                  <label htmlFor="inputEmail4">Prefix</label>
                   <Input
                     variant="filled"
                     placeholder="Input component"
-                    name="suffix"
+                    name="prefix"
                     onChange={handleChange}
                   />
                 </div>

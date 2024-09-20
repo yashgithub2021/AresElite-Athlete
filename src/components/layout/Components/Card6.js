@@ -6,6 +6,8 @@ import {
 import { Modal, ActionIcon, CloseIcon } from "@mantine/core";
 import ViewDrill from "./ViewDrill";
 
+import Logo from "../../../assets/Logo.png";
+
 const Card6 = ({ drills }) => {
   const [selectedSession, setSelectedSession] = useState("Session 1");
   const [selectedDrills, setSelectedDrills] = useState([]);
@@ -75,6 +77,17 @@ const Card6 = ({ drills }) => {
             View all
           </button>
         </div>
+
+        {drills.sessionNames?.length === 0 && (
+          <div className="d-flex flex-column justify-content-center align-items-center mt-5 gap-2">
+            {/* <div style={{ width: "5rem", height: "5rem" }}>
+              <img src="/images/Logo.png" />
+            </div> */}
+            <img src={Logo} width="70" height="70" fill="none" />
+
+            <h3>No drills found </h3>
+          </div>
+        )}
 
         <div
           className="d-flex gap-2 mt-3 mb-3"
