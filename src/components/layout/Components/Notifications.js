@@ -3,7 +3,10 @@ import { Avatar } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { GetNotifications } from "../../../features/apiCall";
+import {
+  GetNotifications,
+  MarkNotificationsRead,
+} from "../../../features/apiCall";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,14 +15,21 @@ const Notifications = () => {
   const navigate = useNavigate();
   const [opened, { open, close }] = useDisclosure(false);
   const [Notifs, setNotifs] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
   console.log(Notifs);
   const fecthNoticiations = async () => {
     const res = await GetNotifications();
     setNotifs(res.notifications);
+    setUnreadCount(res.unreadCounts);
   };
   useEffect(() => {
     fecthNoticiations();
   }, []);
+
+  const markReadHandler = async () => {
+    await MarkNotificationsRead();
+    fecthNoticiations();
+  };
 
   let btnName = "Pay now";
   let btnRedirect = "/a-transactions";
@@ -56,9 +66,10 @@ const Notifications = () => {
     <div>
       <Modal.Root opened={opened} onClose={close} size={"33rem"}>
         <Modal.Overlay />
-        <Modal.Content>
+
+        <Modal.Content style={{ paddingLeft: "0.5rem" }}>
           <Modal.Header>
-            <Modal.Title>
+            <Modal.Title style={{ width: "100%" }}>
               <div className=" d-flex gap-3 mb-4">
                 <button
                   className="modal-close "
@@ -70,9 +81,27 @@ const Notifications = () => {
                     style={{ color: "black" }}
                   ></i>
                 </button>
-                <p className="profile-header " style={{ margin: "0px" }}>
-                  Notifications({Notifs?.length})
-                </p>
+
+                <div className="d-flex justify-content-between w-100">
+                  <p className="profile-header " style={{ margin: "0px" }}>
+                    Notifications{unreadCount > 0 && "(" + unreadCount + ")"}
+                  </p>
+
+                  {unreadCount > 0 && (
+                    <button
+                      className="view-all"
+                      style={{
+                        fontSize: "13px",
+                        cursor: "pointer",
+                        fontWeight: "700",
+                        color: "var(--main-dark)",
+                      }}
+                      onClick={markReadHandler}
+                    >
+                      Mark all as read
+                    </button>
+                  )}
+                </div>
               </div>
             </Modal.Title>
           </Modal.Header>
@@ -83,22 +112,43 @@ const Notifications = () => {
                   updateBtn(item);
                   return (
                     <>
-                      <div className="d-flex flex-start flex-row mt-2 gap-3">
+                      <div
+                        className="d-flex flex-start flex-row mt-2 gap-3"
+                        style={{
+                          backgroundColor: !item.seen ? "#F4F4F4" : "",
+                          paddingTop: "0.5rem",
+                          paddingLeft: "0.5rem",
+                        }}
+                      >
                         <Avatar src="https://s3-alpha-sig.figma.com/img/93eb/70e4/1b58b9ca0fc1d95ef7ee8f1a97100431?Expires=1710720000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=J8X6GzryNyHsiHrAOg-Xp5jH-Y6xzKk2M0ELy8v3CR4Y4zwEp2Cv9yZ0VEhxBL1GNG559NPdUfe44X9aatKkuWKYrjogjkpN782W6kkLvpUMF1DazVpctez~lVmxPMh5lJpokXOebsmpcsjvJSYEcHG756GfllCL4IqPQLG20T10dR5DzA6fYttW~t2vvRLAsVMtxhrr1dnuPI9KxkPvvcb9gfyAokxTCevcHIoTOZ97IdLvW9QkvV8ehYWlhQDvSFCKa9Ssfp~xX668CYkkY8tfZWasMhxXipBPz5vpGhDUwPjC7ZG3tPLlB~z1l6Enwt378BasSQN32GSEDJ95Vw__"></Avatar>
 
                         <div className="d-flex gap-3 items-center">
-                          <h7>Dr.Joe</h7>
-
-                          <p
-                            className="m-0"
-                            style={{ fontSize: "12px", color: " #3C3F5399" }}
-                          >
-                            {" "}
-                            Ophthalmologist
-                          </p>
+                          {item.doctor && (
+                            <>
+                              {" "}
+                              <h7>Dr. {item.doctor}</h7>
+                              <p
+                                className="m-0"
+                                style={{
+                                  fontSize: "12px",
+                                  color: " #3C3F5399",
+                                }}
+                              >
+                                {" "}
+                                Ophthalmologist
+                              </p>
+                            </>
+                          )}
                         </div>
                       </div>
-                      <div className="d-flex  flex-column align-items-end ">
+                      <div
+                        className="d-flex  flex-column align-items-end "
+                        style={{
+                          backgroundColor: !item.seen ? "#F4F4F4" : "",
+                          paddingRight: "0.5rem",
+                          paddingBottom: "0.5rem",
+                        }}
+                      >
                         <p
                           style={{
                             fontSize: "13px",
@@ -146,7 +196,7 @@ const Notifications = () => {
         className="d-flex justify-content-between"
         style={{ padding: "0px 20px 0px" }}
       >
-        <h5>Notifications ({Notifs && `${Notifs?.length}`})</h5>
+        <h5>Notifications {unreadCount > 0 && Notifs && `(${unreadCount})`}</h5>
         {Notifs?.length > 0 && (
           <p
             className="view-all"
@@ -185,17 +235,22 @@ const Notifications = () => {
                     <div className="d-flex flex-start flex-row mt-2 gap-3">
                       <Avatar src="https://s3-alpha-sig.figma.com/img/93eb/70e4/1b58b9ca0fc1d95ef7ee8f1a97100431?Expires=1710720000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=J8X6GzryNyHsiHrAOg-Xp5jH-Y6xzKk2M0ELy8v3CR4Y4zwEp2Cv9yZ0VEhxBL1GNG559NPdUfe44X9aatKkuWKYrjogjkpN782W6kkLvpUMF1DazVpctez~lVmxPMh5lJpokXOebsmpcsjvJSYEcHG756GfllCL4IqPQLG20T10dR5DzA6fYttW~t2vvRLAsVMtxhrr1dnuPI9KxkPvvcb9gfyAokxTCevcHIoTOZ97IdLvW9QkvV8ehYWlhQDvSFCKa9Ssfp~xX668CYkkY8tfZWasMhxXipBPz5vpGhDUwPjC7ZG3tPLlB~z1l6Enwt378BasSQN32GSEDJ95Vw__"></Avatar>
 
-                      <div className="d-flex gap-3 items-center">
-                        <h7>Dr.Joe</h7>
-
-                        <p
-                          className="m-0"
-                          style={{ fontSize: "12px", color: " #3C3F5399" }}
-                        >
+                      {item.doctor && (
+                        <>
                           {" "}
-                          Ophthalmologist
-                        </p>
-                      </div>
+                          <div className="d-flex gap-3 items-center">
+                            <h7>Dr. {item.doctor}</h7>
+
+                            <p
+                              className="m-0"
+                              style={{ fontSize: "12px", color: " #3C3F5399" }}
+                            >
+                              {" "}
+                              Ophthalmologist
+                            </p>
+                          </div>
+                        </>
+                      )}
                     </div>
                     <div className="d-flex  flex-column align-items-end ">
                       <p

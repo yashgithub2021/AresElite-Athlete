@@ -159,6 +159,7 @@ const AtheleDashboard = () => {
               <TeleSessions
                 trainingdata={userinfo?.sessionDetails}
                 userId={userId}
+                isPaid={userinfo?.userDetails?.plan_payment === "paid"}
               />
             )}
 
