@@ -1,8 +1,32 @@
 import React from "react";
 import { Container } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+
 import AtheleteMenu from "../components/layout/AtheleteMenu";
+import axios from "../utils/axios.js";
 
 const PrivacyPolicy = () => {
+  const [data, setData] = useState("");
+
+  const is_Online = useSelector((state) => state.auth.is_Online);
+
+  useEffect(() => {
+    const token = localStorage.getItem("userToken");
+    axios
+      .get("/api/admin/privacy_policy", {
+        params: {
+          role: is_Online === "true" ? "athleteOnline" : "athleteOffline",
+        },
+
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((result) => {
+        console.log("result: ", result, result?.data?.privacyPolicy.text);
+        setData(result?.data?.privacyPolicy.text);
+      });
+  }, [is_Online]);
+
   return (
     <AtheleteMenu>
       <Container
@@ -11,7 +35,9 @@ const PrivacyPolicy = () => {
         }}
         className="privacy-policy scroll"
       >
-        <h2 className="mb-5">Privacy Policy</h2>
+        <div dangerouslySetInnerHTML={{ __html: data }}></div>
+        {/* {data} */}
+        {/* <h2 className="mb-5">Privacy Policy</h2>
         <p>
           This Privacy Policy outlines how Doctor’s App we collects, uses, and
           safeguards your personal information when you use our mobile
@@ -113,7 +139,7 @@ const PrivacyPolicy = () => {
             be posted on this page, and the "Last Updated" date will be modified
             accordingly.
           </p>
-        </div>
+        </div> */}
       </Container>
     </AtheleteMenu>
   );

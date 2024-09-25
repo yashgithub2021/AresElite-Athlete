@@ -20,6 +20,7 @@ const TeleSessions = ({
   trainingdata,
   service_type = "AddTrainingSessions",
   userId,
+  isPaid,
 }) => {
   const dispatch = useDispatch();
   const perc =
@@ -438,18 +439,20 @@ const TeleSessions = ({
             </div>
           </div>
           <div className="d-flex gap-4 tele-buttons">
-            <button
-              className="bookbtn"
-              onClick={async () => {
-                const r = await hasAlreadyBookAppointment(dispatch, userId);
-                console.log("r:", r);
-                if (r) {
-                  open();
-                }
-              }}
-            >
-              Book
-            </button>
+            {isPaid && (
+              <button
+                className="bookbtn"
+                onClick={async () => {
+                  const r = await hasAlreadyBookAppointment(dispatch, userId);
+                  console.log("r:", r);
+                  if (r) {
+                    open();
+                  }
+                }}
+              >
+                Book
+              </button>
+            )}
           </div>
         </div>
       )}

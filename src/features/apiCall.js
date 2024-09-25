@@ -85,6 +85,23 @@ export const GetNotifications = async () => {
   }
 };
 
+export const MarkNotificationsRead = async () => {
+  const token = localStorage.getItem("userToken");
+  try {
+    const { data } = await axios.put(
+      "/api/notification/mark-all-read",
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    return data;
+  } catch (err) {
+    toast.error(err);
+  }
+};
+
 export const SubmitDrillForm = async (dispatch, { activityId, formData }) => {
   const token = localStorage.getItem("userToken");
   dispatch(FormStart());
