@@ -10,12 +10,15 @@ import {
 import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "@mantine/core";
 
 const Notifications = () => {
   const navigate = useNavigate();
   const [opened, { open, close }] = useDisclosure(false);
   const [Notifs, setNotifs] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [isUpdating, setIsUpdating] = useState(false);
+
   console.log(Notifs);
   const fecthNoticiations = async () => {
     const res = await GetNotifications();
@@ -27,7 +30,9 @@ const Notifications = () => {
   }, []);
 
   const markReadHandler = async () => {
+    setIsUpdating(true);
     await MarkNotificationsRead();
+    setIsUpdating(false);
     fecthNoticiations();
   };
 
@@ -88,18 +93,23 @@ const Notifications = () => {
                   </p>
 
                   {unreadCount > 0 && (
-                    <button
-                      className="view-all"
-                      style={{
-                        fontSize: "13px",
-                        cursor: "pointer",
-                        fontWeight: "700",
-                        color: "var(--main-dark)",
-                      }}
-                      onClick={markReadHandler}
-                    >
-                      Mark all as read
-                    </button>
+                    <div className="d-flex align-items-center">
+                      <button
+                        className="view-all"
+                        style={{
+                          fontSize: "13px",
+
+                          fontWeight: "700",
+                          color: "var(--main-dark)",
+                          cursor: isUpdating ? "not-allowed" : "pointer",
+                        }}
+                        onClick={markReadHandler}
+                        disabled={isUpdating}
+                      >
+                        Mark all as read
+                      </button>
+                      {isUpdating && <Loader color="black" size="xs" />}
+                    </div>
                   )}
                 </div>
               </div>
