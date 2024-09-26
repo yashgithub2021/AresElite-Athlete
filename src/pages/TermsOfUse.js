@@ -1,8 +1,31 @@
 import React from "react";
 import { Container } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+
 import AtheleteMenu from "../components/layout/AtheleteMenu";
+import axios from "../utils/axios.js";
 
 const TermsOfUse = () => {
+  const [data, setData] = useState("");
+
+  const is_Online = useSelector((state) => state.auth.is_Online);
+
+  useEffect(() => {
+    const token = localStorage.getItem("userToken");
+    axios
+      .get("/api/admin/terms_and_conditions", {
+        params: {
+          role: is_Online === "true" ? "athleteOnline" : "athleteOffline",
+        },
+
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((result) => {
+        setData(result?.data?.termsAndConditions.text);
+      });
+  }, [is_Online]);
+
   return (
     <AtheleteMenu>
       <Container
@@ -11,7 +34,8 @@ const TermsOfUse = () => {
         }}
         className="terms-of-use scroll"
       >
-        <h2 className="mb-5">Terms of Use</h2>
+        <div dangerouslySetInnerHTML={{ __html: data }}></div>
+        {/* <h2 className="mb-5">Terms of Use</h2>
         <p>
           Welcome to Doctor’s App! Please read these Terms & Conditions
           ("Terms") carefully before using the Tasty Truck mobile application
@@ -109,7 +133,7 @@ const TermsOfUse = () => {
             the App after any such changes constitutes your acceptance of the
             new Terms.
           </p>
-        </div>{" "}
+        </div>{" "} */}
       </Container>
     </AtheleteMenu>
   );
