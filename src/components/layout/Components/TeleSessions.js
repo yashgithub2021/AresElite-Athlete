@@ -18,7 +18,7 @@ import {
 
 const TeleSessions = ({
   trainingdata,
-  service_type = "AddTrainingSessions",
+  service_type = "TrainingSessions",
   userId,
   isPaid,
 }) => {
@@ -137,7 +137,7 @@ const TeleSessions = ({
   useEffect(() => {
     setFormData((prevData) => ({
       ...prevData,
-      ["service_type"]: "AddTrainingSessions",
+      ["service_type"]: "TrainingSessions",
     }));
 
     handledisable();

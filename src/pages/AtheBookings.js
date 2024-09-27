@@ -137,7 +137,7 @@ const AtheBookings = () => {
       const manualTypes = [
         "TeleSession",
         "OfflineVisit",
-        "AddTrainingSessions",
+        "TrainingSessions",
       ];
       const isManual = manualTypes.includes(item.service_type);
 
@@ -320,9 +320,8 @@ const AtheBookings = () => {
       <Table.Tr key={element.name}>
         <Table.Td>{element.Name}</Table.Td>
         <Table.Td>
-          {element.mass === "AddTrainingSessions"
-            ? "TrainingSessions"
-            : element.mass}
+          
+            {element.mass}
         </Table.Td>
         <Table.Td>{element.symbol}</Table.Td>
         <Table.Td>{element.time}</Table.Td>
@@ -411,7 +410,7 @@ const AtheBookings = () => {
                 data={[
                   "Medical/OfficeVisit",
                   "ConsultationCall",
-                  "AddTrainingSessions",
+                  "TrainingSessions",
                   "Post-ConcussionEvaluation",
                   "SportsVisionPerformanceEvaluation",
                 ]}
