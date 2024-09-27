@@ -390,7 +390,7 @@ const AtheTransactions = () => {
                 data={[
                   "Medical/OfficeVisit",
                   "ConsultationCall",
-                  "AddTrainingSessions",
+                  "TrainingSessions",
                   "Post-ConcussionEvaluation",
                   "SportsVisionPerformanceEvaluation",
                   "planPurchase",

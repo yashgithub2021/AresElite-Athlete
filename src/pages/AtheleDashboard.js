@@ -181,7 +181,7 @@ const AtheleDashboard = () => {
                 className=" service-box text-light mb-4 d-flex justify-content-between  align-items-center box-shadow-drop-bottom "
               >
                 <ServiceModal
-                  service_type={"SportsVisionEvaluation"}
+                  service_type={"SportsVisionPerformanceEvaluation"}
                   svg={SportsVisionPerformanceEvaluation}
                   icon={
                     <svg
@@ -200,8 +200,14 @@ const AtheleDashboard = () => {
                     </svg>
                   }
                   heading={"Sports Vision Performance Evaluation"}
-                  amount={getServiceConf(true, "SportsVisionEvaluation")}
-                  meetingTime={getServiceConf(false, "SportsVisionEvaluation")}
+                  amount={getServiceConf(
+                    true,
+                    "SportsVisionPerformanceEvaluation"
+                  )}
+                  meetingTime={getServiceConf(
+                    false,
+                    "SportsVisionPerformanceEvaluation"
+                  )}
                   divors={{ heading: "white", text: "#FFFFFFCC" }}
                   // session={{ time: "8:30" }}
                 />
