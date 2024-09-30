@@ -14,6 +14,7 @@ const RecentBooking = () => {
     const res = await getAllBooking();
     setNotifs(res);
   };
+
   useEffect(() => {
     fetchnotifs();
   }, [isFetching]);

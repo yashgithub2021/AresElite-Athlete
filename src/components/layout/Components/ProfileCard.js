@@ -5,43 +5,53 @@ import { Modal, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { PasswordInput, Stack } from "@mantine/core";
 import { useSelector, useDispatch } from "react-redux";
-import { GetProfileDetails, ResetPassword, UpdateProfilePic } from "../../../features/apiCall";
+import {
+  GetProfileDetails,
+  ResetPassword,
+  UpdateProfilePic,
+} from "../../../features/apiCall";
 import { logOut } from "../../../features/authSlice";
 import { Spinner } from "react-bootstrap";
 const ProfileCard = () => {
+  const defaultPic =
+    "https://icon-library.com/images/icon-user/icon-user-15.jpg";
+
   const [opened, { open, close }] = useDisclosure(false);
   const [visible, { toggle }] = useDisclosure(false);
   const [confirm, setConfirm] = useState(false);
   const CloseModal = async () => {
-
     close();
     setConfirm(false);
   };
   const [isUploading, setIsUploading] = useState(false);
 
-  const { userName, userEmail, phone } = useSelector((state) => state.auth)
-  const dispatch = useDispatch()
-  const [newPassword, setnewPassword] = useState("")
-  const [confirmPassword, setConfirmpass] = useState("")
-  const email = useSelector((state) => state.auth.userEmail)
+  const { userName, userEmail, phone } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const [newPassword, setnewPassword] = useState("");
+  const [confirmPassword, setConfirmpass] = useState("");
+  const email = useSelector((state) => state.auth.userEmail);
   const handleChangePassword = async () => {
-
-    await ResetPassword(dispatch, { email, newPassword, confirmPassword })
+    await ResetPassword(dispatch, { email, newPassword, confirmPassword });
     close();
     setConfirm(false);
-  }
+  };
   const handleLogout = async () => {
     await dispatch(logOut());
   };
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(defaultPic);
   useEffect(() => {
     const fetchProfileDetails = async () => {
       const data = await GetProfileDetails(dispatch);
-      console.log("Dataaa", data.athlete.profilePic)
-      if (data && data.athlete.profilePic) {
+      console.log("user", data?.athlete);
+
+      if (
+        data &&
+        data.athlete?.profilePic &&
+        data.athlete?.profilePic !== "picture"
+      ) {
         setImage(data.athlete.profilePic);
       }
-      console.log("No data")
+      console.log("No data");
     };
     fetchProfileDetails();
   }, [dispatch]);
@@ -53,7 +63,10 @@ const ProfileCard = () => {
       formData.append("profilePic", file);
 
       try {
-        const result = await UpdateProfilePic(dispatch, { formData, userId: userEmail });
+        const result = await UpdateProfilePic(dispatch, {
+          formData,
+          userId: userEmail,
+        });
 
         if (result) {
           setImage(result.profilePicUrl);
@@ -143,7 +156,6 @@ const ProfileCard = () => {
               <Stack>
                 <PasswordInput
                   label="Password"
-
                   visible={visible}
                   variant="filled"
                   visibilityToggleIcon={({ reveal }) =>
@@ -153,15 +165,18 @@ const ProfileCard = () => {
                       <i class="fa-solid fa-eye-slash"></i>
                     )
                   }
-                  onChange={(e) => { setnewPassword(e.target.value) }}
+                  onChange={(e) => {
+                    setnewPassword(e.target.value);
+                  }}
                 />
                 <PasswordInput
                   label="Confirm password"
-
                   visible={visible}
                   variant="filled"
                   onVisibilityChange={toggle}
-                  onChange={(e) => { setConfirmpass(e.target.value) }}
+                  onChange={(e) => {
+                    setConfirmpass(e.target.value);
+                  }}
                 />
               </Stack>
               <div className="mt-3 ">
@@ -178,11 +193,16 @@ const ProfileCard = () => {
         style={{ background: "white", padding: "30px", borderRadius: "16px" }}
       >
         <div style={{ padding: "0px 20px" }}>
-          <p className="profile-header" style={{ marginRight: "30px" }}>Profile</p>
+          <p className="profile-header" style={{ marginRight: "30px" }}>
+            Profile
+          </p>
         </div>
 
         <div className="profile-card">
-          <div className="profile-picture-container" style={{ marginRight: '20px', position: 'relative' }}>
+          <div
+            className="profile-picture-container"
+            style={{ marginRight: "20px", position: "relative" }}
+          >
             {isUploading ? (
               <div className="upload-spinner">
                 <Spinner animation="border" variant="primary" />
@@ -191,8 +211,16 @@ const ProfileCard = () => {
               <>
                 <img src={image} alt="Profile" className="profile-picture" />
                 <label className="camera-icon">
-                  <i className="fa-solid fa-camera" style={{ color: '#7257ff' }} />
-                  <input type="file" accept="image/*" onChange={handleImageChange} disabled={isUploading} />
+                  <i
+                    className="fa-solid fa-camera"
+                    style={{ color: "#7257ff" }}
+                  />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    disabled={isUploading}
+                  />
                 </label>
               </>
             )}
