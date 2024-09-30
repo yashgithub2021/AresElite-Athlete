@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
+import { useSelector } from "react-redux";
 import AtheleteMenu from "../components/layout/AtheleteMenu";
 import { Input, CloseButton } from "@mantine/core";
 import { Table, Avatar } from "@mantine/core";
@@ -23,14 +24,6 @@ const AtheTransactions = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showData, setShowData] = useState([]);
-  const getdetail = async () => {
-    const { transactions } = await GetTransaction(dispatch, {
-      date: date,
-      service_type: value,
-    });
-    console.log(transactions);
-    handleappointmentData(transactions);
-  };
   const [selected, setSelected] = useState([]);
   const [date, setDate] = useState(null);
   const [value, setValue] = useState(null);
@@ -38,27 +31,44 @@ const AtheTransactions = () => {
   const [mainheading, setmainheading] = useState("");
   const [subheading, setsubheading] = useState("");
   const [bodyforpaymnet, setbodyforpyamnet] = useState(null);
+
+  const getdetail = useCallback(async () => {
+    const { transactions } = await GetTransaction(dispatch, {
+      date: date,
+      service_type: value,
+    });
+    console.log(transactions);
+    handleappointmentData(transactions);
+  }, [date, value, dispatch]);
+
+  const services = useSelector((state) => state.AllServices.services);
+  let filteredServices = Object.keys(services)?.filter(
+    (service) => !["OfflineVisit", "TeleSession"].includes(service)
+  );
+  filteredServices.push("planPurchase");
+
   const handleSelect = (date) => {
     const temp = new Date(date);
 
     const res = `${temp.getFullYear()}-${
       temp.getMonth() + 1
     }-${temp.getDate()}`;
-    setDate(res);
-    // const isSelected = selected.some((s) => dayjs(date).isSame(s, 'date'));
+    setDate(dayjs(date).format("YYYY-MM-DD"));
+    const isSelected = selected.some((s) => dayjs(date).isSame(s, "date"));
     // if (isSelected) {
-    //   setSelected((current) => current.filter((d) => !dayjs(d).isSame(date, 'date')));
-
-    // } else if (selected.length < 3) {
+    //   setSelected((current) =>
+    //     current.filter((d) => !dayjs(d).isSame(date, "date"))
+    //   );
+    // } else if (selected.length < 1) {
     //   setSelected((current) => [...current, date]);
-    //   alert(selected)
     // }
+    setSelected([date]);
     close();
   };
 
   useEffect(() => {
     getdetail();
-  }, [date, value]);
+  }, [getdetail]);
 
   const makePayment = async (service_type, bookingid) => {
     const stripe = await loadStripe(
@@ -387,14 +397,15 @@ const AtheTransactions = () => {
             <div className="d-flex console-inputs">
               <Select
                 placeholder="Select Service Type"
-                data={[
-                  "Medical/OfficeVisit",
-                  "ConsultationCall",
-                  "TrainingSessions",
-                  "Post-ConcussionEvaluation",
-                  "SportsVisionPerformanceEvaluation",
-                  "planPurchase",
-                ]}
+                // data={[
+                //   "Medical/OfficeVisit",
+                //   "ConsultationCall",
+                //   "TrainingSessions",
+                //   "Post-ConcussionEvaluation",
+                //   "SportsVisionPerformanceEvaluation",
+                //   "planPurchase",
+                // ]}
+                data={filteredServices}
                 comboboxProps={{
                   transitionProps: { transition: "pop", duration: 200 },
                 }}

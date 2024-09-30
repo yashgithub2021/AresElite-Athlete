@@ -36,21 +36,26 @@ const AtheBookings = () => {
 
   const [bodyData, setBodyData] = useState({});
 
+  const services = useSelector((state) => state.AllServices.services);
+  let filteredServices = Object.keys(services);
+  filteredServices.push("planPurchase");
+
   const handleSelect = (date) => {
-    alert(date);
     const temp = new Date(date);
+
     const res = `${temp.getFullYear()}-${
       temp.getMonth() + 1
     }-${temp.getDate()}`;
-    setDate(res);
-    // const isSelected = selected.some((s) => dayjs(date).isSame(s, 'date'));
+    setDate(dayjs(date).format("YYYY-MM-DD"));
+    const isSelected = selected.some((s) => dayjs(date).isSame(s, "date"));
     // if (isSelected) {
-    //   setSelected((current) => current.filter((d) => !dayjs(d).isSame(date, 'date')));
-
-    // } else if (selected.length < 3) {
+    //   setSelected((current) =>
+    //     current.filter((d) => !dayjs(d).isSame(date, "date"))
+    //   );
+    // } else if (selected.length < 1) {
     //   setSelected((current) => [...current, date]);
-    //   alert(selected)
     // }
+    setSelected([date]);
     close();
   };
 
@@ -134,11 +139,7 @@ const AtheBookings = () => {
         </button>
       );
 
-      const manualTypes = [
-        "TeleSession",
-        "OfflineVisit",
-        "TrainingSessions",
-      ];
+      const manualTypes = ["TeleSession", "OfflineVisit", "TrainingSessions"];
       const isManual = manualTypes.includes(item.service_type);
 
       if (!isManual && item.presId && item.status == "paid") {
@@ -319,10 +320,7 @@ const AtheBookings = () => {
     return (
       <Table.Tr key={element.name}>
         <Table.Td>{element.Name}</Table.Td>
-        <Table.Td>
-          
-            {element.mass}
-        </Table.Td>
+        <Table.Td>{element.mass}</Table.Td>
         <Table.Td>{element.symbol}</Table.Td>
         <Table.Td>{element.time}</Table.Td>
         <Table.Td>{element.button}</Table.Td>
@@ -407,13 +405,14 @@ const AtheBookings = () => {
             <div className="d-flex console-inputs">
               <Select
                 placeholder="Select Service Type"
-                data={[
-                  "Medical/OfficeVisit",
-                  "ConsultationCall",
-                  "TrainingSessions",
-                  "Post-ConcussionEvaluation",
-                  "SportsVisionPerformanceEvaluation",
-                ]}
+                // data={[
+                //   "Medical/OfficeVisit",
+                //   "ConsultationCall",
+                //   "TrainingSessions",
+                //   "Post-ConcussionEvaluation",
+                //   "SportsVisionPerformanceEvaluation",
+                // ]}
+                data={filteredServices}
                 comboboxProps={{
                   transitionProps: { transition: "pop", duration: 200 },
                 }}

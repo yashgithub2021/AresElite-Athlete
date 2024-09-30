@@ -15,6 +15,7 @@ import { AppFailure, AppStart, AppSuccess } from "./appointSlice.js";
 import { FetchFailure, FetchStart, FetchSuccess } from "./fetchSlice.js";
 import { FormFailure, FormStart, FormSuccess } from "./FormSlice.js";
 import { useNavigate } from "react-router";
+import { ServicesFetch } from "./AllServiceSlice.js";
 
 const ErrorToastOptions = {
   position: "bottom-center",
@@ -649,6 +650,19 @@ export const UpdateProfilePic = async (dispatch, { formData, userId }) => {
     const errorMessage = parseError(error);
     toast.error(errorMessage, ErrorToastOptions);
     dispatch(Failure(errorMessage));
+    return false; // Return false to indicate that the request failed
+  }
+};
+
+export const getAllServices = async (dispatch) => {
+  try {
+    const { data } = await axios.get(`/api/doctor/getAllServices`);
+    console.log("data", data);
+    dispatch(ServicesFetch(data.services));
+  } catch (error) {
+    const errorMessage = parseError(error);
+    toast.error(errorMessage, ErrorToastOptions);
+
     return false; // Return false to indicate that the request failed
   }
 };
