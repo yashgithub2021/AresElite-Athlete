@@ -305,9 +305,7 @@ const Athedrill = () => {
         overlayProps={{ radius: "sm", blur: 4 }}
       />
 
-      <div
-        style={{ padding: "30px ", display: "flex", flexDirection: "column" }}
-      >
+      <div className="aDrill-main">
         <div className="drill-main-box weeks">
           <div className="weekbuttons">
             {[...Array(totalWeeks)]?.map((item, index) => {

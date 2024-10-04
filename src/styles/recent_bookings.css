@@ -1,3 +1,9 @@
+.aDrill-main {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
 .recent-booking-person-image {
   width: 40px;
   height: 40px;
@@ -166,7 +172,7 @@ tbody {
     margin-top: 20px;
   }
   .console-inputs Input {
-    width: 290px !important;
+    width: 100% !important;
   }
   .header {
     font-size: small;
@@ -242,9 +248,9 @@ tbody {
   .name-email-image-cont {
     display: table-cell !important;
   }
-  th {
+  /* th {
     width: 200px;
-  }
+  } */
 }
 
 .transaction-table-cont {
@@ -388,7 +394,7 @@ tbody {
 }
 
 .weeks {
-  height: 52px;
+  /* height: 52px; */
   display: flex;
   justify-content: space-between;
 }
@@ -396,6 +402,7 @@ tbody {
 .weekbuttons {
   display: flex !important;
   flex-direction: row;
+  flex-wrap: wrap;
 
   justify-content: start;
   align-items: center;
@@ -404,7 +411,7 @@ tbody {
 .week-button {
   width: 106px;
   height: 41px;
-  padding: 19px 24px 19px 24px;
+  padding: 19px 22px 19px 22px;
   gap: 6px;
   border-radius: 16px;
   border: 1px;
@@ -492,6 +499,28 @@ input[type="radio"]:checked {
   border-radius: 16px;
   display: flex;
   gap: 30px;
+}
+
+@media screen and (max-width: 600px) {
+  .weekbuttons {
+    margin: 1rem 0.1rem 0 0.2rem;
+  }
+  .week-button {
+    /* width: 108px; */
+    padding: 19px 20px 19px 20px;
+  }
+  .video-cont {
+    flex-direction: column;
+  }
+  .video-player {
+    width: 100% !important;
+  }
+  .accordion {
+    width: 100% !important;
+  }
+  .aDrill-main {
+    padding: 0;
+  }
 }
 
 .calibration-forms {

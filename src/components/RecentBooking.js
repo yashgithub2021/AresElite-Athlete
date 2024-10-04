@@ -93,11 +93,11 @@ const RecentBooking = () => {
               <TableComp data={filteredNotifs} />
             </div>
             <div className="booking-card-cont">
-              <RecentBookingCard />
-              <hr />
-              <RecentBookingCard />
-              <hr />
-              <RecentBookingCard />
+              {filteredNotifs?.map((data) => (
+                <>
+                  <RecentBookingCard data={data} /> <hr />{" "}
+                </>
+              ))}
             </div>
           </Modal.Body>
         </Modal.Content>
@@ -111,15 +111,16 @@ const RecentBooking = () => {
           marginBottom: "10px",
         }}
       >
-        <div className="d-flex justify-content-between">
+        <div className="d-flex justify-content-between mb-2">
           <h5>Recent Bookings</h5>
-          {notifs?.length != 0 && (
+          {notifs?.length !== 0 && (
             <p
               onClick={open}
               style={{
                 cursor: "pointer",
                 color: "var(--main-dark)",
                 fontWeight: "700",
+                // fontSize: "0.8rem",
               }}
             >
               View All
@@ -132,17 +133,19 @@ const RecentBooking = () => {
               className="table-cont"
               style={{ overflow: "scroll", padding: "0px 4px 0px" }}
             >
-              <TableComp data={filteredNotifs} />
+              <TableComp data={filteredNotifs?.slice(0, 5)} />
             </div>
             <div className="booking-card-cont">
-              <RecentBookingCard />
-              <hr />
-              <RecentBookingCard />
+              {filteredNotifs?.slice(0, 2)?.map((data) => (
+                <>
+                  <RecentBookingCard data={data} /> <hr />{" "}
+                </>
+              ))}
             </div>
           </>
         ) : (
           <div style={{ textAlign: "center" }}>
-            <p>No Notfications</p>
+            <p>No Bookings</p>
           </div>
         )}
       </div>

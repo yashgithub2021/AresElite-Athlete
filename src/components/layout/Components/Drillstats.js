@@ -28,7 +28,12 @@ const Drillstats = ({ data, ispaid, userId }) => {
   return (
     <>
       {data?.totalDrills != 0 && ispaid == "paid" ? (
-        <div xs={6} sm={6} className="training-card text-shadow">
+        <div
+          xs={6}
+          sm={6}
+          className="training-card text-shadow"
+          id="drillstate-cont"
+        >
           <div className="d-flex  flex-wrap justify-content-between upper-train  ">
             <div>
               <h2 style={{ fontSize: "700" }}>Drills</h2>
@@ -95,7 +100,7 @@ const Drillstats = ({ data, ispaid, userId }) => {
           </div>
 
           <button
-            className="px-4 py-2 fw-semibold rounded-3"
+            className="px-4 py-2 fw-semibold rounded-3 mb-md-0 mt-0 mb-md-1 "
             style={{
               backgroundColor: "#7257FF26",
               color: "var(--main-dark)",

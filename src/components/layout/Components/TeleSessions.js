@@ -382,7 +382,9 @@ const TeleSessions = ({
         <div xs={6} sm={6} className="training-card text-shadow">
           <div className="d-flex  flex-wrap justify-content-between upper-train  ">
             <div>
-              <h2 style={{ fontSize: "700" }}>Training Session</h2>
+              <h2 style={{ fontSize: "700" }} className="mt-md-0 mt-3">
+                Training Session
+              </h2>
             </div>
             <div>
               {/* <div className="view-all" onClick={open}>

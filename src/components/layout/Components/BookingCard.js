@@ -1,6 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-const BookingCard = ({ name, serviceType, date, time, pStatus, cancelBtn }) => {
+const BookingCard = ({
+  name,
+  serviceType,
+  date,
+  time,
+  pStatus,
+  serviceStatus,
+  cancelBtn,
+}) => {
   const navigate = useNavigate();
   return (
     <div style={{ fontSize: "small" }}>
@@ -10,7 +18,11 @@ const BookingCard = ({ name, serviceType, date, time, pStatus, cancelBtn }) => {
       </div>
       <div className="d-flex justify-content-between">
         <p>Service Type</p>
-        <p>{serviceType}</p>
+        <p
+          style={{ maxWidth: "6rem", hyphens: "auto", wordBreak: "break-all" }}
+        >
+          {serviceType}
+        </p>
       </div>
       <div className="d-flex justify-content-between">
         <p>Date</p>
@@ -21,27 +33,17 @@ const BookingCard = ({ name, serviceType, date, time, pStatus, cancelBtn }) => {
         <p>{time}</p>
       </div>
       <div className="d-flex justify-content-between">
-        <p>Payment Status</p>
-        <button className="pending">{pStatus}</button>
+        <p>Payment</p>
+        <p>{pStatus}</p>
       </div>
-      <div className="">
-        <p>Action</p>
-        {cancelBtn}
-        <div className="d-flex gap-3">
-          <button
-            style={{
-              padding: "12.5px 26.5px 12.5px 26.5px",
-              background: "#7257FF26",
-              borderRadius: "10px",
-              width: "100%",
-            }}
-            onClick={() => {
-              navigate("/a-prescription");
-            }}
-          >
-            View Prescription
-          </button>
-        </div>
+      {/* <div className="d-flex justify-content-between align-items-center">
+        <p>Service Status</p>
+        <button className="pending">{serviceStatus}</button>
+      </div> */}
+      <div className="d-flex flex-column gap-2 mt-3">
+        {/* <p>Action</p> */}
+        <div>{serviceStatus}</div>
+        <div> {cancelBtn}</div>
       </div>
       <hr />
     </div>
