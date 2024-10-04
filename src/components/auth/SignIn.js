@@ -85,13 +85,13 @@ const SignIn = () => {
         />
       </section>
 
-      <Form onSubmit={handleSubmit} style={{ width: "407px" }}>
-        <div style={{ marginBottom: "-35px" }}>
+      <Form onSubmit={handleSubmit} className="login-container">
+        <div style={{ marginBottom: "-25px" }}>
           <h6 className="text-secondary">Welcome !</h6>
           <h3 className="mb-5 font-weight-bold">Log in for Ares Elite</h3>
         </div>
 
-        <Form.Group controlId="formBasicEmail">
+        <Form.Group controlId="formBasicEmail" className=" f-label ">
           <Form.Label>Email address</Form.Label>
           <Form.Control
             type="email"
@@ -99,11 +99,11 @@ const SignIn = () => {
             placeholder="Enter your email"
             onChange={handleChange}
             value={values.email}
-            className="mb-3 mt-2"
+            className="mb-3 mt-2 w-100"
           />
         </Form.Group>
 
-        <Form.Group controlId="formBasicPassword">
+        <Form.Group controlId="formBasicPassword" className="w-100 f-label">
           <Form.Label>Password</Form.Label>
           <InputGroup>
             <Form.Control
@@ -127,7 +127,7 @@ const SignIn = () => {
 
         <div className="d-flex justify-content-between">
           <NavLink
-            className="d-block w-100 mb-2 text-decoration-none purple-text"
+            className="d-block w-md-100 ms-md-1 ms-0 text-nowrap mb-2 text-decoration-none purple-text"
             to="/signup"
           >
             New User?
@@ -161,7 +161,11 @@ const SignIn = () => {
           className="purple-button w-100"
           disabled={!isFormValid || isFetching}
         >
-          {isFetching ? <Spinner animation="border" variant="light" /> : "Login"}
+          {isFetching ? (
+            <Spinner animation="border" variant="light" />
+          ) : (
+            "Login"
+          )}
         </Button>
       </Form>
     </AuthLayout>

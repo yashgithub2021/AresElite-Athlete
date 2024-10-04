@@ -2,28 +2,39 @@ import React, { useEffect, useState } from "react";
 import AtheleteMenu from "../components/layout/AtheleteMenu";
 import { TextInput } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
-import { useSearchParams,useParams } from "react-router-dom";
+import { useSearchParams, useParams } from "react-router-dom";
 import { GetRecentPrescriptions } from "../features/apiCall";
 import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
+
 const Prescriptions = () => {
-    const navigate=useNavigate()
-    let { presId,appointmentid } = useParams();
-    const [presc,setpresc]=useState([])
-    const dispatch=useDispatch()
-    console.log(presc.form)
-    const fetchprescription= async()=>{
-       const {form}= await GetRecentPrescriptions(dispatch,{presId,appointmentid})
-       setpresc(form)
-    }
-    useEffect(()=>{
-      fetchprescription()
-    },[])
+  const navigate = useNavigate();
+  let { presId, appointmentid } = useParams();
+  const [presc, setpresc] = useState([]);
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  console.log("location", location);
+
+  console.log(presc.form);
+  const fetchprescription = async () => {
+    const { form } = await GetRecentPrescriptions(dispatch, {
+      presId,
+      appointmentid,
+    });
+    setpresc(form);
+  };
+  useEffect(() => {
+    fetchprescription();
+  }, []);
   return (
     <AtheleteMenu>
       <div style={{ padding: "30px" }}>
         <div className="d-flex gap-5 ">
           <svg
-            onClick={()=>{navigate("/a-booking")}}
+            onClick={() => {
+              navigate("/a-booking");
+            }}
             width="40"
             height="61"
             viewBox="0 0 40 41"
@@ -47,7 +58,7 @@ const Prescriptions = () => {
               Prescription
             </p>{" "}
             <p style={{ margin: 0, color: "#8C90AA", fontSize: "15px" }}>
-              Mr. Scott Mctominay
+              Mr. {location?.state?.doctorName}
             </p>
           </div>
         </div>
@@ -61,34 +72,28 @@ const Prescriptions = () => {
           }}
         >
           <div className="mb-3 d-flex flex-wrap gap-3">
-            {presc?.form?.map((item,index)=>{
+            {presc?.form?.map((item, index) => {
               const form = Object.entries(item);
-              console.log(form)
-              return form?.map((field)=>{
+              console.log(form);
+              return form?.map((field) => {
                 return (
                   <TextInput
-                  label={field[0]}
-                  placeholder={field[1]}
-                  variant="filled"
-                  radius={"8px"}
-                  style={{ width: "45%", borderRadius: "8px" }}
-                  inputWrapperOrder={["label", "error", "input", "description"]}
-                />
-                 )
-                   
-              })
-              
-                 
-            
-               
+                    label={field[0]}
+                    placeholder={field[1]}
+                    variant="filled"
+                    radius={"8px"}
+                    style={{ width: "45%", borderRadius: "8px" }}
+                    inputWrapperOrder={[
+                      "label",
+                      "error",
+                      "input",
+                      "description",
+                    ]}
+                  />
+                );
+              });
             })}
-            
-           
           </div>
-          
-         
-
-          
         </div>
       </div>
     </AtheleteMenu>

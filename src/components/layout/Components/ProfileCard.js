@@ -12,6 +12,7 @@ import {
 } from "../../../features/apiCall";
 import { logOut } from "../../../features/authSlice";
 import { Spinner } from "react-bootstrap";
+
 const ProfileCard = () => {
   const defaultPic =
     "https://icon-library.com/images/icon-user/icon-user-15.jpg";
@@ -225,9 +226,9 @@ const ProfileCard = () => {
               </>
             )}
           </div>
-          <div className="d-flex flex-column  justify-content-center text-left ">
+          <div className="d-flex flex-column  justify-content-center text-left p-sub">
             <h5>{userName}</h5>
-            <div>
+            <div className="d-flex flex-column align-items-md-start align-items-center">
               <p className="sub-text">{userEmail}</p>
               <p className="sub-text" style={{ marginTop: "-16px" }}>
                 {phone}
@@ -235,6 +236,7 @@ const ProfileCard = () => {
             </div>
           </div>
         </div>
+
         <NavLink to="/a-profile">
           <div className="nav-links">
             <div className="cont">

@@ -1,29 +1,40 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-const RecentBookingCard = () => {
+import { formatDateToMMDDYYY } from "../../../utils/functions";
+
+const RecentBookingCard = ({ data }) => {
   const navigate = useNavigate();
   return (
     <div style={{ fontSize: "small" }}>
       <div className="d-flex justify-content-between">
         <p>Name</p>
-        <p>Raj K</p>
+        <p> {data?.doctor_trainer}</p>
       </div>
       <div className="d-flex justify-content-between">
         <p>Service Type</p>
-        <p>Sports Vision Performance</p>
+        <p
+          style={{
+            maxWidth: "7rem",
+            hyphens: "auto",
+            overflowWrap: "break-word",
+            wordBreak: "break-word",
+          }}
+        >
+          {data?.service_type}
+        </p>
       </div>
       <div className="d-flex justify-content-between">
         <p>Date</p>
-        <p>18/03/24</p>
+        <p>{formatDateToMMDDYYY(data.app_date)}</p>
       </div>
       <div className="d-flex justify-content-between">
         <p>Service</p>
-        <p>9:23 AM</p>
+        <p>{data?.app_time}</p>
       </div>
       <div className="">
-        <p>Action</p>
+        {/* <p>Action</p> */}
         <div className="d-flex gap-3">
-          <button
+          {/* <button
             style={{
               padding: "12.5px 26.5px 12.5px 26.5px",
               background: "#7257FF26",
@@ -32,21 +43,33 @@ const RecentBookingCard = () => {
             }}
           >
             View prescription
-          </button>
-          <button
-            style={{
-              padding: "12.5px 26.5px 12.5px 26.5px",
-              background: "var(--main-dark)",
-              borderRadius: "10px",
-              width: "40%",
-              color: "white",
-            }}
-            onClick={() => {
-              navigate("/a-drill");
-            }}
-          >
-            Start drill
-          </button>
+          </button> */}
+          {data?.status === "paid" && (
+            <button
+              style={{
+                padding: "12.5px 26.5px 12.5px 26.5px",
+                background: "var(--main-dark)",
+                borderRadius: "10px",
+                width: "100%",
+                color: "#ffffff",
+              }}
+            >
+              Paid{" "}
+            </button>
+          )}
+          {data?.status !== "paid" && (
+            <button
+              style={{
+                padding: "12.5px 26.5px 12.5px 26.5px",
+                background: "#7257FF26",
+                borderRadius: "10px",
+                width: "100%",
+              }}
+              onClick={() => navigate("/a-transactions")}
+            >
+              Pay
+            </button>
+          )}
         </div>
       </div>
     </div>

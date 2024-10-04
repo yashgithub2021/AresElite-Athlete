@@ -31,6 +31,7 @@ const AtheTransactions = () => {
   const [mainheading, setmainheading] = useState("");
   const [subheading, setsubheading] = useState("");
   const [bodyforpaymnet, setbodyforpyamnet] = useState(null);
+  const [incomingData, setIncomingData] = useState([]);
 
   const getdetail = useCallback(async () => {
     const { transactions } = await GetTransaction(dispatch, {
@@ -38,6 +39,7 @@ const AtheTransactions = () => {
       service_type: value,
     });
     console.log(transactions);
+    setIncomingData(transactions);
     handleappointmentData(transactions);
   }, [date, value, dispatch]);
 
@@ -111,6 +113,51 @@ const AtheTransactions = () => {
     console.log(data);
     setclientsecret(data.clientSecret);
     paymentmodalhandler.open();
+  };
+
+  const actionBtn = (item) => {
+    const date = new Date(item.date);
+    const date_dis = `${date.getDate()}/${
+      date.getMonth() + 1
+    }/${date.getFullYear()}`;
+    var btn;
+    if (item.payment_status === "paid") {
+      btn = (
+        <button
+          style={{
+            padding: "12.5px 26.5px 12.5px 26.5px",
+            background: "#7257FF26",
+            borderRadius: "10px",
+            width: "100%",
+          }}
+        >
+          Paid ${item.amount?.toLocaleString("en-US")}
+        </button>
+      );
+    } else {
+      btn = (
+        <button
+          style={{
+            padding: "12.5px 26.5px 12.5px 26.5px",
+            background: "#7257FF26",
+            borderRadius: "10px",
+            width: "100%",
+          }}
+          onClick={() => {
+            let id = item.bookingId;
+            if (item.service_type === "trainingSession") {
+              id = String(item._id);
+            }
+            makePayment(item.service_type, id);
+            setmainheading("Appointment");
+            setsubheading(`${date_dis}`);
+          }}
+        >
+          Pay ${item.amount?.toLocaleString("en-US")}
+        </button>
+      );
+    }
+    return btn;
   };
 
   const handleappointmentData = (arr) => {
@@ -444,10 +491,9 @@ const AtheTransactions = () => {
             </Table>
           </div>
           <div className="mobile-cont">
-            <TransactionCard />
-            <TransactionCard />
-            <TransactionCard />
-            <TransactionCard />
+            {incomingData?.map((data) => (
+              <TransactionCard data={data} action={actionBtn(data)} />
+            ))}
           </div>
         </div>
       </div>
