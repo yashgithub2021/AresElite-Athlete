@@ -7,6 +7,7 @@ import { SubmitDrillForm } from "../features/apiCall";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button } from "@mantine/core";
 import { MultiSelect } from "@mantine/core";
+
 const DrillForm = ({ activity, index, total, disabled, fetchDrills }) => {
   const [formData, setFormData] = useState([]);
   const [opened, { open, close }] = useDisclosure(false);
@@ -105,15 +106,16 @@ const DrillForm = ({ activity, index, total, disabled, fetchDrills }) => {
         </div>
       </Modal>
       <div className="drill-main-box calibration-forms">
-        <h5>NeuroTrainer (Calibration)</h5>
+        <h5 className="mb-2">NeuroTrainer (Calibration)</h5>
         <span style={{ color: "rgb(178 170 170)", fontSize: "16px" }}>
           Drill {index} of {total}
         </span>
 
-        <Container>
+        <Container className="mt-1">
           <Form
             style={{
               display: "grid",
+              gap: "10px",
               gridTemplateRows: "repeat(auto-fit, 1fr)",
               gridTemplateColumns: "repeat(2, 1fr)",
             }}

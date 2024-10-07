@@ -387,7 +387,7 @@ body {
 }
 
 .signUp-container {
-  width: 1000px;
+  width: 65rem;
   padding: 30px;
 }
 .signUp-container label {
@@ -401,6 +401,19 @@ body {
   margin-bottom: -5px;
 }
 .signUp-container .form-control {
+}
+
+@media screen and (max-width: 1000px) {
+  .signUp-container {
+    /* width: 100vw !important; */
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .signUp-container {
+    flex-direction: column;
+  }
 }
 
 .m-82577fc2[data-position="left"] {

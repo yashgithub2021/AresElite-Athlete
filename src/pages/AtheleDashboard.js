@@ -37,6 +37,8 @@ const AtheleDashboard = () => {
   const userId = useSelector((state) => state.auth.user);
   const plan = useSelector((state) => state.auth.plan);
   const is_Online = useSelector((state) => state.auth.is_Online);
+
+  console.log("is_online", is_Online);
   // const is_Online = online === "false" ? false : true;
   // console.log("isOnline", is_Online);
 
@@ -86,7 +88,7 @@ const AtheleDashboard = () => {
     <AtheleteMenu>
       <section class="layout2">
         <div class="main">
-          <div>
+          <div className="mb-md-0 mb-3">
             <p className="h4  ">
               Hello,
               <p className="font-weight-bold d-inline">{name}!</p>
@@ -114,12 +116,13 @@ const AtheleDashboard = () => {
             </p>
           </div>
           {/* This is row 1 contains your stat cards */}
-          <div className="d-flex row1 grow1 upper-card-cont">
+          <div className="d-flex flex-md-row flex-column row1 grow1 upper-card-cont">
             {!userinfo?.userDetails && (
               <>
                 <Loadercard color="var(--main-dark)" />
               </>
             )}
+
             {userinfo?.userDetails &&
               is_Online === "true" &&
               userinfo?.userDetails?.plan_payment == "paid" &&
@@ -159,6 +162,7 @@ const AtheleDashboard = () => {
               <TeleSessions
                 trainingdata={userinfo?.sessionDetails}
                 userId={userId}
+                isPaid={userinfo?.userDetails?.plan_payment === "paid"}
               />
             )}
 
@@ -180,7 +184,7 @@ const AtheleDashboard = () => {
                 className=" service-box text-light mb-4 d-flex justify-content-between  align-items-center box-shadow-drop-bottom "
               >
                 <ServiceModal
-                  service_type={"SportsVisionEvaluation"}
+                  service_type={"SportsVisionPerformanceEvaluation"}
                   svg={SportsVisionPerformanceEvaluation}
                   icon={
                     <svg
@@ -199,8 +203,14 @@ const AtheleDashboard = () => {
                     </svg>
                   }
                   heading={"Sports Vision Performance Evaluation"}
-                  amount={getServiceConf(true, "SportsVisionEvaluation")}
-                  meetingTime={getServiceConf(false, "SportsVisionEvaluation")}
+                  amount={getServiceConf(
+                    true,
+                    "SportsVisionPerformanceEvaluation"
+                  )}
+                  meetingTime={getServiceConf(
+                    false,
+                    "SportsVisionPerformanceEvaluation"
+                  )}
                   divors={{ heading: "white", text: "#FFFFFFCC" }}
                   // session={{ time: "8:30" }}
                 />

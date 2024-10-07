@@ -15,6 +15,7 @@ import { AppFailure, AppStart, AppSuccess } from "./appointSlice.js";
 import { FetchFailure, FetchStart, FetchSuccess } from "./fetchSlice.js";
 import { FormFailure, FormStart, FormSuccess } from "./FormSlice.js";
 import { useNavigate } from "react-router";
+import { ServicesFetch } from "./AllServiceSlice.js";
 
 const ErrorToastOptions = {
   position: "bottom-center",
@@ -50,6 +51,25 @@ export const login = async (dispatch, user) => {
     dispatch(loginFailure(errorMessage));
   }
 };
+
+export const sendMe = async(dispatch)=>{
+  const token = localStorage.getItem("userToken");
+
+  if(token){
+  try {
+    const { data } = await axios.get("/api/athlete/send-me", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    // console.log(data);
+
+    await dispatch(loginSuccess(data));
+  } catch (error) {
+    const errorMessage = parseError(error);
+    toast.error(errorMessage);
+   
+  }
+}
+}
 export const SendOtp = async (dispatch, email) => {
   dispatch(Start());
   // const { email } = email;
@@ -79,6 +99,23 @@ export const GetNotifications = async () => {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log("-->", data);
+    return data;
+  } catch (err) {
+    toast.error(err);
+  }
+};
+
+export const MarkNotificationsRead = async () => {
+  const token = localStorage.getItem("userToken");
+  try {
+    const { data } = await axios.put(
+      "/api/notification/mark-all-read",
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
     return data;
   } catch (err) {
     toast.error(err);
@@ -642,6 +679,19 @@ export const UpdateProfilePic = async (dispatch, { formData, userId }) => {
     const errorMessage = parseError(error);
     toast.error(errorMessage, ErrorToastOptions);
     dispatch(Failure(errorMessage));
+    return false; // Return false to indicate that the request failed
+  }
+};
+
+export const getAllServices = async (dispatch) => {
+  try {
+    const { data } = await axios.get(`/api/doctor/getAllServices`);
+    console.log("data", data);
+    dispatch(ServicesFetch(data.services));
+  } catch (error) {
+    const errorMessage = parseError(error);
+    toast.error(errorMessage, ErrorToastOptions);
+
     return false; // Return false to indicate that the request failed
   }
 };

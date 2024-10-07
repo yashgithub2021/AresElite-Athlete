@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
+import { useSelector } from "react-redux";
 import AtheleteMenu from "../components/layout/AtheleteMenu";
 import { Input, CloseButton } from "@mantine/core";
 import { Table, Avatar } from "@mantine/core";
@@ -26,16 +27,6 @@ const AtheTransactions = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showData, setShowData] = useState([]);
-  const [allTransactions, setallTransactions] = useState([])
-  const getdetail = async () => {
-    const { transactions } = await GetTransaction(dispatch, {
-      date: date,
-      service_type: value,
-    });
-    console.log(transactions);
-    setallTransactions(transactions)
-    handleappointmentData(transactions);
-  };
   const [selected, setSelected] = useState([]);
   const [date, setDate] = useState(null);
   const [value, setValue] = useState(null);
@@ -43,6 +34,24 @@ const AtheTransactions = () => {
   const [mainheading, setmainheading] = useState("");
   const [subheading, setsubheading] = useState("");
   const [bodyforpaymnet, setbodyforpyamnet] = useState(null);
+  const [incomingData, setIncomingData] = useState([]);
+
+  const getdetail = useCallback(async () => {
+    const { transactions } = await GetTransaction(dispatch, {
+      date: date,
+      service_type: value,
+    });
+    console.log(transactions);
+    setIncomingData(transactions);
+    handleappointmentData(transactions);
+  }, [date, value, dispatch]);
+
+  const services = useSelector((state) => state.AllServices.services);
+  let filteredServices = Object.keys(services)?.filter(
+    (service) => !["OfflineVisit", "TeleSession"].includes(service)
+  );
+  filteredServices.push("planPurchase");
+
   const handleSelect = (date) => {
     const temp = new Date(date);
 
@@ -51,18 +60,19 @@ const AtheTransactions = () => {
     setDate(res);
     // const isSelected = selected.some((s) => dayjs(date).isSame(s, 'date'));
     // if (isSelected) {
-    //   setSelected((current) => current.filter((d) => !dayjs(d).isSame(date, 'date')));
-
-    // } else if (selected.length < 3) {
+    //   setSelected((current) =>
+    //     current.filter((d) => !dayjs(d).isSame(date, "date"))
+    //   );
+    // } else if (selected.length < 1) {
     //   setSelected((current) => [...current, date]);
-    //   alert(selected)
     // }
+    setSelected([date]);
     close();
   };
 
   useEffect(() => {
     getdetail();
-  }, [date, value]);
+  }, [getdetail]);
 
   const makePayment = async (service_type, bookingid, transactionId) => {
     const stripe = await loadStripe(
@@ -109,6 +119,50 @@ const AtheTransactions = () => {
     console.log(data);
     setclientsecret(data.clientSecret);
     paymentmodalhandler.open();
+  };
+
+  const actionBtn = (item) => {
+    const date = new Date(item.date);
+    const date_dis = `${date.getDate()}/${date.getMonth() + 1
+      }/${date.getFullYear()}`;
+    var btn;
+    if (item.payment_status === "paid") {
+      btn = (
+        <button
+          style={{
+            padding: "12.5px 26.5px 12.5px 26.5px",
+            background: "#7257FF26",
+            borderRadius: "10px",
+            width: "100%",
+          }}
+        >
+          Paid ${item.amount?.toLocaleString("en-US")}
+        </button>
+      );
+    } else {
+      btn = (
+        <button
+          style={{
+            padding: "12.5px 26.5px 12.5px 26.5px",
+            background: "#7257FF26",
+            borderRadius: "10px",
+            width: "100%",
+          }}
+          onClick={() => {
+            let id = item.bookingId;
+            if (item.service_type === "trainingSession") {
+              id = String(item._id);
+            }
+            makePayment(item.service_type, id);
+            setmainheading("Appointment");
+            setsubheading(`${date_dis}`);
+          }}
+        >
+          Pay ${item.amount?.toLocaleString("en-US")}
+        </button>
+      );
+    }
+    return btn;
   };
 
   const handleappointmentData = (arr) => {
@@ -428,14 +482,15 @@ const AtheTransactions = () => {
             <div className="d-flex console-inputs">
               <Select
                 placeholder="Select Service Type"
-                data={[
-                  "Medical/OfficeVisit",
-                  "ConsultationCall",
-                  "AddTrainingSessions",
-                  "Post-ConcussionEvaluation",
-                  "SportsVisionPerformanceEvaluation",
-                  "planPurchase",
-                ]}
+                // data={[
+                //   "Medical/OfficeVisit",
+                //   "ConsultationCall",
+                //   "TrainingSessions",
+                //   "Post-ConcussionEvaluation",
+                //   "SportsVisionPerformanceEvaluation",
+                //   "planPurchase",
+                // ]}
+                data={filteredServices}
                 comboboxProps={{
                   transitionProps: { transition: "pop", duration: 200 },
                 }}
@@ -475,10 +530,9 @@ const AtheTransactions = () => {
             </Table>
           </div>
           <div className="mobile-cont">
-            <TransactionCard />
-            <TransactionCard />
-            <TransactionCard />
-            <TransactionCard />
+            {incomingData?.map((data) => (
+              <TransactionCard data={data} action={actionBtn(data)} />
+            ))}
           </div>
         </div>
       </div>

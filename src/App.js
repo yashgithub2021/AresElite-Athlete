@@ -1,4 +1,7 @@
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+
 import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
 import UpdatePassword from "./components/auth/password/UpdatePassword";
@@ -22,23 +25,35 @@ import AthelProfileManager from "./components/layout/AthelProfileManager";
 import AtheleDashboard from "./pages/AtheleDashboard";
 import SelectPlan from "./pages/SelectPlan";
 import Prescriptions from "./pages/Prescriptions";
-
+import { getAllServices, sendMe } from "./features/apiCall.js";
+import { loginSuccess } from "./features/authSlice.js";
 
 function App() {
-  
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getAllServices(dispatch);
+  }, [dispatch]);
+
+  useEffect(() => {
+    sendMe(dispatch);
+  }, [dispatch]);
 
   return (
     <>
       <ErrorBoundary>
         {/* <Router> */}
-        <Routes >
-          <Route path="/" element={<AtheleDashboard/>} />
+        <Routes>
+          <Route path="/" element={<AtheleDashboard />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/a-home" element={<AtheleHome />} />
           <Route path="/a-transactions" element={<AtheTransactions />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/a-booking" element={<AtheBookings />} />
-          <Route path="/a-prescription/:presId/:appointmentid" element={<Prescriptions/>}/>
+          <Route
+            path="/a-prescription/:presId/:appointmentid"
+            element={<Prescriptions />}
+          />
           <Route path="/a-drill" element={<Athedrill />} />
           <Route path="/a-profile" element={<EditProfile />} />
           <Route path="/a-manager" element={<AthelProfileManager />} />
@@ -48,10 +63,9 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/update-password" element={<UpdatePassword />} />
           <Route path="*" element={<PageNotFound />} />
-          <Route path="/a-plans" element={<SelectPlan/>}/>
+          <Route path="/a-plans" element={<SelectPlan />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-use" element={<TermsOfUse />} />
-         
         </Routes>
         {/* </Router> */}
       </ErrorBoundary>

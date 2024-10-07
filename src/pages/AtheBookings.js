@@ -16,7 +16,8 @@ import { Skeleton } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
 import PaymentForm from "../components/PaymentForm";
 import { stripestep1 } from "../features/apiCall";
-import { AiOutlineClose as CancelIcon } from "react-icons/ai";
+// import { AiOutlineClose as CancelIcon } from "react-icons/ai";
+import { RiDeleteBinFill as CancelIcon } from "react-icons/ri";
 import { ActionIcon } from "@mantine/core";
 import { formatDateToMMDDYYY } from "../utils/functions";
 
@@ -36,21 +37,26 @@ const AtheBookings = () => {
 
   const [bodyData, setBodyData] = useState({});
 
+  const services = useSelector((state) => state.AllServices.services);
+  let filteredServices = Object.keys(services);
+  filteredServices.push("planPurchase");
+
   const handleSelect = (date) => {
-    alert(date);
     const temp = new Date(date);
+
     const res = `${temp.getFullYear()}-${
       temp.getMonth() + 1
     }-${temp.getDate()}`;
-    setDate(res);
-    // const isSelected = selected.some((s) => dayjs(date).isSame(s, 'date'));
+    setDate(dayjs(date).format("YYYY-MM-DD"));
+    const isSelected = selected.some((s) => dayjs(date).isSame(s, "date"));
     // if (isSelected) {
-    //   setSelected((current) => current.filter((d) => !dayjs(d).isSame(date, 'date')));
-
-    // } else if (selected.length < 3) {
+    //   setSelected((current) =>
+    //     current.filter((d) => !dayjs(d).isSame(date, "date"))
+    //   );
+    // } else if (selected.length < 1) {
     //   setSelected((current) => [...current, date]);
-    //   alert(selected)
     // }
+    setSelected([date]);
     close();
   };
 
@@ -115,6 +121,7 @@ const AtheBookings = () => {
   };
 
   const handleappointmentData = (arr) => {
+    console.log("ddddddddddddd", arr?.appointments);
     const apointmentData = arr?.appointments?.map((item, index) => {
       // const date = new Date(item.app_date);
       // const date_dis = `${date.getDate()}/${
@@ -130,24 +137,23 @@ const AtheBookings = () => {
             setsubheading(`${date_dis}`);
           }}
         >
-          Pay {item.amount}$
+          Pay ${item.amount}
         </button>
       );
 
-      const manualTypes = [
-        "TeleSession",
-        "OfflineVisit",
-        "AddTrainingSessions",
-      ];
+      const manualTypes = ["Medical/OfficeVisit", "ConsultationCall"];
       const isManual = manualTypes.includes(item.service_type);
 
-      if (!isManual && item.presId && item.status == "paid") {
+      if (isManual && item.presId && item.status === "paid") {
         buttoncomp = (
-          <NavLink to={`/a-prescription/${item.presId}/${item._id}`}>
+          <NavLink
+            to={`/a-prescription/${item.presId}/${item._id}`}
+            state={{ doctorName: item.doctor_trainer }}
+          >
             <button className="fill">View Prescription</button>
           </NavLink>
         );
-      } else if (!isManual && !item.presId && item.status == "paid") {
+      } else if (isManual && !item.presId && item.status === "paid") {
         buttoncomp = (
           <NavLink>
             <button className="fill">Prescription Upcoming</button>
@@ -155,7 +161,10 @@ const AtheBookings = () => {
         );
       }
 
-      if (isManual) {
+      if (
+        !isManual &&
+        (item.status === "paid" || item.service_status === "cancelled")
+      ) {
         buttoncomp = (
           <NavLink>
             <button className="fill">
@@ -187,6 +196,88 @@ const AtheBookings = () => {
     });
 
     setShowData(apointmentData);
+  };
+
+  const mob_serviceStatus = (item) => {
+    const date_dis = formatDateToMMDDYYY(item.app_date);
+    var buttoncomp = (
+      <button
+        style={{
+          padding: "12.5px 26.5px 12.5px 26.5px",
+          background: "#7257FF26",
+          borderRadius: "10px",
+          width: "100%",
+        }}
+        onClick={() => {
+          makePayment(item.service_type, item._id);
+          setmainheading("Appointment");
+          setsubheading(`${date_dis}`);
+        }}
+      >
+        Pay ${item.amount}
+      </button>
+    );
+
+    const manualTypes = ["Medical/OfficeVisit", "ConsultationCall"];
+    const isManual = manualTypes.includes(item.service_type);
+
+    if (isManual && item.presId && item.status === "paid") {
+      buttoncomp = (
+        <NavLink
+          to={`/a-prescription/${item.presId}/${item._id}`}
+          state={{ doctorName: item.doctor_trainer }}
+        >
+          <button
+            style={{
+              padding: "12.5px 26.5px 12.5px 26.5px",
+              background: "#7257FF26",
+              borderRadius: "10px",
+              width: "100%",
+            }}
+          >
+            View Prescription
+          </button>
+        </NavLink>
+      );
+    } else if (isManual && !item.presId && item.status === "paid") {
+      buttoncomp = (
+        <NavLink>
+          <button
+            style={{
+              padding: "12.5px 26.5px 12.5px 26.5px",
+              background: "#7257FF26",
+              borderRadius: "10px",
+              width: "100%",
+            }}
+          >
+            Prescription Upcoming
+          </button>
+        </NavLink>
+      );
+    }
+
+    if (
+      !isManual &&
+      (item.status === "paid" || item.service_status === "cancelled")
+    ) {
+      buttoncomp = (
+        <NavLink>
+          <button
+            style={{
+              padding: "12.5px 26.5px 12.5px 26.5px",
+              background: "#7257FF26",
+              borderRadius: "10px",
+              width: "100%",
+            }}
+          >
+            {item.service_status?.charAt(0).toUpperCase() +
+              item.service_status?.slice(1)}
+          </button>
+        </NavLink>
+      );
+    }
+
+    return buttoncomp;
   };
 
   const elements = [
@@ -319,11 +410,7 @@ const AtheBookings = () => {
     return (
       <Table.Tr key={element.name}>
         <Table.Td>{element.Name}</Table.Td>
-        <Table.Td>
-          {element.mass === "AddTrainingSessions"
-            ? "TrainingSessions"
-            : element.mass}
-        </Table.Td>
+        <Table.Td>{element.mass}</Table.Td>
         <Table.Td>{element.symbol}</Table.Td>
         <Table.Td>{element.time}</Table.Td>
         <Table.Td>{element.button}</Table.Td>
@@ -334,11 +421,16 @@ const AtheBookings = () => {
               setAlertDialog(true);
               setBId(element._id);
             }}
-            variant="filled"
-            color="red"
+            // variant="filled"
+            color="#ffffff"
             aria-label="Settings"
           >
-            <CancelIcon style={{ width: "70%", height: "70%" }} stroke={1.5} />
+            <CancelIcon
+              color="#E32636"
+              // style={{ width: "70%", height: "80%" }}
+              size={23}
+              stroke={1.5}
+            />
           </ActionIcon>
         </Table.Td>
       </Table.Tr>
@@ -408,13 +500,14 @@ const AtheBookings = () => {
             <div className="d-flex console-inputs">
               <Select
                 placeholder="Select Service Type"
-                data={[
-                  "Medical/OfficeVisit",
-                  "ConsultationCall",
-                  "AddTrainingSessions",
-                  "Post-ConcussionEvaluation",
-                  "SportsVisionPerformanceEvaluation",
-                ]}
+                // data={[
+                //   "Medical/OfficeVisit",
+                //   "ConsultationCall",
+                //   "TrainingSessions",
+                //   "Post-ConcussionEvaluation",
+                //   "SportsVisionPerformanceEvaluation",
+                // ]}
+                data={filteredServices}
                 comboboxProps={{
                   transitionProps: { transition: "pop", duration: 200 },
                 }}
@@ -508,22 +601,27 @@ const AtheBookings = () => {
                 serviceType={data.service_type}
                 date={formatDateToMMDDYYY(data.app_date)}
                 time={data.app_time}
-                pStatus={data.service_status}
+                pStatus={data.status}
+                serviceStatus={mob_serviceStatus(data)}
                 cancelBtn={
-                  <ActionIcon
+                  <button
                     onClick={() => {
                       setAlertDialog(true);
                       setBId(data._id);
                     }}
-                    variant="filled"
-                    color="red"
-                    aria-label="Settings"
+                    style={{
+                      padding: "12.5px 26.5px 12.5px 26.5px",
+                      background: "#FF7074",
+                      borderRadius: "10px",
+                      width: "100%",
+                    }}
                   >
-                    <CancelIcon
+                    {/* <CancelIcon
                       style={{ width: "70%", height: "70%" }}
                       stroke={1.5}
-                    />
-                  </ActionIcon>
+                    /> */}
+                    Cancel Booking
+                  </button>
                 }
               />
             ))}

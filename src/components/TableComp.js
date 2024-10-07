@@ -4,12 +4,12 @@ import { Avatar } from "@mantine/core";
 import { Button } from "@mantine/core";
 import { NavLink, useNavigate } from "react-router-dom";
 
+import { formatDateToMMDDYYY } from "../utils/functions";
+
 const TableComp = ({ data }) => {
   const naviagte = useNavigate();
 
   const rows = data?.map((data) => {
-    const date = new Date(data.app_date);
-    const dtstring = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
     return (
       <Table.Tr key={data._id}>
         <Table.Td>
@@ -27,14 +27,10 @@ const TableComp = ({ data }) => {
           </p>
         </Table.Td>
         <Table.Td>
-          <p>
-            {data.service_type === "AddTrainingSessions"
-              ? "TrainingSessions"
-              : data.service_type}
-          </p>
+          <p>{data.service_type}</p>
         </Table.Td>
         <Table.Td>
-          <p>{dtstring}</p>
+          <p>{formatDateToMMDDYYY(data.app_date)}</p>
         </Table.Td>
         <Table.Td>
           <p>{data.app_time}</p>
@@ -42,7 +38,7 @@ const TableComp = ({ data }) => {
         <Table.Td>
           {
             <div className="d-flex flex-column gap-2">
-              {data.status == "paid" && (
+              {data.status === "paid" && (
                 <Button
                   variant="filled"
                   color="var(--main-dark)"
@@ -54,7 +50,7 @@ const TableComp = ({ data }) => {
                   Paid{" "}
                 </Button>
               )}
-              {data.status != "paid" && (
+              {data.status !== "paid" && (
                 <Button
                   variant="filled"
                   color="#7257FF26"

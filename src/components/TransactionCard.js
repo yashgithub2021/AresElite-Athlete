@@ -1,39 +1,44 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-const TransactionCard = () => {
-    const navigate=useNavigate()
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
+import { formatDateToMMDDYYY } from "../utils/functions";
+
+const TransactionCard = ({ data, action }) => {
+  const navigate = useNavigate();
   return (
-    <div style={{fontSize:"small"}}>
-    <div className='d-flex justify-content-between'>
+    <div style={{ fontSize: "small" }}>
+      <div className="d-flex justify-content-between">
         <p>Name</p>
-        <p>Raj K</p>
-    </div>
-    <div className='d-flex justify-content-between'>
+        <p>{data.doctor}</p>
+      </div>
+      <div className="d-flex justify-content-between ">
         <p>Service Type</p>
-        <p>Sports Vision Performance</p>
-    </div>
-    <div className='d-flex justify-content-between'>
+        <p
+          style={{ maxWidth: "6rem", hyphens: "auto", wordBreak: "break-all" }}
+        >
+          {data.service_type}
+        </p>
+      </div>
+      <div className="d-flex justify-content-between">
         <p>Date</p>
-        <p>18/03/24</p>
-    </div>
-    <div className='d-flex justify-content-between'>
+        <p>{formatDateToMMDDYYY(data.date)}</p>
+      </div>
+      {/* <div className="d-flex justify-content-between">
         <p>Service</p>
         <p>9:23 AM</p>
-    </div>
-    <div className='d-flex justify-content-between'>
+      </div> */}
+      <div className="d-flex justify-content-between align-items-center">
         <p>Payment Status</p>
-        <button className='pending'>Pending</button>
+        <button className={data.payment_status} style={{ maxWidth: "5rem" }}>
+          {data.payment_status}
+        </button>
+      </div>
+      <div className="mt-2">
+        <div className="d-flex gap-3">{action}</div>
+      </div>
+      <hr />
     </div>
-    <div className=''>
-        <p>Action</p>
-        <div className="d-flex gap-3">
-            <button style={{padding:"12.5px 26.5px 12.5px 26.5px",background:"#7257FF26",borderRadius:"10px",width:"100%"}}>Pay Now</button>
+  );
+};
 
-        </div>
-    </div>
-    <hr/>
-    </div>
-  )
-}
-
-export default TransactionCard
+export default TransactionCard;
