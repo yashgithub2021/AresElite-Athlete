@@ -5,6 +5,8 @@ import { Stepper, rem } from "@mantine/core";
 const Card3 = ({ len, trackingid, startDate, endDate }) => {
   const [active, setActive] = React.useState(len);
   console.log(len);
+  console.log("Start", startDate)
+  console.log("end", endDate)
   const formattedStartDate = new Intl.DateTimeFormat("en-US", {
     month: "long",
     day: "numeric",

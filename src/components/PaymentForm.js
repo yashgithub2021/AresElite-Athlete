@@ -7,7 +7,7 @@ import { Avatar } from "@mantine/core";
 
 const PaymentForm = ({ clientSecret, mainheading, subheading, body }) => {
   const [stripePromise, setstripePromise] = useState(
-    "pk_test_51Oj2PsSH9ISObaXSOzY9UoQzpiIQE8X0Z7jn0j19DWqQkC5XohMv1GsU30vmMf6tkRUj7FQlz7DS09BM5A2Sk9fh00FxwNewLo"
+    "pk_test_51P1kZASAZ5IkC6u6AubbgH453E8NdLV1wAVeipaiZrHtY4PDfzPImUfquioLk924EBUtcYzgBLiMCd0hLDsWh4XY004V9N14x4"
   );
   console.log(body);
   return (
