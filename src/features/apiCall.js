@@ -51,6 +51,25 @@ export const login = async (dispatch, user) => {
     dispatch(loginFailure(errorMessage));
   }
 };
+
+export const sendMe = async(dispatch)=>{
+  const token = localStorage.getItem("userToken");
+
+  if(token){
+  try {
+    const { data } = await axios.get("/api/athlete/send-me", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    // console.log(data);
+
+    await dispatch(loginSuccess(data));
+  } catch (error) {
+    const errorMessage = parseError(error);
+    toast.error(errorMessage);
+   
+  }
+}
+}
 export const SendOtp = async (dispatch, email) => {
   dispatch(Start());
   // const { email } = email;

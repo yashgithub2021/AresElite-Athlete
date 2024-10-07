@@ -303,6 +303,7 @@ const PlanCard = ({ price, features, Name, phases }) => {
         style={{
           minWidth: "270px",
           minHeight: "520px",
+          height: "max-content",
           background: "white",
           borderRadius: "16px",
           padding: "30px 16px 30px",

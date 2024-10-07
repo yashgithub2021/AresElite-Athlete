@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+
 import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
 import UpdatePassword from "./components/auth/password/UpdatePassword";
@@ -24,13 +25,18 @@ import AthelProfileManager from "./components/layout/AthelProfileManager";
 import AtheleDashboard from "./pages/AtheleDashboard";
 import SelectPlan from "./pages/SelectPlan";
 import Prescriptions from "./pages/Prescriptions";
-import { getAllServices } from "./features/apiCall.js";
+import { getAllServices, sendMe } from "./features/apiCall.js";
+import { loginSuccess } from "./features/authSlice.js";
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     getAllServices(dispatch);
+  }, [dispatch]);
+
+  useEffect(() => {
+    sendMe(dispatch);
   }, [dispatch]);
 
   return (
