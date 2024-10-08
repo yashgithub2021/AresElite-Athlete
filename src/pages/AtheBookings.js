@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import AtheleteMenu from "../components/layout/AtheleteMenu";
 import { Input, CloseButton, Avatar } from "@mantine/core";
-import { Table } from "@mantine/core";
+import { Table, Loader } from "@mantine/core";
 import { NavLink } from "react-router-dom";
 import TransactionCard from "../components/TransactionCard";
 import BookingCard from "../components/layout/Components/BookingCard";
@@ -36,6 +36,7 @@ const AtheBookings = () => {
   const [bId, setBId] = useState("");
 
   const [bodyData, setBodyData] = useState({});
+  const [cancelStart, setCancelStart] = useState(false);
 
   const services = useSelector((state) => state.AllServices.services);
   let filteredServices = Object.keys(services);
@@ -121,7 +122,6 @@ const AtheBookings = () => {
   };
 
   const handleappointmentData = (arr) => {
-    console.log("ddddddddddddd", arr?.appointments);
     const apointmentData = arr?.appointments?.map((item, index) => {
       // const date = new Date(item.app_date);
       // const date_dis = `${date.getDate()}/${
@@ -656,15 +656,22 @@ const AtheBookings = () => {
           </div>
           <div className="d-flex gap-2 justify-content-end">
             <Button
-              style={{ backgroundColor: "var(--main-dark)" }}
+              style={{
+                backgroundColor: "var(--main-dark)",
+                cursor: cancelStart ? "not-allowed" : "pointer",
+              }}
+              disabled={cancelStart}
               onClick={async () => {
+                setCancelStart(true);
                 await CancelBooking(dispatch, bId);
+                setCancelStart(false);
                 setBId("");
                 setAlertDialog(false);
                 bookingDataHandler();
               }}
             >
-              Confirm
+              Confirm &nbsp;
+              {cancelStart && <Loader color="#ffffff" size="xs" />}
             </Button>
             <Button
               style={{

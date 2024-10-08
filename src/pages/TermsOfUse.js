@@ -2,17 +2,20 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Loader } from "@mantine/core";
 
 import AtheleteMenu from "../components/layout/AtheleteMenu";
 import axios from "../utils/axios.js";
 
 const TermsOfUse = () => {
   const [data, setData] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const is_Online = useSelector((state) => state.auth.is_Online);
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
+    setIsLoading(true);
     axios
       .get("/api/admin/terms_and_conditions", {
         params: {
@@ -23,6 +26,7 @@ const TermsOfUse = () => {
       })
       .then((result) => {
         setData(result?.data?.termsAndConditions.text);
+        setIsLoading(false);
       });
   }, [is_Online]);
 
@@ -34,7 +38,15 @@ const TermsOfUse = () => {
         }}
         className="terms-of-use scroll"
       >
-        <div dangerouslySetInnerHTML={{ __html: data }}></div>
+        {isLoading && (
+          <div
+            style={{ height: "80vh" }}
+            className="d-flex justify-content-center align-items-center mt-3"
+          >
+            <Loader size={70} color="var(--main-dark)" />
+          </div>
+        )}
+        {!isLoading && <div dangerouslySetInnerHTML={{ __html: data }}></div>}
         {/* <h2 className="mb-5">Terms of Use</h2>
         <p>
           Welcome to Doctor’s App! Please read these Terms & Conditions

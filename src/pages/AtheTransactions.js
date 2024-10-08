@@ -17,6 +17,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import PaymentForm from "../components/PaymentForm";
 import { formatDateToMMDDYYY } from "../utils/functions";
+import { Skeleton } from "@mantine/core";
 
 const AtheTransactions = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -32,13 +33,15 @@ const AtheTransactions = () => {
   const [subheading, setsubheading] = useState("");
   const [bodyforpaymnet, setbodyforpyamnet] = useState(null);
   const [incomingData, setIncomingData] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
 
   const getdetail = useCallback(async () => {
+    setIsFetching(true);
     const { transactions } = await GetTransaction(dispatch, {
       date: date,
       service_type: value,
     });
-    console.log(transactions);
+    setIsFetching(false);
     setIncomingData(transactions);
     handleappointmentData(transactions);
   }, [date, value, dispatch]);
@@ -475,21 +478,68 @@ const AtheTransactions = () => {
               </svg>
             </div>
           </div>
-          <div className="mt-3 table-cont">
-            <Table>
-              <Table.Thead>
-                <Table.Tr style={{ fontWeight: "600", fontSize: "18px" }}>
-                  <Table.Th>Name</Table.Th>
-                  <Table.Th>Service Type</Table.Th>
-                  <Table.Th>Date</Table.Th>
+          {isFetching ? (
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                gap: "15px",
+                padding: "30px",
+              }}
+            >
+              <Skeleton height={80} /> <Skeleton height={80} />{" "}
+              <Skeleton height={80} />
+            </div>
+          ) : (
+            <>
+              {showData.length === 0 ? (
+                <div
+                  style={{
+                    width: "100%",
+                    padding: "30px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <h1 style={{ color: "#3C3F53CC" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        justfiyContent: "center",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <img
+                        src="/images/DoctorMenuLogo.png"
+                        style={{ height: "250px", marginBottom: "-40px" }}
+                      />
+                      <h3>No Recent Booking Found</h3>
+                    </div>
+                  </h1>
+                </div>
+              ) : (
+                <div className="mt-3 table-cont">
+                  <Table>
+                    <Table.Thead>
+                      <Table.Tr style={{ fontWeight: "600", fontSize: "18px" }}>
+                        <Table.Th>Name</Table.Th>
+                        <Table.Th>Service Type</Table.Th>
+                        <Table.Th>Date</Table.Th>
 
-                  <Table.Th>Payment Status</Table.Th>
-                  <Table.Th>Service Status</Table.Th>
-                </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody>{rows}</Table.Tbody>
-            </Table>
-          </div>
+                        <Table.Th>Payment Status</Table.Th>
+                        <Table.Th>Service Status</Table.Th>
+                      </Table.Tr>
+                    </Table.Thead>
+                    <Table.Tbody>{rows}</Table.Tbody>
+                  </Table>
+                </div>
+              )}
+            </>
+          )}
           <div className="mobile-cont">
             {incomingData?.map((data) => (
               <TransactionCard data={data} action={actionBtn(data)} />

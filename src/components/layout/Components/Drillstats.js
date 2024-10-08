@@ -145,6 +145,7 @@ const Drillstats = ({ data, ispaid, userId }) => {
                   visible={true}
                   zIndex={1000}
                   overlayProps={{ blur: 0, radius: "xl" }}
+                  loaderProps={{ color: "var(--main-dark)" }}
                 />
               }
             </div>
@@ -185,8 +186,9 @@ const Drillstats = ({ data, ispaid, userId }) => {
 
       <ServiceBooking
         showBookModal={showBookModal}
-        handleModalOpen={() => setShowBookModal(true)}
+        // handleModalOpen={() => setShowBookModal(true)}
         handleModalClose={() => setShowBookModal(false)}
+        amount={0}
         service_type={serviceType}
       />
     </>

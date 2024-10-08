@@ -15,6 +15,9 @@ function ViewDrill({ openModal, handleCloseModal, clickedDrill, isMobile }) {
 
   const drillData = clickedDrill?.sessionDrills[currentDrill];
 
+  const firstDrill = currentDrill === 0;
+  const lastDrill = currentDrill === clickedDrill?.sessionDrills.length - 1;
+
   useEffect(() => {
     let dInputs = Object.entries(drillData?.inputValues || {})?.map(
       ([key, value]) => ({
@@ -205,9 +208,11 @@ function ViewDrill({ openModal, handleCloseModal, clickedDrill, isMobile }) {
                   backgroundColor: "#EAE6FF",
                   color: "var(--main-dark)",
                   width: isMobile ? "7rem" : "8rem",
-
                   padding: "0.5rem 0",
+                  cursor: firstDrill ? "not-allowed" : "pointer",
+                  opacity: !firstDrill ? 1 : 0.6,
                 }}
+                disabled={firstDrill ? true : false}
                 onClick={goBackAction}
               >
                 <div className="d-flex justify-content-center align-items-center gap-2 ">
@@ -222,7 +227,10 @@ function ViewDrill({ openModal, handleCloseModal, clickedDrill, isMobile }) {
                   color: "var(--main-dark)",
                   width: isMobile ? "7rem" : "8rem",
                   padding: "0.5rem 0",
+                  cursor: lastDrill ? "not-allowed" : "pointer",
+                  opacity: !lastDrill ? 1 : 0.6,
                 }}
+                disabled={lastDrill ? true : false}
                 onClick={goNextAction}
               >
                 <div className="d-flex justify-content-center align-items-center gap-2 ">
