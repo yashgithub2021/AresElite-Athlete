@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Stepper, Button, Group } from "@mantine/core";
 import { Table } from "@mantine/core";
+import { Loader } from "@mantine/core";
 
 import { Col } from "react-bootstrap";
 import ServiceBookingform from "./layout/Components/ServiceBookingform";
@@ -26,6 +27,9 @@ const ServiceModal = ({
   const [datedata, setDateData] = useState([]);
   const [formData, setFormData] = useState([]);
   const [disabled, setDisabled] = useState(true);
+  const [bookingStart, setBookingStart] = useState(false);
+
+  
 
   const handledisable = () => {
     if (formData.app_time) {
@@ -35,6 +39,8 @@ const ServiceModal = ({
   const handleBooking = async (e) => {
     e.preventDefault();
 
+    setBookingStart(true);
+
     setFormData((prevData) => ({
       ...prevData,
       ["service_type"]: service_type,
@@ -42,6 +48,8 @@ const ServiceModal = ({
     console.log("formData", formData);
 
     const res = await Bookappointment(dispatch, formData);
+    setBookingStart(false);
+
     if (res) {
       nextStep();
     }
@@ -203,10 +211,22 @@ const ServiceModal = ({
                     {!disabled && (
                       <button
                         className="continue-btn"
-                        disabled={disabled}
+                        disabled={bookingStart}
+                        style={{
+                          cursor: bookingStart ? "not-allowed" : "pointer",
+                        }}
                         onClick={handleBooking}
                       >
                         Continue
+                        {bookingStart && (
+                          <div style={{ marginTop: "0.2rem" }}>
+                            <Loader
+                              // style={{ marginTop: "1rem" }}
+                              color="#ffffff"
+                              size="xs"
+                            />
+                          </div>
+                        )}
                       </button>
                     )}
                   </div>

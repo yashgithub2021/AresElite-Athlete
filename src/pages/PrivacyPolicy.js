@@ -2,17 +2,20 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Loader } from "@mantine/core";
 
 import AtheleteMenu from "../components/layout/AtheleteMenu";
 import axios from "../utils/axios.js";
 
 const PrivacyPolicy = () => {
   const [data, setData] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const is_Online = useSelector((state) => state.auth.is_Online);
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
+    setIsLoading(true);
     axios
       .get("/api/admin/privacy_policy", {
         params: {
@@ -24,6 +27,7 @@ const PrivacyPolicy = () => {
       .then((result) => {
         console.log("result: ", result, result?.data?.privacyPolicy.text);
         setData(result?.data?.privacyPolicy.text);
+        setIsLoading(false);
       });
   }, [is_Online]);
 
@@ -35,7 +39,15 @@ const PrivacyPolicy = () => {
         }}
         className="privacy-policy scroll"
       >
-        <div dangerouslySetInnerHTML={{ __html: data }}></div>
+        {isLoading && (
+          <div
+            style={{ height: "80vh" }}
+            className="d-flex justify-content-center align-items-center mt-3"
+          >
+            <Loader size={70} color="var(--main-dark)" />
+          </div>
+        )}
+        {!isLoading && <div dangerouslySetInnerHTML={{ __html: data }}></div>}
         {/* {data} */}
         {/* <h2 className="mb-5">Privacy Policy</h2>
         <p>

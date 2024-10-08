@@ -14,6 +14,7 @@ const Loadercard = ({ color = "white" }) => {
         visible={true}
         zIndex={1000}
         overlayProps={{ blur: 0, color: "var(--main-dark)" }}
+        loaderProps={{ color: "#ffffff" }}
       />
     </div>
   );

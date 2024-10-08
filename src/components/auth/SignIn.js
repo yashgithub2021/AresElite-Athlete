@@ -125,7 +125,7 @@ const SignIn = () => {
           </InputGroup>
         </Form.Group>
 
-        <div className="d-flex justify-content-between">
+        <div className="d-flex justify-content-between ">
           <NavLink
             className="d-block w-md-100 ms-md-1 ms-0 text-nowrap mb-2 text-decoration-none purple-text"
             to="/signup"
@@ -153,7 +153,7 @@ const SignIn = () => {
               <span className="purple-text"> Privacy Policies.</span>
             </span>
           }
-          className="mb-4 mt-4"
+          className="mb-4 mt-4  "
         />
 
         <Button

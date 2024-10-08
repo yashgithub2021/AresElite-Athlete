@@ -1629,6 +1629,9 @@ thead {
   line-height: 18px;
   letter-spacing: 0px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .continue-btn {

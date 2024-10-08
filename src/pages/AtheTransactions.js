@@ -4,7 +4,11 @@ import AtheleteMenu from "../components/layout/AtheleteMenu";
 import { Input, CloseButton } from "@mantine/core";
 import { Table, Avatar } from "@mantine/core";
 import TransactionCard from "../components/TransactionCard";
-import { cancelTransactionAPI, GetTransaction, stripestep1 } from "../features/apiCall";
+import {
+  cancelTransactionAPI,
+  GetTransaction,
+  stripestep1,
+} from "../features/apiCall";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -17,7 +21,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import PaymentForm from "../components/PaymentForm";
 import { formatDateToMMDDYYY } from "../utils/functions";
-import { AiOutlineClose as CancelIcon } from "react-icons/ai";
+import { Skeleton } from "@mantine/core";
+import { RiDeleteBinFill as CancelIcon } from "react-icons/ri";
 import { ActionIcon } from "@mantine/core";
 import { toast } from "react-toastify";
 
@@ -35,13 +40,15 @@ const AtheTransactions = () => {
   const [subheading, setsubheading] = useState("");
   const [bodyforpaymnet, setbodyforpyamnet] = useState(null);
   const [incomingData, setIncomingData] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
 
   const getdetail = useCallback(async () => {
+    setIsFetching(true);
     const { transactions } = await GetTransaction(dispatch, {
       date: date,
       service_type: value,
     });
-    console.log(transactions);
+    setIsFetching(false);
     setIncomingData(transactions);
     handleappointmentData(transactions);
   }, [date, value, dispatch]);
@@ -55,8 +62,9 @@ const AtheTransactions = () => {
   const handleSelect = (date) => {
     const temp = new Date(date);
 
-    const res = `${temp.getFullYear()}-${temp.getMonth() + 1
-      }-${temp.getDate()}`;
+    const res = `${temp.getFullYear()}-${
+      temp.getMonth() + 1
+    }-${temp.getDate()}`;
     setDate(res);
     // const isSelected = selected.some((s) => dayjs(date).isSame(s, 'date'));
     // if (isSelected) {
@@ -86,7 +94,7 @@ const AtheTransactions = () => {
           userId: localStorage.getItem("userId"),
           isPaid: true,
           phaseName: localStorage.getItem("phase"),
-          transactionId
+          transactionId,
         },
       };
     } else if (service_type === "trainingSession") {
@@ -96,7 +104,7 @@ const AtheTransactions = () => {
           userId: localStorage.getItem("userId"),
           tId: bookingid,
           isPaid: true,
-          transactionId
+          transactionId,
         },
       };
     } else {
@@ -105,7 +113,7 @@ const AtheTransactions = () => {
           type: "booking",
           bookingId: bookingid,
           isPaid: true,
-          transactionId
+          transactionId,
         },
       };
     }
@@ -123,8 +131,9 @@ const AtheTransactions = () => {
 
   const actionBtn = (item) => {
     const date = new Date(item.date);
-    const date_dis = `${date.getDate()}/${date.getMonth() + 1
-      }/${date.getFullYear()}`;
+    const date_dis = `${date.getDate()}/${
+      date.getMonth() + 1
+    }/${date.getFullYear()}`;
     var btn;
     if (item.payment_status === "paid") {
       btn = (
@@ -168,7 +177,9 @@ const AtheTransactions = () => {
   const handleappointmentData = (arr) => {
     const apointmentData = arr?.map((item, index) => {
       const date = new Date(item.date);
-      const date_dis = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+      const date_dis = `${date.getDate()}/${
+        date.getMonth() + 1
+      }/${date.getFullYear()}`;
 
       let btn;
       if (item.payment_status === "paid") {
@@ -197,20 +208,20 @@ const AtheTransactions = () => {
       }
 
       // Add Cancel button for planPurchase
-      const cancelButton = item.service_type === "planPurchase" ? (
-        <ActionIcon
-          variant="filled"
-          color="red"
-          aria-label="Settings"
-          style={{ width: '100%' }}
-          onClick={() => handleCancelTransaction(item._id)}
-        >
-          <CancelIcon
-            style={{ width: "70%", height: "70%" }}
-            stroke={1.5}
-          />
-        </ActionIcon>
-      ) : null;
+      const cancelButton =
+        item.service_type === "planPurchase" ? (
+          <ActionIcon
+            color="#ffffff"
+            onClick={() => handleCancelTransaction(item._id)}
+          >
+            <CancelIcon
+              color="#E32636"
+              // style={{ width: "70%", height: "80%" }}
+              size={23}
+              stroke={1.5}
+            />
+          </ActionIcon>
+        ) : null;
 
       if (item.service_type !== "planPurchase") {
         return {
@@ -231,12 +242,8 @@ const AtheTransactions = () => {
               {item.payment_status}
             </button>
           ),
-          status: (
-            <div>
-              {btn}
-            </div>
-          ),
-          cancelBtn: cancelButton
+          status: <div>{btn}</div>,
+          cancelBtn: cancelButton,
         };
       } else {
         return {
@@ -263,7 +270,7 @@ const AtheTransactions = () => {
               {/* {cancelButton} Render the Cancel button for planPurchase */}
             </div>
           ),
-          cancelBtn: cancelButton
+          cancelBtn: cancelButton,
         };
       }
     });
@@ -277,17 +284,16 @@ const AtheTransactions = () => {
       // Add API call or logic here to cancel the transaction
       const data = await cancelTransactionAPI(dispatch, transactionId);
       if (data.success) {
-        toast.success(data.message)
+        toast.success(data.message);
         getdetail();
       }
       // Refresh the transaction list after cancellation
     } catch (error) {
       console.error("Error canceling transaction:", error);
-      toast.error(error.response.data.error.message)
+      toast.error(error.response.data.error.message);
       getdetail();
     }
   };
-
 
   console.log(showData);
 
@@ -415,8 +421,7 @@ const AtheTransactions = () => {
 
       <Table.Td>{element.button}</Table.Td>
       <Table.Td>{element.status}</Table.Td>
-      <Table.Td >{element.cancelBtn ? element.cancelBtn : ''}</Table.Td>
-
+      <Table.Td>{element.cancelBtn ? element.cancelBtn : ""}</Table.Td>
     </Table.Tr>
   ));
   return (
@@ -513,22 +518,69 @@ const AtheTransactions = () => {
               </svg>
             </div>
           </div>
-          <div className="mt-3 table-cont">
-            <Table>
-              <Table.Thead>
-                <Table.Tr style={{ fontWeight: "600", fontSize: "18px" }}>
-                  <Table.Th>Name</Table.Th>
-                  <Table.Th>Service Type</Table.Th>
-                  <Table.Th>Date</Table.Th>
+          {isFetching ? (
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                gap: "15px",
+                padding: "30px",
+              }}
+            >
+              <Skeleton height={80} /> <Skeleton height={80} />{" "}
+              <Skeleton height={80} />
+            </div>
+          ) : (
+            <>
+              {showData.length === 0 ? (
+                <div
+                  style={{
+                    width: "100%",
+                    padding: "30px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <h1 style={{ color: "#3C3F53CC" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        justfiyContent: "center",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <img
+                        src="/images/DoctorMenuLogo.png"
+                        style={{ height: "250px", marginBottom: "-40px" }}
+                      />
+                      <h3>No Recent Booking Found</h3>
+                    </div>
+                  </h1>
+                </div>
+              ) : (
+                <div className="mt-3 table-cont">
+                  <Table>
+                    <Table.Thead>
+                      <Table.Tr style={{ fontWeight: "600", fontSize: "18px" }}>
+                        <Table.Th>Name</Table.Th>
+                        <Table.Th>Service Type</Table.Th>
+                        <Table.Th>Date</Table.Th>
 
-                  <Table.Th>Payment Status</Table.Th>
-                  <Table.Th>Service Status</Table.Th>
-                  <Table.Th>Action</Table.Th>
-                </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody>{rows}</Table.Tbody>
-            </Table>
-          </div>
+                        <Table.Th>Payment Status</Table.Th>
+                        <Table.Th>Service Status</Table.Th>
+                        <Table.Th>Action</Table.Th>
+                      </Table.Tr>
+                    </Table.Thead>
+                    <Table.Tbody>{rows}</Table.Tbody>
+                  </Table>
+                </div>
+              )}
+            </>
+          )}
           <div className="mobile-cont">
             {incomingData?.map((data) => (
               <TransactionCard data={data} action={actionBtn(data)} />

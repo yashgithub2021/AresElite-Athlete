@@ -15,6 +15,7 @@ import {
   Bookappointment,
   hasAlreadyBookAppointment,
 } from "../../../features/apiCall";
+import { Loader } from "@mantine/core";
 
 const TeleSessions = ({
   trainingdata,
@@ -30,6 +31,7 @@ const TeleSessions = ({
   const [formData, setFormData] = useState([]);
   const [datedata, setDateData] = useState([]);
   const [disabled, setDisabled] = useState(true);
+  const [bookingStart, setBookingStart] = useState(false);
 
   // console.log("sdsd", Object.keys(trainingdata).length);
 
@@ -123,13 +125,14 @@ const TeleSessions = ({
   };
   const handleBooking = async (e) => {
     e.preventDefault();
-
+    setBookingStart(true);
     setFormData((prevData) => ({
       ...prevData,
       ["service_type"]: service_type,
     }));
 
     const res = await Bookappointment(dispatch, formData, 0);
+    setBookingStart(false);
     if (res) {
       nextStep();
     }
@@ -274,10 +277,22 @@ const TeleSessions = ({
                     {!disabled && (
                       <button
                         className="continue-btn"
-                        disabled={disabled}
+                        disabled={bookingStart}
+                        style={{
+                          cursor: bookingStart ? "not-allowed" : "pointer",
+                        }}
                         onClick={handleBooking}
                       >
                         Continue
+                        {bookingStart && (
+                          <div style={{ marginTop: "0.2rem" }}>
+                            <Loader
+                              // style={{ marginTop: "1rem" }}
+                              color="#ffffff"
+                              size="xs"
+                            />
+                          </div>
+                        )}
                       </button>
                     )}
                   </div>

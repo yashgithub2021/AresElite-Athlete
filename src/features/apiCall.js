@@ -620,7 +620,7 @@ export const UpdateProfile = async (dispatch, formdata) => {
 };
 
 export const CancelBooking = async (dispatch, id) => {
-  dispatch(Start());
+ 
   const token = localStorage.getItem("userToken");
 
   try {
@@ -632,7 +632,7 @@ export const CancelBooking = async (dispatch, id) => {
 
     return true;
   } catch (error) {
-    console.log(error);
+
     const errorMessage = parseError(error);
     toast.error(errorMessage, ErrorToastOptions);
     dispatch(Failure(errorMessage));
