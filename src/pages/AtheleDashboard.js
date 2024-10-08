@@ -68,7 +68,10 @@ const AtheleDashboard = () => {
 
   // console.log(shiparray[0]?.shipmentStatus[0].startDate)
   useEffect(() => {
-    getuserDetails();
+    const token = localStorage.getItem("userToken");
+    if (token) {
+      getuserDetails();
+    }
   }, []);
 
   console.log("--> dwd", plan);

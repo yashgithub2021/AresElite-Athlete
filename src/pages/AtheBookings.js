@@ -423,7 +423,7 @@ const AtheBookings = () => {
             }}
             // variant="filled"
             color="#ffffff"
-            aria-label="Settings"
+          
           >
             <CancelIcon
               color="#E32636"

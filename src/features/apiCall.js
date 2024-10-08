@@ -168,6 +168,15 @@ export const stripestep2 = async (dispatch, { body }) => {
   });
   return data;
 };
+
+export const cancelTransactionAPI = async (dispatch, id) => {
+  const token = localStorage.getItem("userToken");
+  console.log(id)
+  const { data } = await axios.delete(`/api/payments/cancelSubscription/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  return data
+}
 export const GetRecentBookingsSearch = async (
   dispatch,
   {
@@ -420,7 +429,7 @@ export const getAllBooking = async () => {
     });
     console.log(data);
     return data.sortedAppointments;
-  } catch (err) {}
+  } catch (err) { }
 };
 
 export const getSlots = async (service_type, date, doctor) => {
@@ -472,12 +481,13 @@ export const GetPlans = async (dispatch) => {
 
 export const Plans = async (dispatch, { Name, phase, ClientId }) => {
   dispatch(Start());
+
   const token = localStorage.getItem("userToken");
   try {
     console.log(ClientId);
 
     const data = await axios.put(
-      `/api/doctor/select-plan?userId=${ClientId}&plan=${Name}&planPhase=${phase.name}`,
+      `/api/doctor/select-plan?userId=${ClientId}&plan=${Name}&planPhase=${phase}`,
       {},
       {
         headers: { Authorization: `Bearer ${token}` },

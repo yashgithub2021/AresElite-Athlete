@@ -4,7 +4,11 @@ import AtheleteMenu from "../components/layout/AtheleteMenu";
 import { Input, CloseButton } from "@mantine/core";
 import { Table, Avatar } from "@mantine/core";
 import TransactionCard from "../components/TransactionCard";
-import { GetTransaction, stripestep1 } from "../features/apiCall";
+import {
+  cancelTransactionAPI,
+  GetTransaction,
+  stripestep1,
+} from "../features/apiCall";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -18,6 +22,9 @@ import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import PaymentForm from "../components/PaymentForm";
 import { formatDateToMMDDYYY } from "../utils/functions";
 import { Skeleton } from "@mantine/core";
+import { RiDeleteBinFill as CancelIcon } from "react-icons/ri";
+import { ActionIcon } from "@mantine/core";
+import { toast } from "react-toastify";
 
 const AtheTransactions = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -58,8 +65,8 @@ const AtheTransactions = () => {
     const res = `${temp.getFullYear()}-${
       temp.getMonth() + 1
     }-${temp.getDate()}`;
-    setDate(dayjs(date).format("YYYY-MM-DD"));
-    const isSelected = selected.some((s) => dayjs(date).isSame(s, "date"));
+    setDate(res);
+    // const isSelected = selected.some((s) => dayjs(date).isSame(s, 'date'));
     // if (isSelected) {
     //   setSelected((current) =>
     //     current.filter((d) => !dayjs(d).isSame(date, "date"))
@@ -75,9 +82,9 @@ const AtheTransactions = () => {
     getdetail();
   }, [getdetail]);
 
-  const makePayment = async (service_type, bookingid) => {
+  const makePayment = async (service_type, bookingid, transactionId) => {
     const stripe = await loadStripe(
-      "pk_test_51Oj2PsSH9ISObaXSOzY9UoQzpiIQE8X0Z7jn0j19DWqQkC5XohMv1GsU30vmMf6tkRUj7FQlz7DS09BM5A2Sk9fh00FxwNewLo"
+      "pk_test_51P1kZASAZ5IkC6u6AubbgH453E8NdLV1wAVeipaiZrHtY4PDfzPImUfquioLk924EBUtcYzgBLiMCd0hLDsWh4XY004V9N14x4"
     );
     var body;
     if (service_type == "planPurchase") {
@@ -86,6 +93,8 @@ const AtheTransactions = () => {
           type: service_type,
           userId: localStorage.getItem("userId"),
           isPaid: true,
+          phaseName: localStorage.getItem("phase"),
+          transactionId,
         },
       };
     } else if (service_type === "trainingSession") {
@@ -95,6 +104,7 @@ const AtheTransactions = () => {
           userId: localStorage.getItem("userId"),
           tId: bookingid,
           isPaid: true,
+          transactionId,
         },
       };
     } else {
@@ -103,6 +113,7 @@ const AtheTransactions = () => {
           type: "booking",
           bookingId: bookingid,
           isPaid: true,
+          transactionId,
         },
       };
     }
@@ -169,7 +180,8 @@ const AtheTransactions = () => {
       const date_dis = `${date.getDate()}/${
         date.getMonth() + 1
       }/${date.getFullYear()}`;
-      var btn;
+
+      let btn;
       if (item.payment_status === "paid") {
         btn = (
           <button className="fill">
@@ -185,7 +197,7 @@ const AtheTransactions = () => {
               if (item.service_type === "trainingSession") {
                 id = String(item._id);
               }
-              makePayment(item.service_type, id);
+              makePayment(item.service_type, id, item._id);
               setmainheading("Appointment");
               setsubheading(`${date_dis}`);
             }}
@@ -194,6 +206,23 @@ const AtheTransactions = () => {
           </button>
         );
       }
+
+      // Add Cancel button for planPurchase
+      const cancelButton =
+        item.service_type === "planPurchase" ? (
+          <ActionIcon
+            color="#ffffff"
+            onClick={() => handleCancelTransaction(item._id)}
+          >
+            <CancelIcon
+              color="#E32636"
+              // style={{ width: "70%", height: "80%" }}
+              size={23}
+              stroke={1.5}
+            />
+          </ActionIcon>
+        ) : null;
+
       if (item.service_type !== "planPurchase") {
         return {
           Name: (
@@ -206,16 +235,15 @@ const AtheTransactions = () => {
             </div>
           ),
           mass: `${item.service_type}`,
-          // symbol: `${date_dis}`,
           symbol: `${formatDateToMMDDYYY(item?.date)}`,
-          name: "Carbon",
           time: <p className="time">{item.app_time}</p>,
           button: (
             <button className={`${item.payment_status}`}>
               {item.payment_status}
             </button>
           ),
-          status: btn,
+          status: <div>{btn}</div>,
+          cancelBtn: cancelButton,
         };
       } else {
         return {
@@ -230,7 +258,6 @@ const AtheTransactions = () => {
           ),
           mass: `Plan Purchase`,
           symbol: `${formatDateToMMDDYYY(item?.date)}`,
-          name: "Carbon",
           time: <p className="time">{item.app_time}</p>,
           button: (
             <button className={`${item.payment_status}`}>
@@ -238,22 +265,34 @@ const AtheTransactions = () => {
             </button>
           ),
           status: (
-            <button
-              className="fill"
-              onClick={() => {
-                makePayment(item.service_type);
-                setmainheading(item.plan);
-                setsubheading(item.phase);
-              }}
-            >
-              Pay ${item.amount.toLocaleString("en-US")}
-            </button>
+            <div>
+              {btn}
+              {/* {cancelButton} Render the Cancel button for planPurchase */}
+            </div>
           ),
+          cancelBtn: cancelButton,
         };
       }
     });
 
     setShowData(apointmentData);
+  };
+
+  // Handler function for canceling the transaction
+  const handleCancelTransaction = async (transactionId) => {
+    try {
+      // Add API call or logic here to cancel the transaction
+      const data = await cancelTransactionAPI(dispatch, transactionId);
+      if (data.success) {
+        toast.success(data.message);
+        getdetail();
+      }
+      // Refresh the transaction list after cancellation
+    } catch (error) {
+      console.error("Error canceling transaction:", error);
+      toast.error(error.response.data.error.message);
+      getdetail();
+    }
   };
 
   console.log(showData);
@@ -382,6 +421,7 @@ const AtheTransactions = () => {
 
       <Table.Td>{element.button}</Table.Td>
       <Table.Td>{element.status}</Table.Td>
+      <Table.Td>{element.cancelBtn ? element.cancelBtn : ""}</Table.Td>
     </Table.Tr>
   ));
   return (
@@ -532,6 +572,7 @@ const AtheTransactions = () => {
 
                         <Table.Th>Payment Status</Table.Th>
                         <Table.Th>Service Status</Table.Th>
+                        <Table.Th>Action</Table.Th>
                       </Table.Tr>
                     </Table.Thead>
                     <Table.Tbody>{rows}</Table.Tbody>

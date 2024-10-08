@@ -439,3 +439,8 @@ body {
   background-color: #faf8fe !important;
   border: 1px solid var(--main-dark);
 }
+
+.form-check-input:checked {
+  background-color: var(--main-dark);
+  border-color: var(--main-dark);
+}

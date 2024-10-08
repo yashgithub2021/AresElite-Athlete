@@ -1,54 +1,68 @@
+import { useState } from 'react';
 import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 import { useDispatch } from 'react-redux';
 import { stripestep2 } from '../features/apiCall';
+import { toast } from 'react-toastify';
 
-const Checkoutform = ({ body }) => {
-  const dispatch = useDispatch()
+const CheckoutForm = ({ body }) => {
+  const dispatch = useDispatch();
   const stripe = useStripe();
   const elements = useElements();
 
+  // State to manage form visibility
+  const [isFormVisible, setFormVisible] = useState(true);
+
   const handleSubmit = async (event) => {
-    alert("here")
-    // We don't want to let default form submission happen here,
-    // which would refresh the page.
     event.preventDefault();
 
     if (!stripe || !elements) {
       // Stripe.js hasn't yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
+      return;
+    }
+
+    if (body.isPaid) {
+      // Payment has already succeeded, handle this case
+      const toastId = toast.success("Payment successfully processed", {
+        onClose: async () => {
+          await stripestep2(dispatch, { body });
+          setFormVisible(false); // Close the payment form
+          window.location.reload(); // Reload the page only after toast is closed
+        },
+      });
       return;
     }
 
     const result = await stripe.confirmPayment({
-      //`Elements` instance that was used to create the Payment Element
       elements,
       confirmParams: {
         return_url: `${window.location.origin}/a-transactions`,
       },
-      redirect: 'if_required'
+      redirect: 'if_required',
     });
 
     if (result.error) {
-      // Show error to your customer (for example, payment details incomplete)
-      alert(result.error.message)
+      // Show error to your customer
+      alert(result.error.message);
     } else {
-      console.log("success")
-      console.log({ body })
-      await stripestep2(dispatch, { body })
-      window.location.reload()
-      // Your customer will be redirected to your `return_url`. For some payment
-      // methods like iDEAL, your customer will be redirected to an intermediate
-      // site first to authorize the payment, then redirected to the `return_url`.
+      console.log("Payment successful");
+      await stripestep2(dispatch, { body });
+      setFormVisible(false); // Close the payment form
+      window.location.reload();
     }
   };
 
+  // Render the form conditionally
   return (
-
-    <form onSubmit={handleSubmit} className="payment_form">
-      <PaymentElement />
-      <button disabled={!stripe} onClick={() => { }} className="signup-button">Submit</button>
-    </form>
-  )
+    <>
+      {isFormVisible && (
+        <form onSubmit={handleSubmit} className="payment_form">
+          <PaymentElement />
+          <button type="submit" disabled={!stripe} className="signup-button">Submit</button>
+        </form>
+      )}
+      {!isFormVisible && <div>Your payment has been processed successfully.</div>}
+    </>
+  );
 };
 
-export default Checkoutform;
+export default CheckoutForm;
