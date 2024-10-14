@@ -16,6 +16,7 @@ body {
 
 .grey-button {
   width: 180px !important;
+  height: 40px !important;
 
   align-items: center;
   appearance: none;

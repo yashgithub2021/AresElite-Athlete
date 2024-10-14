@@ -24,7 +24,8 @@ const RecentBooking = () => {
   const filteredNotifs = notifs?.filter((item) => {
     if (
       item.service_type === "TeleSession" ||
-      item.service_type === "OfflineVisit"
+      item.service_type === "OfflineVisit" ||
+      item.service_status === "cancelled"
     ) {
       return false;
     }
