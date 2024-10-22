@@ -46,6 +46,7 @@ const TableComp = ({ data }) => {
                   // onClick={() => {
                   //   naviagte(`/a-drill`);
                   // }}
+                  onClick={() => naviagte("/a-transactions")}
                 >
                   Paid{" "}
                 </Button>

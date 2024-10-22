@@ -47,29 +47,28 @@ export const login = async (dispatch, user) => {
     await dispatch(loginSuccess(data));
   } catch (error) {
     const errorMessage = parseError(error);
-    toast.error(errorMessage);
-    dispatch(loginFailure(errorMessage));
+    toast.error("Invalid username or password");
+    dispatch(loginFailure("Invalid username or password"));
   }
 };
 
-export const sendMe = async(dispatch)=>{
+export const sendMe = async (dispatch) => {
   const token = localStorage.getItem("userToken");
 
-  if(token){
-  try {
-    const { data } = await axios.get("/api/athlete/send-me", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    // console.log(data);
+  if (token) {
+    try {
+      const { data } = await axios.get("/api/athlete/send-me", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      // console.log(data);
 
-    await dispatch(loginSuccess(data));
-  } catch (error) {
-    const errorMessage = parseError(error);
-    toast.error(errorMessage);
-   
+      await dispatch(loginSuccess(data));
+    } catch (error) {
+      const errorMessage = parseError(error);
+      toast.error(errorMessage);
+    }
   }
-}
-}
+};
 export const SendOtp = async (dispatch, email) => {
   dispatch(Start());
   // const { email } = email;
@@ -171,12 +170,15 @@ export const stripestep2 = async (dispatch, { body }) => {
 
 export const cancelTransactionAPI = async (dispatch, id) => {
   const token = localStorage.getItem("userToken");
-  console.log(id)
-  const { data } = await axios.delete(`/api/payments/cancelSubscription/${id}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  })
-  return data
-}
+  console.log(id);
+  const { data } = await axios.delete(
+    `/api/payments/cancelSubscription/${id}`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+  return data;
+};
 export const GetRecentBookingsSearch = async (
   dispatch,
   {
@@ -429,7 +431,7 @@ export const getAllBooking = async () => {
     });
     console.log(data);
     return data.sortedAppointments;
-  } catch (err) { }
+  } catch (err) {}
 };
 
 export const getSlots = async (service_type, date, doctor) => {
@@ -620,7 +622,6 @@ export const UpdateProfile = async (dispatch, formdata) => {
 };
 
 export const CancelBooking = async (dispatch, id) => {
- 
   const token = localStorage.getItem("userToken");
 
   try {
@@ -632,7 +633,6 @@ export const CancelBooking = async (dispatch, id) => {
 
     return true;
   } catch (error) {
-
     const errorMessage = parseError(error);
     toast.error(errorMessage, ErrorToastOptions);
     dispatch(Failure(errorMessage));

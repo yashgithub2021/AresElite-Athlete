@@ -61,9 +61,13 @@
 }
 
 .logout-button-wrapper {
-  position: absolute;
-  bottom: 10px;
+  /* position: absolute;
+  left: 2.5rem;
+  bottom: 10px; */
   color: white;
+
+  display: flex;
+  margin: auto auto 1rem 0.8rem;
 }
 .logout-button-wrapper p {
   color: white;

@@ -1808,13 +1808,14 @@ thead {
   justify-content: space-between;
   padding-left: 30px;
   padding-right: 30px;
-  padding-top: 25px;
+  /* padding-top: 25px; */
 }
 
 .nav-links .cont {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: 12px;
   text-align: left;
 }
 

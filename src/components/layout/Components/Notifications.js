@@ -72,7 +72,13 @@ const Notifications = () => {
       <Modal.Root opened={opened} onClose={close} size={"33rem"}>
         <Modal.Overlay />
 
-        <Modal.Content style={{ paddingLeft: "0.5rem" }}>
+        <Modal.Content
+          style={{
+            paddingTop: "0.5rem",
+            paddingLeft: "0.5rem",
+            borderRadius: "1.5rem",
+          }}
+        >
           <Modal.Header>
             <Modal.Title style={{ width: "100%" }}>
               <div className=" d-flex gap-3 mb-4">
@@ -123,16 +129,17 @@ const Notifications = () => {
                   return (
                     <>
                       <div
-                        className="d-flex flex-start flex-row mt-2 gap-3"
+                        className="d-flex flex-start flex-row mt-0  gap-3"
                         style={{
-                          backgroundColor: !item.seen ? "#F4F4F4" : "",
-                          paddingTop: "0.5rem",
+                          backgroundColor: !item.seen ? "#F4F4F4" : "#fbfbfb",
+                          paddingTop: "2rem",
                           paddingLeft: "0.5rem",
+                          borderRadius: "0.2rem",
                         }}
                       >
                         <Avatar src="https://s3-alpha-sig.figma.com/img/93eb/70e4/1b58b9ca0fc1d95ef7ee8f1a97100431?Expires=1710720000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=J8X6GzryNyHsiHrAOg-Xp5jH-Y6xzKk2M0ELy8v3CR4Y4zwEp2Cv9yZ0VEhxBL1GNG559NPdUfe44X9aatKkuWKYrjogjkpN782W6kkLvpUMF1DazVpctez~lVmxPMh5lJpokXOebsmpcsjvJSYEcHG756GfllCL4IqPQLG20T10dR5DzA6fYttW~t2vvRLAsVMtxhrr1dnuPI9KxkPvvcb9gfyAokxTCevcHIoTOZ97IdLvW9QkvV8ehYWlhQDvSFCKa9Ssfp~xX668CYkkY8tfZWasMhxXipBPz5vpGhDUwPjC7ZG3tPLlB~z1l6Enwt378BasSQN32GSEDJ95Vw__"></Avatar>
 
-                        <div className="d-flex gap-3 items-center">
+                        <div className="d-flex gap-3  items-center">
                           {item.doctor && (
                             <>
                               {" "}
@@ -154,9 +161,11 @@ const Notifications = () => {
                       <div
                         className="d-flex  flex-column align-items-end "
                         style={{
-                          backgroundColor: !item.seen ? "#F4F4F4" : "",
-                          paddingRight: "0.5rem",
-                          paddingBottom: "0.5rem",
+                          backgroundColor: !item.seen ? "#F4F4F4" : "#fbfbfb",
+                          padding: "1rem",
+                          paddingBottom: "2rem",
+
+                          paddingTop: "0",
                         }}
                       >
                         <p

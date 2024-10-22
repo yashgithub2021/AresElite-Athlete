@@ -134,7 +134,7 @@ const EditProfile = () => {
             <label htmlFor="inputPassword4">Phone Number</label>
             <div className="d-flex " style={{ width: "100%" }}>
               <select className="select">
-                <option>+91</option>
+                <option>+1</option>
               </select>
               <Input
                 variant="filled"
