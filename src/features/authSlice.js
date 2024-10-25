@@ -28,7 +28,7 @@ const authSlice = createSlice({
     isFetching: false,
     error: false,
     errMsg: "",
-
+    prefix: "Mr",
     city: city,
     state: state,
     address,
@@ -77,6 +77,7 @@ const authSlice = createSlice({
       state.phase = action?.payload.user?.phase;
       state.plan = action?.payload?.user?.plan;
       state.is_Online = `${action?.payload?.user?.is_online}`;
+      state.prefix = action?.payload?.user?.prefix;
       localStorage.setItem("plan", state.plan);
       localStorage.setItem("userToken", state.token);
       localStorage.setItem("userId", state.user);
@@ -92,6 +93,7 @@ const authSlice = createSlice({
       localStorage.setItem("phone", state.phone);
       localStorage.setItem("dob", state.dob);
       localStorage.setItem("is_Online", state.is_Online);
+      localStorage.setItem("prefix", state.prefix);
     },
 
     loginFailure: (state, action) => {
@@ -127,12 +129,14 @@ const authSlice = createSlice({
       state.gender = action?.payload?.athlete?.gender;
       state.zip = action?.payload?.athlete?.zip;
       state.address = action?.payload?.athlete?.address;
+      state.prefix = action?.payload?.athlete?.prefix;
       state.lastname = action?.payload?.athlete?.lastName;
       state.phone = action?.payload?.athlete?.phone;
 
       localStorage.setItem("userId", state.user);
       localStorage.setItem("userName", state.userName);
       localStorage.setItem("userEmail", state.userEmail);
+      localStorage.setItem("prefix", state.prefix);
 
       localStorage.setItem("city", state.city);
       localStorage.setItem("state", state.state);

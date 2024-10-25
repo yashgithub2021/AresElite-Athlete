@@ -19,7 +19,7 @@ import { stripestep1 } from "../features/apiCall";
 // import { AiOutlineClose as CancelIcon } from "react-icons/ai";
 import { RiDeleteBinFill as CancelIcon } from "react-icons/ri";
 import { ActionIcon } from "@mantine/core";
-import { formatDateToMMDDYYY } from "../utils/functions";
+import { firstLetterUppercase, formatDateToMMDDYYY } from "../utils/functions";
 
 const AtheBookings = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -189,8 +189,16 @@ const AtheBookings = () => {
         mass: `${item.service_type}`,
         symbol: `${date_dis}`,
         name: "Carbon",
-        time: <p className="time">{item.app_time}</p>,
-        button: <button className={`${item.status}`}>{item.status}</button>,
+        time: (
+          <p className="time" style={{ marginBottom: 0 }}>
+            {item.app_time}
+          </p>
+        ),
+        button: (
+          <button className={`${item.status}`}>
+            {firstLetterUppercase(item.status)}
+          </button>
+        ),
         status: buttoncomp,
       };
     });
@@ -423,7 +431,6 @@ const AtheBookings = () => {
             }}
             // variant="filled"
             color="#ffffff"
-          
           >
             <CancelIcon
               color="#E32636"
@@ -677,6 +684,10 @@ const AtheBookings = () => {
               style={{
                 backgroundColor: "#7257FF26",
                 color: "var(--main-dark)",
+              }}
+              onClick={() => {
+                setBId("");
+                setAlertDialog(false);
               }}
             >
               Cancel

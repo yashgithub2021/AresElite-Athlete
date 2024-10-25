@@ -20,7 +20,7 @@ import dayjs from "dayjs";
 import { loadStripe } from "@stripe/stripe-js";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import PaymentForm from "../components/PaymentForm";
-import { formatDateToMMDDYYY } from "../utils/functions";
+import { firstLetterUppercase, formatDateToMMDDYYY } from "../utils/functions";
 import { Skeleton } from "@mantine/core";
 import { RiDeleteBinFill as CancelIcon } from "react-icons/ri";
 import { ActionIcon } from "@mantine/core";
@@ -239,7 +239,7 @@ const AtheTransactions = () => {
           time: <p className="time">{item.app_time}</p>,
           button: (
             <button className={`${item.payment_status}`}>
-              {item.payment_status}
+              {firstLetterUppercase(item.payment_status)}
             </button>
           ),
           status: <div>{btn}</div>,
@@ -261,7 +261,7 @@ const AtheTransactions = () => {
           time: <p className="time">{item.app_time}</p>,
           button: (
             <button className={`${item.payment_status}`}>
-              {item.payment_status}
+              {firstLetterUppercase(item.payment_status)}
             </button>
           ),
           status: (

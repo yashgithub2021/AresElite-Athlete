@@ -177,7 +177,7 @@ const SelectPlan = () => {
             width: "100%",
             display: "flex",
             gap: "25.2px",
-            overflowX: "scroll",
+            // overflowX: "scroll",
             height: "fit-content",
             marginTop: "-30px",
             padding: "10px",

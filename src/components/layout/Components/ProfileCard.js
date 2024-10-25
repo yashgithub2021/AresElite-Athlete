@@ -91,16 +91,27 @@ const ProfileCard = () => {
           <Modal.Overlay />
           <Modal.Content>
             <Modal.Body>
-              <div style={{ textAlign: "center" }}>
-                <h4 style={{ fontSize: "19px" }}>Change Password?</h4>
+              <div
+                style={{
+                  textAlign: "start",
+                  marginTop: "0.5rem",
+                  marginBottom: "0.5rem",
+                  marginLeft: "0.5rem",
+                }}
+              >
+                <h4 style={{ fontSize: "19px", textAlign: "start" }}>
+                  Change Password?
+                </h4>
                 <p style={{ color: "#8C90AA" }}>
-                  Are you sure that you want Change password
+                  Are you sure that you want change the password
                 </p>
                 <div
                   style={{
                     display: "flex",
                     minWidth: "100%",
-                    justifyContent: "space-between",
+                    gap: "0.5rem",
+                    justifyContent: "end",
+                    marginTop: "2rem",
                   }}
                 >
                   <button
@@ -159,6 +170,7 @@ const ProfileCard = () => {
                   label="Password"
                   visible={visible}
                   variant="filled"
+                  onVisibilityChange={toggle}
                   visibilityToggleIcon={({ reveal }) =>
                     reveal ? (
                       <i class="fa-solid fa-eye"></i>
@@ -175,6 +187,13 @@ const ProfileCard = () => {
                   visible={visible}
                   variant="filled"
                   onVisibilityChange={toggle}
+                  visibilityToggleIcon={({ reveal }) =>
+                    reveal ? (
+                      <i class="fa-solid fa-eye"></i>
+                    ) : (
+                      <i class="fa-solid fa-eye-slash"></i>
+                    )
+                  }
                   onChange={(e) => {
                     setConfirmpass(e.target.value);
                   }}
@@ -269,7 +288,7 @@ const ProfileCard = () => {
           <div className="cont">
             <p className="header">Change Password</p>
             <p className="sub-text" style={{ marginTop: "-15px" }}>
-              you can Change your password from here
+              you can change your password from here
             </p>
           </div>
           <div>
@@ -292,7 +311,7 @@ const ProfileCard = () => {
         <NavLink to="/terms-of-use">
           <div className="nav-links">
             <div className="cont">
-              <p className="header">Term Of Use</p>
+              <p className="header">Terms Of Use</p>
             </div>
             <div>
               <svg

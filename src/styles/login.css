@@ -313,11 +313,13 @@ body {
   background-color: white;
   min-width: 546px;
   max-width: fit-content;
-  min-height: 580px;
+  /* min-height: 580px; */
   max-height: fit-content;
 
   padding-left: 60px;
   padding-right: 60px;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
   border-radius: 30px;
   gap: 30px;
   display: flex;

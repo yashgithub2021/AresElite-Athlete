@@ -60,7 +60,7 @@ export const sendMe = async (dispatch) => {
       const { data } = await axios.get("/api/athlete/send-me", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      // console.log(data);
+      console.log(data);
 
       await dispatch(loginSuccess(data));
     } catch (error) {

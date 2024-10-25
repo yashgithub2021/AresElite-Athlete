@@ -32,14 +32,14 @@ const PlanCard = ({ price, features, Name, phases }) => {
 
       try {
         const data = await Plans(dispatch, params);
-        console.log("data", data)
+        console.log("data", data);
         if (data && data.data.success) {
           // Show success modal only if the plan booking was successful
           setSelectedPhaseCost(selectedPhase.cost); // Set the cost for display in the modal
           successHandler.open(); // Open the success modal when the booking is successful
         } else {
           // Handle specific error where the user needs to select the Novice plan
-          toast.error("Failed to book the plan. Please try again.");
+          // toast.error("Failed to book the plan. Please try again.");
         }
       } catch (error) {
         // Handle any errors from the API call
@@ -50,7 +50,6 @@ const PlanCard = ({ price, features, Name, phases }) => {
       toast.error("No phase selected. Please select a phase.");
     }
   };
-
 
   const elements = [
     { position: <b>Ref Number</b>, mass: 12.011 },
@@ -149,9 +148,7 @@ const PlanCard = ({ price, features, Name, phases }) => {
                 </button>
               </div>
               <div>
-                <p style={{ fontWeight: "600", fontSize: "21px" }}>
-                  {Name}
-                </p>
+                <p style={{ fontWeight: "600", fontSize: "21px" }}>{Name}</p>
               </div>
             </Modal.Title>
           </Modal.Header>
@@ -166,7 +163,7 @@ const PlanCard = ({ price, features, Name, phases }) => {
           >
             <div style={{ maxWidth: "100%" }}>
               {/*  */}
-              <p style={{ fontWeight: '700' }}>Select Phase from {Name} Plan</p>
+              <p style={{ fontWeight: "700" }}>Select Phase from {Name} Plan</p>
               <div className="mt-1">
                 <div style={{ width: "100%" }}>
                   <div
@@ -299,6 +296,7 @@ const PlanCard = ({ price, features, Name, phases }) => {
           </Modal.Body>
         </Modal.Content>
       </Modal.Root>
+
       <div
         style={{
           minWidth: "270px",

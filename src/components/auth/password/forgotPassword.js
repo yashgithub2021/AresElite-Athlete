@@ -57,7 +57,7 @@ const ForgotPassword = () => {
   return (
     <AuthLayout>
       {!showModal ? (
-        <div className="px-md-0 px-4">
+        <div className="px-md-0 px-4 ">
           <div className="d-flex justify-content-start">
             <svg
               onClick={() => {
@@ -270,6 +270,7 @@ const ForgotPassword = () => {
                     }
                     visible={visible}
                     variant="filled"
+                    onVisibilityChange={toggle}
                     onChange={(e) => {
                       setnewPassword(e.target.value);
                     }}
@@ -279,12 +280,19 @@ const ForgotPassword = () => {
                     visible={visible}
                     variant="filled"
                     onVisibilityChange={toggle}
+                    visibilityToggleIcon={({ reveal }) =>
+                      reveal ? (
+                        <i class="fa-solid fa-eye"></i>
+                      ) : (
+                        <i class="fa-solid fa-eye-slash"></i>
+                      )
+                    }
                     onChange={(e) => {
                       setConfirmpass(e.target.value);
                     }}
                   />
                 </div>
-                <div style={{ marginTop: "10px" }}>
+                <div style={{ marginTop: "2rem" }}>
                   <Button
                     className="purple-button"
                     loading={isFetching}

@@ -29,8 +29,6 @@ const ServiceModal = ({
   const [disabled, setDisabled] = useState(true);
   const [bookingStart, setBookingStart] = useState(false);
 
-  
-
   const handledisable = () => {
     if (formData.app_time) {
       setDisabled(false);
@@ -183,7 +181,7 @@ const ServiceModal = ({
               >
                 <Stepper.Step label="Select Service" />
 
-                <Stepper.Step label="Appoointment Information">
+                <Stepper.Step label="Appointment Information">
                   <div
                     style={{
                       width: "100%",

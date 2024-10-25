@@ -13,18 +13,24 @@ import { LoadingOverlay, Button, Group, Box } from "@mantine/core";
 const EditProfile = () => {
   const user = useSelector((state) => state.auth);
   const { isFetching } = useSelector((state) => state.auth);
-  console.log(user);
-  const [value, setValue] = useState(new Date(user?.dob));
+  console.log("user", user);
+  const [value, setValue] = useState(
+    new Date(user?.dob ? user.dob : new Date())
+  );
   const dispatch = useDispatch();
   const [visible, { toggle }] = useDisclosure(true);
 
+  console.log("USer:", user);
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    prefix: user?.prefix,
     firstName: user?.userName,
     lastName: user?.lastname,
     city: user?.city,
     state: user?.state,
-    // dob: user?.dob,
+    dob: user?.dob,
+    gender: user?.gender,
     email: user?.userEmail,
     phone: user?.phone,
     address: user?.address,
@@ -103,33 +109,32 @@ const EditProfile = () => {
             />
           </div>
         </div>
+
         <div className="form-row">
-          <div className="form-group col-md-12">
+          <div className="form-group col-md-6">
+            <label htmlFor="inputEmail4">Prefix</label>
+            <Input
+              variant="filled"
+              placeholder="Input component"
+              defaultValue={user?.prefix}
+              name="prefix"
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group col-md-6">
             <label htmlFor="inputEmail4">Email</label>
             <Input
               variant="filled"
               placeholder="Input component"
               defaultValue={user?.userEmail}
-              disabled
+              name="email"
+              onChange={handleChange}
+              // disabled
             />
           </div>
         </div>
         <div className="form-row">
-          {/* <div className="form-group col-md-6">
-          <label htmlFor="inputEmail4">Date of birth</label>
-          <DateInput
-            value={value}
-            name="dob"
-            defaultValue={user?.dob}
-            variant="filled"
-            onChange={(e)=>{ setValue(e);setFormData((prevData) => ({
-              ...prevData,
-              ["dob"]: e,
-            }))}}
-            rightSection={<i class="fa-solid fa-calendar"></i>}
-            placeholder="Choose your date of birth"
-          />
-        </div> */}
           <div className="form-group col-md-6">
             <label htmlFor="inputPassword4">Phone Number</label>
             <div className="d-flex " style={{ width: "100%" }}>
@@ -145,6 +150,47 @@ const EditProfile = () => {
                 onChange={handleChange}
               />
             </div>
+          </div>
+          <div className="form-group col-md-2">
+            <label htmlFor="inputPassword4">Gender</label>
+            <div className="d-flex " style={{ width: "100%" }}>
+              <Select
+                variant="filled"
+                data={["Male", "Female"]}
+                onChange={(value) =>
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    gender: value,
+                  }))
+                }
+                defaultValue={user.gender}
+                width={"100%"}
+                // comboboxProps={{ width: "100%" }}
+              />
+              {/* <select name="gender" onChange={handleChange} >
+   <option>Male</option>
+   <option>Female</option>
+   </select> */}
+            </div>
+          </div>
+
+          <div className="form-group col-md-4">
+            <label htmlFor="inputEmail4">Date of birth</label>
+            <DateInput
+              value={value}
+              name="dob"
+              defaultValue={user?.dob ? user.dob : new Date()}
+              variant="filled"
+              onChange={(e) => {
+                setValue(e);
+                setFormData((prevData) => ({
+                  ...prevData,
+                  ["dob"]: e,
+                }));
+              }}
+              rightSection={<i class="fa-solid fa-calendar"></i>}
+              placeholder="Choose your date of birth"
+            />
           </div>
         </div>
         <div className="form-row">
@@ -198,7 +244,7 @@ const EditProfile = () => {
               display: "flex",
               minWidth: "100%",
               gap: "0.5rem",
-              marginTop: "2px",
+              marginTop: "1rem",
             }}
           >
             <button

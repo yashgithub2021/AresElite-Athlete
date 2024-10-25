@@ -249,7 +249,7 @@ const TeleSessions = ({
               >
                 <Stepper.Step label="Select Service" />
 
-                <Stepper.Step label="Appoointment Information">
+                <Stepper.Step label="Appointment Information">
                   <div
                     style={{
                       width: "100%",

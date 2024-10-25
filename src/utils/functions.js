@@ -5,3 +5,7 @@ export function formatDateToMMDDYYY(dateString) {
   const day = String(date.getDate()).padStart(2, "0");
   return `${month}/${day}/${year}`;
 }
+
+export function firstLetterUppercase(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

@@ -18,8 +18,10 @@ const Notifications = () => {
   const [Notifs, setNotifs] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [width, setWidth] = useState(window.innerWidth);
 
   console.log(Notifs);
+  console.log("width: ", width);
   const fecthNoticiations = async () => {
     const res = await GetNotifications();
     setNotifs(res.notifications);
@@ -66,6 +68,17 @@ const Notifications = () => {
         btnRedirect = "/a-transactions";
     }
   };
+
+  useEffect(() => {
+    // Function to update width
+    const handleResize = () => setWidth(window.innerWidth);
+
+    // Add event listener to window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div>
@@ -260,28 +273,36 @@ const Notifications = () => {
                           <div className="d-flex gap-3 items-center">
                             <h7>Dr. {item.doctor}</h7>
 
-                            <p
+                            {/* <p
                               className="m-0"
                               style={{ fontSize: "12px", color: " #3C3F5399" }}
                             >
                               {" "}
                               Ophthalmologist
-                            </p>
+                            </p> */}
                           </div>
                         </>
                       )}
                     </div>
                     <div className="d-flex  flex-column align-items-end ">
+                      {width > 1600 && (
+                        <p
+                          style={{
+                            fontSize: "13px",
+                            marginLeft: "50px",
+                            fontWeight: "bold",
+                            marginBottom: "0.5rem",
+                          }}
+                        >
+                          {item.title}
+                        </p>
+                      )}
                       <p
                         style={{
                           fontSize: "13px",
                           marginLeft: "50px",
-                          fontWeight: "bold",
                         }}
                       >
-                        {item.title}
-                      </p>
-                      <p style={{ fontSize: "13px", marginLeft: "50px" }}>
                         {item.text}
                       </p>
                       {btnName && (
@@ -292,6 +313,7 @@ const Notifications = () => {
                             borderRadius: "10px",
                             color: "white",
                             fontSize: "smaller",
+                            marginBottom: "1rem",
                           }}
                           onClick={() => {
                             updateBtn(item);

@@ -153,12 +153,12 @@ const SignIn = () => {
               <span className="purple-text"> Privacy Policies.</span>
             </span>
           }
-          className="mb-4 mt-4  "
+          className="mb-3 mt-5  "
         />
 
         <Button
           type="submit"
-          className="purple-button w-100"
+          className="purple-button w-100 "
           disabled={!isFormValid || isFetching}
         >
           {isFetching ? (
