@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { formatDateToMMDDYYY } from "../utils/functions";
 
-const TransactionCard = ({ data, action }) => {
+const TransactionCard = ({ data, action, freeServices }) => {
   const navigate = useNavigate();
   return (
     <div style={{ fontSize: "small" }}>
@@ -30,7 +30,9 @@ const TransactionCard = ({ data, action }) => {
       <div className="d-flex justify-content-between align-items-center">
         <p>Payment Status</p>
         <button className={data.payment_status} style={{ maxWidth: "5rem" }}>
-          {data.payment_status}
+          {freeServices.indexOf(data.service_type) !== -1
+            ? "Free"
+            : data.payment_status}
         </button>
       </div>
       <div className="mt-2">

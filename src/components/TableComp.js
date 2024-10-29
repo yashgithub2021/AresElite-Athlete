@@ -6,7 +6,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 import { formatDateToMMDDYYY } from "../utils/functions";
 
-const TableComp = ({ data }) => {
+const TableComp = ({ data, freeServices }) => {
   const naviagte = useNavigate();
 
   const rows = data?.map((data) => {
@@ -37,7 +37,7 @@ const TableComp = ({ data }) => {
         </Table.Td>
         <Table.Td>
           {
-            <div className="d-flex flex-column gap-2">
+            <div className="d-flex flex-column gap-2 mt-0">
               {data.status === "paid" && (
                 <Button
                   variant="filled"
@@ -46,9 +46,11 @@ const TableComp = ({ data }) => {
                   // onClick={() => {
                   //   naviagte(`/a-drill`);
                   // }}
-                  onClick={() => naviagte("/a-transactions")}
+                  onClick={() => naviagte("/a-booking")}
                 >
-                  Paid{" "}
+                  {freeServices?.indexOf(data?.service_type) !== -1
+                    ? "Free"
+                    : "Paid"}
                 </Button>
               )}
               {data.status !== "paid" && (
@@ -60,7 +62,7 @@ const TableComp = ({ data }) => {
                     color: "var(--main-dark)",
                     borderRadius: "12px",
                   }}
-                  onClick={() => naviagte("/a-transactions")}
+                  onClick={() => naviagte("/a-booking")}
                 >
                   Pay
                 </Button>

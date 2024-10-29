@@ -430,7 +430,7 @@ export const getAllBooking = async () => {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log(data);
-    return data.sortedAppointments;
+    return data;
   } catch (err) {}
 };
 

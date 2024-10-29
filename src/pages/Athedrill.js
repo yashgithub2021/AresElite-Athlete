@@ -82,7 +82,13 @@ const Athedrill = () => {
           className="d-flex gap-4"
           style={{ justifyContent: "space-between" }}
         >
-          <div className="d-flex gap-1" style={{ alignItems: "center" }}>
+          <div
+            className="d-flex gap-1"
+            style={{
+              alignItems: "center",
+              minWidth: "5rem",
+            }}
+          >
             <svg
               width="21"
               height="20"
@@ -109,7 +115,7 @@ const Athedrill = () => {
               {item.activities.length == 1 ? `drill` : `drills`}
             </p>
           </div>
-          <div className="d-flex gap-1" style={{ alignItems: "center" }}>
+          {/* <div className="d-flex gap-1" style={{ alignItems: "center" }}>
             <svg
               width="21"
               height="20"
@@ -135,7 +141,7 @@ const Athedrill = () => {
             <p style={{ margin: 0, color: "#4E5566", fontSize: "small" }}>
               51 min
             </p>
-          </div>
+          </div> */}
           <div className="d-flex gap-1" style={{ alignItems: "center" }}>
             <svg
               width="21"
@@ -250,7 +256,7 @@ const Athedrill = () => {
                       />
                     </svg>
                   </div>
-                  <div>
+                  {/* <div>
                     <p
                       style={{
                         margin: 0,
@@ -261,7 +267,7 @@ const Athedrill = () => {
                     >
                       07:31
                     </p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             );

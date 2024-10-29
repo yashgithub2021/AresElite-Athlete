@@ -64,6 +64,7 @@ const AtheBookings = () => {
   const userEmail = localStorage.getItem("userEmail");
 
   const [bookingData, setBookingData] = useState([]);
+  const [freeServices, setFreeServices] = useState([]);
   const dispatch = useDispatch();
 
   const bookingDataHandler = async () => {
@@ -83,9 +84,13 @@ const AtheBookings = () => {
     }
 
     setBookingData(appointments?.appointments);
-
-    handleappointmentData(appointments);
+    setFreeServices(appointments?.freeServicesNames);
   };
+
+  useEffect(() => {
+    handleappointmentData(bookingData);
+  }, [bookingData, freeServices]);
+
   useEffect(() => {
     bookingDataHandler();
   }, [selected, date, value]);
@@ -121,8 +126,8 @@ const AtheBookings = () => {
     paymentmodalhandler.open();
   };
 
-  const handleappointmentData = (arr) => {
-    const apointmentData = arr?.appointments?.map((item, index) => {
+  const handleappointmentData = (appointments) => {
+    const apointmentData = appointments?.map((item, index) => {
       // const date = new Date(item.app_date);
       // const date_dis = `${date.getDate()}/${
       //   date.getMonth() + 1
@@ -156,7 +161,11 @@ const AtheBookings = () => {
       } else if (isManual && !item.presId && item.status === "paid") {
         buttoncomp = (
           <NavLink>
-            <button className="fill">Prescription Upcoming</button>
+            <button className="fill">
+              {item.service_status === "cancelled"
+                ? "Cancelled"
+                : "Prescription Upcoming"}
+            </button>
           </NavLink>
         );
       }
@@ -196,7 +205,9 @@ const AtheBookings = () => {
         ),
         button: (
           <button className={`${item.status}`}>
-            {firstLetterUppercase(item.status)}
+            {freeServices?.indexOf(item.service_type) !== -1
+              ? "Free"
+              : firstLetterUppercase(item.status)}
           </button>
         ),
         status: buttoncomp,
@@ -431,6 +442,7 @@ const AtheBookings = () => {
             }}
             // variant="filled"
             color="#ffffff"
+            // disabled={element.status === "Cancelled"}
           >
             <CancelIcon
               color="#E32636"
@@ -610,6 +622,7 @@ const AtheBookings = () => {
                 time={data.app_time}
                 pStatus={data.status}
                 serviceStatus={mob_serviceStatus(data)}
+                freeServices={freeServices}
                 cancelBtn={
                   <button
                     onClick={() => {
@@ -622,12 +635,15 @@ const AtheBookings = () => {
                       borderRadius: "10px",
                       width: "100%",
                     }}
+                    disabled={data?.service_status == "cancelled"}
                   >
                     {/* <CancelIcon
                       style={{ width: "70%", height: "70%" }}
                       stroke={1.5}
                     /> */}
-                    Cancel Booking
+                    {data?.service_status == "cancelled"
+                      ? "Cancelled"
+                      : "Cancel Booking"}
                   </button>
                 }
               />

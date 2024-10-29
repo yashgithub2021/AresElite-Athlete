@@ -329,6 +329,7 @@ body {
 }
 .password-eye {
   position: relative;
+  z-index: 100;
 }
 .password-eye i {
   left: -30px !important;

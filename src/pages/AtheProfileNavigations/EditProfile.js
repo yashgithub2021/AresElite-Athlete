@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { UpdateProfile } from "../../features/apiCall";
 import { useDisclosure } from "@mantine/hooks";
 import { LoadingOverlay, Button, Group, Box } from "@mantine/core";
+import { toast } from "react-toastify";
 
 const EditProfile = () => {
   const user = useSelector((state) => state.auth);
@@ -51,7 +52,6 @@ const EditProfile = () => {
     // You can make a fetch or axios call here to send the updated data
     // to your backend.
 
-    console.log("Form data submitted:", formData);
     const bool = await UpdateProfile(dispatch, formData);
     if (bool) {
       navigate("/");
@@ -105,7 +105,9 @@ const EditProfile = () => {
             <Input
               variant="filled"
               placeholder="Input component"
+              name="lastName"
               defaultValue={user?.lastname}
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -143,6 +145,7 @@ const EditProfile = () => {
               </select>
               <Input
                 variant="filled"
+                type="number"
                 placeholder="Phone Number"
                 style={{ width: "100%" }}
                 defaultValue={user?.phone}
@@ -234,6 +237,7 @@ const EditProfile = () => {
               defaultValue={user?.zip}
               name="zip"
               onChange={handleChange}
+              type="number"
             />
           </div>
         </div>
@@ -255,14 +259,14 @@ const EditProfile = () => {
               {" "}
               Save
             </button>
-            <button
+            {/* <button
               className="grey-button "
               onClick={() => {
                 navigate("/a-manager");
               }}
             >
               Cancel
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

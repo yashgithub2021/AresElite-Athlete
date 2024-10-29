@@ -205,7 +205,7 @@ const ServiceBookingform = ({
         />
       </div>
       <div className="mt-1">
-        <p>Appointment Time</p>
+        <p style={{ fontWeight: "500" }}>Appointment Time</p>
         <p style={{ fontSize: "10px" }}>
           {serviceTime ? serviceTime : isTele ? "45" : "90"} minutes meeting
         </p>

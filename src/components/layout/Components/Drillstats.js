@@ -66,7 +66,7 @@ const Drillstats = ({ data, ispaid, userId }) => {
                   <td style={{ color: "#8C90AA" }}>
                     -
                     {Number(data?.teleSessions?.offlineDrills) +
-                      Number(data?.teleSessions?.teleBookings)}
+                      Number(data?.teleSessions?.teleBookings) || 0}{" "}
                   </td>
                 </tr>
               </table>

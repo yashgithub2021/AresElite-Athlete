@@ -41,17 +41,22 @@ const AtheTransactions = () => {
   const [bodyforpaymnet, setbodyforpyamnet] = useState(null);
   const [incomingData, setIncomingData] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
+  const [freeServices, setFreeServices] = useState([]);
 
   const getdetail = useCallback(async () => {
     setIsFetching(true);
-    const { transactions } = await GetTransaction(dispatch, {
+    const { transactions, freeServicesNames } = await GetTransaction(dispatch, {
       date: date,
       service_type: value,
     });
     setIsFetching(false);
     setIncomingData(transactions);
-    handleappointmentData(transactions);
+    setFreeServices(freeServicesNames);
   }, [date, value, dispatch]);
+
+  useEffect(() => {
+    handleappointmentData(incomingData);
+  }, [incomingData, freeServices]);
 
   const services = useSelector((state) => state.AllServices.services);
   let filteredServices = Object.keys(services)?.filter(
@@ -239,7 +244,9 @@ const AtheTransactions = () => {
           time: <p className="time">{item.app_time}</p>,
           button: (
             <button className={`${item.payment_status}`}>
-              {firstLetterUppercase(item.payment_status)}
+              {freeServices?.indexOf(item.service_type) !== -1
+                ? "Free"
+                : item.payment_status}
             </button>
           ),
           status: <div>{btn}</div>,
@@ -583,7 +590,11 @@ const AtheTransactions = () => {
           )}
           <div className="mobile-cont">
             {incomingData?.map((data) => (
-              <TransactionCard data={data} action={actionBtn(data)} />
+              <TransactionCard
+                data={data}
+                action={actionBtn(data)}
+                freeServices={freeServices}
+              />
             ))}
           </div>
         </div>

@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { formatDateToMMDDYYY } from "../../../utils/functions";
 
-const RecentBookingCard = ({ data }) => {
+const RecentBookingCard = ({ data, freeServices }) => {
   const navigate = useNavigate();
   return (
     <div style={{ fontSize: "small" }}>
@@ -54,7 +54,9 @@ const RecentBookingCard = ({ data }) => {
                 color: "#ffffff",
               }}
             >
-              Paid{" "}
+              {freeServices?.indexOf(data?.service_type) !== -1
+                ? "Free"
+                : "Paid"}
             </button>
           )}
           {data?.status !== "paid" && (

@@ -10,9 +10,11 @@ const RecentBooking = () => {
   const { isFetching } = useSelector((state) => state.auth);
   const [opened, { open, close }] = useDisclosure(false);
   const [notifs, setNotifs] = useState([]);
+  const [freeServices, setFreeServices] = useState([]);
   const fetchnotifs = async () => {
     const res = await getAllBooking();
-    setNotifs(res);
+    setNotifs(res?.sortedAppointments);
+    setFreeServices(res?.freeServicesNames);
   };
 
   useEffect(() => {
@@ -91,7 +93,7 @@ const RecentBooking = () => {
               className="table-cont"
               style={{ overflow: "scroll", padding: "0px 4px 0px" }}
             >
-              <TableComp data={filteredNotifs} />
+              <TableComp data={filteredNotifs} freeServices={freeServices} />
             </div>
             <div className="booking-card-cont">
               {filteredNotifs?.map((data) => (
@@ -134,12 +136,16 @@ const RecentBooking = () => {
               className="table-cont"
               style={{ overflow: "scroll", padding: "0px 4px 0px" }}
             >
-              <TableComp data={filteredNotifs?.slice(0, 5)} />
+              <TableComp
+                data={filteredNotifs?.slice(0, 5)}
+                freeServices={freeServices}
+              />
             </div>
             <div className="booking-card-cont">
               {filteredNotifs?.slice(0, 2)?.map((data) => (
                 <>
-                  <RecentBookingCard data={data} /> <hr />{" "}
+                  <RecentBookingCard data={data} freeServices={freeServices} />{" "}
+                  <hr />{" "}
                 </>
               ))}
             </div>

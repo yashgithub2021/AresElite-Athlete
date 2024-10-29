@@ -8,6 +8,7 @@ const BookingCard = ({
   pStatus,
   serviceStatus,
   cancelBtn,
+  freeServices,
 }) => {
   const navigate = useNavigate();
   return (
@@ -34,7 +35,7 @@ const BookingCard = ({
       </div>
       <div className="d-flex justify-content-between">
         <p>Payment</p>
-        <p>{pStatus}</p>
+        <p>{freeServices.indexOf(serviceType) !== -1 ? "free" : pStatus}</p>
       </div>
       {/* <div className="d-flex justify-content-between align-items-center">
         <p>Service Status</p>

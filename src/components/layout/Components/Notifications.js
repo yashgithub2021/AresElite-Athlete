@@ -176,7 +176,7 @@ const Notifications = () => {
                         style={{
                           backgroundColor: !item.seen ? "#F4F4F4" : "#fbfbfb",
                           padding: "1rem",
-                          paddingBottom: "2rem",
+                          paddingBottom: "1rem",
 
                           paddingTop: "0",
                         }}
@@ -225,15 +225,15 @@ const Notifications = () => {
         </Modal.Content>
       </Modal.Root>
       <div
-        className="d-flex justify-content-between"
-        style={{ padding: "0px 20px 0px" }}
+        className="d-flex justify-content-between "
+        style={{ padding: "0px 10px  0px 20px" }}
       >
         <h5>Notifications {unreadCount > 0 && Notifs && `(${unreadCount})`}</h5>
         {Notifs?.length > 0 && (
           <p
-            className="view-all"
+            className="view-all mt-1"
             style={{
-              fontSize: "13px",
+              fontSize: "12px",
               cursor: "pointer",
               fontWeight: "700",
               color: "var(--main-dark)",

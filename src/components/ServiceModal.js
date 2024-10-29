@@ -152,7 +152,7 @@ const ServiceModal = ({
                       marginTop: "10px",
                     }}
                   >
-                    <h2>Appointment booking </h2>
+                    <h2>Appointment Booking </h2>
 
                     <p>{service_type}</p>
                   </div>
