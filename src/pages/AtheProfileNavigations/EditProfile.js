@@ -145,7 +145,7 @@ const EditProfile = () => {
               </select>
               <Input
                 variant="filled"
-                type="number"
+                // type="number"
                 placeholder="Phone Number"
                 style={{ width: "100%" }}
                 defaultValue={user?.phone}
