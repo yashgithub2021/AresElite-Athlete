@@ -67,9 +67,8 @@ const AtheTransactions = () => {
   const handleSelect = (date) => {
     const temp = new Date(date);
 
-    const res = `${temp.getFullYear()}-${
-      temp.getMonth() + 1
-    }-${temp.getDate()}`;
+    const res = `${temp.getFullYear()}-${temp.getMonth() + 1
+      }-${temp.getDate()}`;
     setDate(res);
     // const isSelected = selected.some((s) => dayjs(date).isSame(s, 'date'));
     // if (isSelected) {
@@ -136,9 +135,8 @@ const AtheTransactions = () => {
 
   const actionBtn = (item) => {
     const date = new Date(item.date);
-    const date_dis = `${date.getDate()}/${
-      date.getMonth() + 1
-    }/${date.getFullYear()}`;
+    const date_dis = `${date.getDate()}/${date.getMonth() + 1
+      }/${date.getFullYear()}`;
     var btn;
     if (item.payment_status === "paid") {
       btn = (
@@ -182,9 +180,8 @@ const AtheTransactions = () => {
   const handleappointmentData = (arr) => {
     const apointmentData = arr?.map((item, index) => {
       const date = new Date(item.date);
-      const date_dis = `${date.getDate()}/${
-        date.getMonth() + 1
-      }/${date.getFullYear()}`;
+      const date_dis = `${date.getDate()}/${date.getMonth() + 1
+        }/${date.getFullYear()}`;
 
       let btn;
       if (item.payment_status === "paid") {
@@ -214,7 +211,7 @@ const AtheTransactions = () => {
 
       // Add Cancel button for planPurchase
       const cancelButton =
-        item.service_type === "planPurchase" ? (
+        item.service_type === "planPurchase" && item.plan !== 'Novice' ? (
           <ActionIcon
             color="#ffffff"
             onClick={() => handleCancelTransaction(item._id)}
