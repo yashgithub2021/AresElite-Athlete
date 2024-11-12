@@ -205,7 +205,7 @@ const SignUp = () => {
             <div className="d-flex " style={{ width: "100%" }}>
               <Select
                 variant="filled"
-                data={["Male", "Female"]}
+                data={["Male", "Female", "Prefer not to say"]}
                 onChange={(value) => {
                   setValues({ ...values, ["gender"]: value });
                 }}

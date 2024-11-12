@@ -19,13 +19,16 @@ const Notifications = () => {
   const [unreadCount, setUnreadCount] = useState(0);
   const [isUpdating, setIsUpdating] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
+  const [loading, setLoading] = useState(false);
 
   console.log(Notifs);
   console.log("width: ", width);
   const fecthNoticiations = async () => {
+    setLoading(true);
     const res = await GetNotifications();
     setNotifs(res.notifications);
     setUnreadCount(res.unreadCounts);
+    setLoading(false);
   };
   useEffect(() => {
     fecthNoticiations();
@@ -244,6 +247,7 @@ const Notifications = () => {
           </p>
         )}
       </div>
+
       <div
         style={{
           backgroundColor: "#F4F4F4",
@@ -253,83 +257,105 @@ const Notifications = () => {
         }}
         className="rounded-4  "
       >
+        {loading && (
+          <div
+            style={{
+              // width: "40rem",
+              minHeight: "10rem",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              // alignItems: "center",
+            }}
+          >
+            <p style={{ visibility: "hidden" }}>
+              An athlete is most commonly a person
+            </p>
+            <Loader
+              color="var(--main-dark)"
+              className="mx-auto "
+              style={{ marginBottom: "4rem" }}
+            />
+          </div>
+        )}
         {!Notifs ? (
           <div style={{ textAlign: "center" }}>
             <p>No new notifications</p>
           </div>
         ) : (
           <>
-            {Notifs?.map((item, id) => {
-              if (id < 2) {
-                updateBtn(item);
-                return (
-                  <>
-                    <div className="d-flex flex-start flex-row mt-2 gap-3">
-                      <Avatar src="https://s3-alpha-sig.figma.com/img/93eb/70e4/1b58b9ca0fc1d95ef7ee8f1a97100431?Expires=1710720000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=J8X6GzryNyHsiHrAOg-Xp5jH-Y6xzKk2M0ELy8v3CR4Y4zwEp2Cv9yZ0VEhxBL1GNG559NPdUfe44X9aatKkuWKYrjogjkpN782W6kkLvpUMF1DazVpctez~lVmxPMh5lJpokXOebsmpcsjvJSYEcHG756GfllCL4IqPQLG20T10dR5DzA6fYttW~t2vvRLAsVMtxhrr1dnuPI9KxkPvvcb9gfyAokxTCevcHIoTOZ97IdLvW9QkvV8ehYWlhQDvSFCKa9Ssfp~xX668CYkkY8tfZWasMhxXipBPz5vpGhDUwPjC7ZG3tPLlB~z1l6Enwt378BasSQN32GSEDJ95Vw__"></Avatar>
+            {!loading &&
+              Notifs?.map((item, id) => {
+                if (id < 2) {
+                  updateBtn(item);
+                  return (
+                    <>
+                      <div className="d-flex flex-start flex-row mt-2 gap-3">
+                        <Avatar src="https://s3-alpha-sig.figma.com/img/93eb/70e4/1b58b9ca0fc1d95ef7ee8f1a97100431?Expires=1710720000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=J8X6GzryNyHsiHrAOg-Xp5jH-Y6xzKk2M0ELy8v3CR4Y4zwEp2Cv9yZ0VEhxBL1GNG559NPdUfe44X9aatKkuWKYrjogjkpN782W6kkLvpUMF1DazVpctez~lVmxPMh5lJpokXOebsmpcsjvJSYEcHG756GfllCL4IqPQLG20T10dR5DzA6fYttW~t2vvRLAsVMtxhrr1dnuPI9KxkPvvcb9gfyAokxTCevcHIoTOZ97IdLvW9QkvV8ehYWlhQDvSFCKa9Ssfp~xX668CYkkY8tfZWasMhxXipBPz5vpGhDUwPjC7ZG3tPLlB~z1l6Enwt378BasSQN32GSEDJ95Vw__"></Avatar>
 
-                      {item.doctor && (
-                        <>
-                          {" "}
-                          <div className="d-flex gap-3 items-center">
-                            <h7>Dr. {item.doctor}</h7>
+                        {item.doctor && (
+                          <>
+                            {" "}
+                            <div className="d-flex gap-3 items-center">
+                              <h7>Dr. {item.doctor}</h7>
 
-                            {/* <p
+                              {/* <p
                               className="m-0"
                               style={{ fontSize: "12px", color: " #3C3F5399" }}
                             >
                               {" "}
                               Ophthalmologist
                             </p> */}
-                          </div>
-                        </>
-                      )}
-                    </div>
-                    <div className="d-flex  flex-column align-items-end ">
-                      {width > 1600 && (
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      <div className="d-flex  flex-column align-items-end ">
+                        {width > 1600 && (
+                          <p
+                            style={{
+                              fontSize: "13px",
+                              marginLeft: "50px",
+                              fontWeight: "bold",
+                              marginBottom: "0.5rem",
+                            }}
+                          >
+                            {item.title}
+                          </p>
+                        )}
                         <p
                           style={{
                             fontSize: "13px",
                             marginLeft: "50px",
-                            fontWeight: "bold",
-                            marginBottom: "0.5rem",
                           }}
                         >
-                          {item.title}
+                          {item.text}
                         </p>
-                      )}
-                      <p
-                        style={{
-                          fontSize: "13px",
-                          marginLeft: "50px",
-                        }}
-                      >
-                        {item.text}
-                      </p>
-                      {btnName && (
-                        <button
-                          style={{
-                            backgroundColor: "var(--main-dark)",
-                            padding: "6px 9px 6px",
-                            borderRadius: "10px",
-                            color: "white",
-                            fontSize: "smaller",
-                            marginBottom: "1rem",
-                          }}
-                          onClick={() => {
-                            updateBtn(item);
-                            navigate(btnRedirect);
-                          }}
-                        >
-                          {btnName}
-                        </button>
-                      )}
-                    </div>
-                  </>
-                );
-              } else {
-                return;
-              }
-            })}
+                        {btnName && (
+                          <button
+                            style={{
+                              backgroundColor: "var(--main-dark)",
+                              padding: "6px 9px 6px",
+                              borderRadius: "10px",
+                              color: "white",
+                              fontSize: "smaller",
+                              marginBottom: "1rem",
+                            }}
+                            onClick={() => {
+                              updateBtn(item);
+                              navigate(btnRedirect);
+                            }}
+                          >
+                            {btnName}
+                          </button>
+                        )}
+                      </div>
+                    </>
+                  );
+                } else {
+                  return;
+                }
+              })}
           </>
         )}
       </div>

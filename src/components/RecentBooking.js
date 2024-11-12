@@ -91,7 +91,7 @@ const RecentBooking = () => {
           <Modal.Body>
             <div
               className="table-cont"
-              style={{ overflow: "scroll", padding: "0px 4px 0px" }}
+              style={{ overflow: "auto", padding: "0px 4px 0px" }}
             >
               <TableComp data={filteredNotifs} freeServices={freeServices} />
             </div>
@@ -134,7 +134,7 @@ const RecentBooking = () => {
           <>
             <div
               className="table-cont"
-              style={{ overflow: "scroll", padding: "0px 4px 0px" }}
+              style={{ overflow: "auto", padding: "0px 4px 0px" }}
             >
               <TableComp
                 data={filteredNotifs?.slice(0, 5)}

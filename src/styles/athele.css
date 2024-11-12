@@ -5,6 +5,20 @@
   --main-light: #5d3eb3;
 }
 
+::-webkit-scrollbar {
+  width: 0px; /* Hides the scrollbar */
+  height: 0px; /* Hides the horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent; /* Ensures the track is fully transparent */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Ensures the thumb is fully transparent */
+  border-radius: 0px;
+}
+
 .custom-scrollbar {
   /* Firefox */
   scrollbar-width: thin;
@@ -1911,7 +1925,7 @@ thead {
   grid-area: body;
   background-color: #f1effe;
   height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .layout2 {
