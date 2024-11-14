@@ -85,18 +85,22 @@ const Notifications = () => {
 
   return (
     <div>
-      <Modal.Root opened={opened} onClose={close} size={"33rem"}>
+      <Modal.Root opened={opened} onClose={close} size={"37rem"}>
         <Modal.Overlay />
 
         <Modal.Content
           style={{
-            paddingTop: "0.5rem",
+            paddingTop: "0rem",
+            // paddingBottom: "7rem",
+            marginTop: "2rem",
             paddingLeft: "0.5rem",
-            borderRadius: "1.5rem",
+            paddingRight: "0.4rem",
+            borderRadius: "0.8rem",
+            maxHeight: "calc(100vh - 5rem)",
           }}
         >
-          <Modal.Header>
-            <Modal.Title style={{ width: "100%" }}>
+          <Modal.Header style={{ paddingBottom: 0 }}>
+            <Modal.Title style={{ width: "100%", paddingTop: "0.5rem" }}>
               <div className=" d-flex gap-3 mb-4">
                 <button
                   className="modal-close "
@@ -137,7 +141,7 @@ const Notifications = () => {
               </div>
             </Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body style={{ height: "38rem" }}>
             {Notifs?.length > 0 ? (
               <>
                 {Notifs.map((item) => {
@@ -149,7 +153,8 @@ const Notifications = () => {
                         style={{
                           backgroundColor: !item.seen ? "#F4F4F4" : "#fbfbfb",
                           paddingTop: "2rem",
-                          paddingLeft: "0.5rem",
+                          paddingLeft: "0.8rem",
+                          paddingRight: "0.8rem",
                           borderRadius: "0.2rem",
                         }}
                       >

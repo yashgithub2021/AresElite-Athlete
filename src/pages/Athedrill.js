@@ -379,8 +379,13 @@ const Athedrill = () => {
                     return (
                       <video
                         width="90%"
+                        height={"300px"}
                         controls
-                        style={{ borderRadius: "26.78px" }}
+                        style={{
+                          borderRadius: "26.78px",
+                          marginBottom: "4rem",
+                          marginTop: "2rem",
+                        }}
                       >
                         <source src={item.link} type="video/mp4" />
                       </video>

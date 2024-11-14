@@ -459,6 +459,11 @@ const TeleSessions = ({
             {isPaid && (
               <button
                 className="bookbtn"
+                disabled={
+                  trainingdata?.totalSessions -
+                    trainingdata?.completedSessions ===
+                  0
+                }
                 onClick={async () => {
                   const r = await hasAlreadyBookAppointment(dispatch, userId);
                   console.log("r:", r);
