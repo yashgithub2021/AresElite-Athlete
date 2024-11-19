@@ -21,8 +21,6 @@ const Notifications = () => {
   const [width, setWidth] = useState(window.innerWidth);
   const [loading, setLoading] = useState(false);
 
-  console.log(Notifs);
-  console.log("width: ", width);
   const fecthNoticiations = async () => {
     setLoading(true);
     const res = await GetNotifications();
@@ -100,8 +98,13 @@ const Notifications = () => {
           }}
         >
           <Modal.Header style={{ paddingBottom: 0 }}>
-            <Modal.Title style={{ width: "100%", paddingTop: "0.5rem" }}>
-              <div className=" d-flex gap-3 mb-4">
+            <Modal.Title
+              style={{
+                width: "100%",
+                paddingTop: "0.5rem",
+              }}
+            >
+              <div className=" d-flex gap-3 mb-3">
                 <button
                   className="modal-close "
                   style={{ background: "#1C1C1C0D" }}
@@ -142,93 +145,102 @@ const Notifications = () => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body style={{ height: "38rem" }}>
-            {Notifs?.length > 0 ? (
-              <>
-                {Notifs.map((item) => {
-                  updateBtn(item);
-                  return (
-                    <>
-                      <div
-                        className="d-flex flex-start flex-row mt-0  gap-3"
-                        style={{
-                          backgroundColor: !item.seen ? "#F4F4F4" : "#fbfbfb",
-                          paddingTop: "2rem",
-                          paddingLeft: "0.8rem",
-                          paddingRight: "0.8rem",
-                          borderRadius: "0.2rem",
-                        }}
-                      >
-                        <Avatar src="https://s3-alpha-sig.figma.com/img/93eb/70e4/1b58b9ca0fc1d95ef7ee8f1a97100431?Expires=1710720000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=J8X6GzryNyHsiHrAOg-Xp5jH-Y6xzKk2M0ELy8v3CR4Y4zwEp2Cv9yZ0VEhxBL1GNG559NPdUfe44X9aatKkuWKYrjogjkpN782W6kkLvpUMF1DazVpctez~lVmxPMh5lJpokXOebsmpcsjvJSYEcHG756GfllCL4IqPQLG20T10dR5DzA6fYttW~t2vvRLAsVMtxhrr1dnuPI9KxkPvvcb9gfyAokxTCevcHIoTOZ97IdLvW9QkvV8ehYWlhQDvSFCKa9Ssfp~xX668CYkkY8tfZWasMhxXipBPz5vpGhDUwPjC7ZG3tPLlB~z1l6Enwt378BasSQN32GSEDJ95Vw__"></Avatar>
-
-                        <div className="d-flex gap-3  items-center">
-                          {item.doctor && (
-                            <>
-                              {" "}
-                              <h7>Dr. {item.doctor}</h7>
-                              <p
-                                className="m-0"
-                                style={{
-                                  fontSize: "12px",
-                                  color: " #3C3F5399",
-                                }}
-                              >
-                                {" "}
-                                Ophthalmologist
-                              </p>
-                            </>
-                          )}
-                        </div>
-                      </div>
-                      <div
-                        className="d-flex  flex-column align-items-end "
-                        style={{
-                          backgroundColor: !item.seen ? "#F4F4F4" : "#fbfbfb",
-                          padding: "1rem",
-                          paddingBottom: "1rem",
-
-                          paddingTop: "0",
-                        }}
-                      >
-                        <p
+            <div
+              style={{
+                overflowY: "scroll",
+                height: "37rem",
+                backgroundColor: "#fbfbfb",
+                borderRadius: "0.5rem",
+              }}
+            >
+              {Notifs?.length > 0 ? (
+                <>
+                  {Notifs.map((item) => {
+                    updateBtn(item);
+                    return (
+                      <>
+                        <div
+                          className="d-flex flex-start flex-row mt-0  gap-3"
                           style={{
-                            fontSize: "13px",
-                            marginLeft: "50px",
-                            fontWeight: "bold",
+                            backgroundColor: !item.seen ? "#F4F4F4" : "#fbfbfb",
+                            paddingTop: "2rem",
+                            paddingLeft: "0.8rem",
+                            paddingRight: "0.8rem",
+                            borderRadius: "0.2rem",
                           }}
                         >
-                          {item.title}
-                        </p>
-                        <p style={{ fontSize: "13px", marginLeft: "50px" }}>
-                          {item.text}
-                        </p>
-                        {btnName && (
-                          <button
-                            style={{
-                              backgroundColor: "var(--main-dark)",
-                              padding: "6px 9px 6px",
-                              borderRadius: "10px",
-                              color: "white",
-                              fontSize: "smaller",
-                            }}
-                            onClick={() => {
-                              updateBtn(item);
+                          <Avatar src="https://s3-alpha-sig.figma.com/img/93eb/70e4/1b58b9ca0fc1d95ef7ee8f1a97100431?Expires=1710720000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=J8X6GzryNyHsiHrAOg-Xp5jH-Y6xzKk2M0ELy8v3CR4Y4zwEp2Cv9yZ0VEhxBL1GNG559NPdUfe44X9aatKkuWKYrjogjkpN782W6kkLvpUMF1DazVpctez~lVmxPMh5lJpokXOebsmpcsjvJSYEcHG756GfllCL4IqPQLG20T10dR5DzA6fYttW~t2vvRLAsVMtxhrr1dnuPI9KxkPvvcb9gfyAokxTCevcHIoTOZ97IdLvW9QkvV8ehYWlhQDvSFCKa9Ssfp~xX668CYkkY8tfZWasMhxXipBPz5vpGhDUwPjC7ZG3tPLlB~z1l6Enwt378BasSQN32GSEDJ95Vw__"></Avatar>
 
-                              navigate(btnRedirect);
+                          <div className="d-flex gap-3  items-center">
+                            {item.doctor && (
+                              <>
+                                {" "}
+                                <h7>Dr. {item.doctor}</h7>
+                                <p
+                                  className="m-0"
+                                  style={{
+                                    fontSize: "12px",
+                                    color: " #3C3F5399",
+                                  }}
+                                >
+                                  {" "}
+                                  Ophthalmologist
+                                </p>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                        <div
+                          className="d-flex  flex-column align-items-end "
+                          style={{
+                            backgroundColor: !item.seen ? "#F4F4F4" : "#fbfbfb",
+                            padding: "1rem",
+                            paddingBottom: "1rem",
+
+                            paddingTop: "0",
+                          }}
+                        >
+                          <p
+                            style={{
+                              fontSize: "13px",
+                              marginLeft: "50px",
+                              fontWeight: "bold",
                             }}
                           >
-                            {btnName}
-                          </button>
-                        )}
-                      </div>
-                    </>
-                  );
-                })}
-              </>
-            ) : (
-              <div>
-                <p>No Notifs</p>
-              </div>
-            )}
+                            {item.title}
+                          </p>
+                          <p style={{ fontSize: "13px", marginLeft: "50px" }}>
+                            {item.text}
+                          </p>
+                          {btnName && (
+                            <button
+                              style={{
+                                backgroundColor: "var(--main-dark)",
+                                padding: "6px 9px 6px",
+                                borderRadius: "10px",
+                                color: "white",
+                                fontSize: "smaller",
+                              }}
+                              onClick={() => {
+                                updateBtn(item);
+
+                                navigate(btnRedirect);
+                              }}
+                            >
+                              {btnName}
+                            </button>
+                          )}
+                        </div>
+                      </>
+                    );
+                  })}
+                </>
+              ) : (
+                <div>
+                  <p>No Notifs</p>
+                </div>
+              )}
+            </div>
           </Modal.Body>
         </Modal.Content>
       </Modal.Root>

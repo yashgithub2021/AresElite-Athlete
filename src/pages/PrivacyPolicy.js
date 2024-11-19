@@ -25,7 +25,7 @@ const PrivacyPolicy = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((result) => {
-        console.log("result: ", result, result?.data?.privacyPolicy.text);
+        // console.log("result: ", result, result?.data?.privacyPolicy.text);
         setData(result?.data?.privacyPolicy.text);
         setIsLoading(false);
       });

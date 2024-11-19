@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 const SelectPlan = () => {
   const [plansarray, setplansarray] = useState([]);
   const dispatch = useDispatch();
-  console.log(plansarray);
+  // console.log(plansarray);
   const fetchPlans = async () => {
     const data = await GetPlans(dispatch);
     setplansarray(data?.plans);

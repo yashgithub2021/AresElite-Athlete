@@ -43,7 +43,6 @@ const ServiceModal = ({
       ...prevData,
       ["service_type"]: service_type,
     }));
-    console.log("formData", formData);
 
     const res = await Bookappointment(dispatch, formData);
     setBookingStart(false);
@@ -88,7 +87,6 @@ const ServiceModal = ({
 
     const res = await extractDates(data.dates);
     setDateData(res);
-    console.log(datedata);
   };
   const elements = [
     { position: <b>Ref Number</b>, mass: 12.011 },

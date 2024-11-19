@@ -31,8 +31,6 @@ const ServiceBooking = ({
     }
   };
 
-  console.log("amount:", amount);
-
   const handleBooking = async (e) => {
     e.preventDefault();
 

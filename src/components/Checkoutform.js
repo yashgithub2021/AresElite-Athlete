@@ -1,8 +1,12 @@
-import { useState } from 'react';
-import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
-import { useDispatch } from 'react-redux';
-import { stripestep2 } from '../features/apiCall';
-import { toast } from 'react-toastify';
+import { useState } from "react";
+import {
+  useStripe,
+  useElements,
+  PaymentElement,
+} from "@stripe/react-stripe-js";
+import { useDispatch } from "react-redux";
+import { stripestep2 } from "../features/apiCall";
+import { toast } from "react-toastify";
 
 const CheckoutForm = ({ body }) => {
   const dispatch = useDispatch();
@@ -37,14 +41,13 @@ const CheckoutForm = ({ body }) => {
       confirmParams: {
         return_url: `${window.location.origin}/a-transactions`,
       },
-      redirect: 'if_required',
+      redirect: "if_required",
     });
 
     if (result.error) {
       // Show error to your customer
       alert(result.error.message);
     } else {
-      console.log("Payment successful");
       await stripestep2(dispatch, { body });
       setFormVisible(false); // Close the payment form
       window.location.reload();
@@ -57,10 +60,14 @@ const CheckoutForm = ({ body }) => {
       {isFormVisible && (
         <form onSubmit={handleSubmit} className="payment_form">
           <PaymentElement />
-          <button type="submit" disabled={!stripe} className="signup-button">Submit</button>
+          <button type="submit" disabled={!stripe} className="signup-button">
+            Submit
+          </button>
         </form>
       )}
-      {!isFormVisible && <div>Your payment has been processed successfully.</div>}
+      {!isFormVisible && (
+        <div>Your payment has been processed successfully.</div>
+      )}
     </>
   );
 };

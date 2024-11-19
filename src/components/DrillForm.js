@@ -51,8 +51,6 @@ const DrillForm = ({ activity, index, total, disabled, fetchDrills }) => {
 
     if (res) {
       try {
-        console.log("Form data submitted:", formData);
-
         const success = await SubmitDrillForm(dispatch, {
           activityId: activity._id,
           formData,
@@ -63,7 +61,7 @@ const DrillForm = ({ activity, index, total, disabled, fetchDrills }) => {
         window.location.reload();
       } catch (error) {
         toast.error("Unexpected Error !");
-        console.log(error);
+
         setsubmitchoice(false);
         close();
       }

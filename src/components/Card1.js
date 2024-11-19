@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import EHC_Vector from "../assets/EHC_Vector.jpeg";
 
 const Card1 = ({ data, datacomp }) => {
-  console.log(data);
-  console.log(datacomp);
   const perc = (
     (datacomp?.completedDrills / datacomp?.totalDrills) *
     100

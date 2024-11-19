@@ -21,8 +21,6 @@ const RecentBooking = () => {
     fetchnotifs();
   }, [isFetching]);
 
-  console.log("notifis", notifs);
-
   const filteredNotifs = notifs?.filter((item) => {
     if (
       item.service_type === "TeleSession" ||

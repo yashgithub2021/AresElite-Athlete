@@ -60,7 +60,6 @@ function ViewDrill({ openModal, handleCloseModal, clickedDrill, isMobile }) {
     }
   };
 
-  console.log("DrillInputs", drillInputs);
   const inputArray = (val) => {
     if (Array.isArray(val)) {
       return val.join(", ");
@@ -158,7 +157,7 @@ function ViewDrill({ openModal, handleCloseModal, clickedDrill, isMobile }) {
             </div>
 
             <div className="d-flex flex-column gap-1 mt-4 mx-lg-5 mx-2 align-items-center pb-2">
-              <div className="drill-box mt-2">
+              <div className="drill-box mt-2" style={{ width: "100%" }}>
                 {drillInputs?.map((input, index) => {
                   return (
                     <>

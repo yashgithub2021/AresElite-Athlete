@@ -14,14 +14,14 @@ import { toast } from "react-toastify";
 const EditProfile = () => {
   const user = useSelector((state) => state.auth);
   const { isFetching } = useSelector((state) => state.auth);
-  console.log("user", user);
+  // console.log("user", user);
   const [value, setValue] = useState(
     new Date(user?.dob ? user.dob : new Date())
   );
   const dispatch = useDispatch();
   const [visible, { toggle }] = useDisclosure(true);
 
-  console.log("USer:", user);
+  // console.log("USer:", user);
 
   const navigate = useNavigate();
   const [formData, setFormData] = useState({

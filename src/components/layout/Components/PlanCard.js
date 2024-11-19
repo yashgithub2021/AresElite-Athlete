@@ -28,11 +28,10 @@ const PlanCard = ({ price, features, Name, phases }) => {
         phase: selectedPhase.name,
         ClientId,
       };
-      console.log(params);
 
       try {
         const data = await Plans(dispatch, params);
-        console.log("data", data);
+
         if (data && data.data.success) {
           // Show success modal only if the plan booking was successful
           setSelectedPhaseCost(selectedPhase.cost); // Set the cost for display in the modal

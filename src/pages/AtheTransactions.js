@@ -122,14 +122,14 @@ const AtheTransactions = () => {
         },
       };
     }
-    console.log(body);
+    // console.log(body);
     setbodyforpyamnet(body.product);
 
     const headers = {
       "Content-type": "application/json",
     };
     const data = await stripestep1(dispatch, { body });
-    console.log(data);
+    // console.log(data);
     setclientsecret(data.clientSecret);
     paymentmodalhandler.open();
   };
@@ -302,7 +302,7 @@ const AtheTransactions = () => {
     }
   };
 
-  console.log(showData);
+  // console.log(showData);
 
   const url =
     "https://s3-alpha-sig.figma.com/img/63c4/be83/222c85e6c852819bc5d4b24a87a87fb6?Expires=1711324800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Y4SY5J0CmBpurLNdyssoFuDVIjUivt~TjdQaMbuLy9MqbOJzReqwYFykcxiFAm4wjnxQHbY0fBds-c8jJOuSEhxnIZytiS~EuxX~PytgwY6cobBUszo0gi-oqOTVUlJ89JtgK4fyyXVBeeavR9sisvIFpS740Bty68TTfxndSOlMBM4eOox~yT9ifL2JckNSFBj5WNjS7Cf0YAqIPr9DL4KVoE5gdsTtDmzobV4sVvo9mX9vwMMkr6hAh-NI07QoQlzioEP6B~vuit0ps5EsYwDDZpBmCN5CeU5SqRL-pbW2vNZNXPIm4IUe-bGgJZgdXVmpCnw3mPqykaekuBZ7kw__";

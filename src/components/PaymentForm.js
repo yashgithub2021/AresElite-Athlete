@@ -9,7 +9,7 @@ const PaymentForm = ({ clientSecret, mainheading, subheading, body }) => {
   const [stripePromise, setstripePromise] = useState(
     "pk_test_51P1kZASAZ5IkC6u6AubbgH453E8NdLV1wAVeipaiZrHtY4PDfzPImUfquioLk924EBUtcYzgBLiMCd0hLDsWh4XY004V9N14x4"
   );
-  console.log(body);
+
   return (
     <>
       {clientSecret && (

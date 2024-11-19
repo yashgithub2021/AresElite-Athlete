@@ -38,7 +38,7 @@ const AtheleDashboard = () => {
   const plan = useSelector((state) => state.auth.plan);
   const is_Online = useSelector((state) => state.auth.is_Online);
 
-  console.log("is_online", is_Online);
+  // console.log("is_online", is_Online);
   // const is_Online = online === "false" ? false : true;
   // console.log("isOnline", is_Online);
 
@@ -73,9 +73,6 @@ const AtheleDashboard = () => {
       getuserDetails();
     }
   }, []);
-
-  console.log("--> dwd", plan);
-  console.log("useInfo:", userinfo);
 
   const services = userinfo?.services;
 

@@ -466,10 +466,18 @@ const TeleSessions = ({
                 }
                 onClick={async () => {
                   const r = await hasAlreadyBookAppointment(dispatch, userId);
-                  console.log("r:", r);
+
                   if (r) {
                     open();
                   }
+                }}
+                style={{
+                  cursor:
+                    trainingdata?.totalSessions -
+                      trainingdata?.completedSessions ===
+                    0
+                      ? "not-allowed"
+                      : "pointer",
                 }}
               >
                 Book

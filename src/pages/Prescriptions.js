@@ -14,9 +14,9 @@ const Prescriptions = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  console.log("location", location);
+  // console.log("location", location);
 
-  console.log(presc.form);
+  // console.log(presc.form);
   const fetchprescription = async () => {
     const { form } = await GetRecentPrescriptions(dispatch, {
       presId,
@@ -74,7 +74,7 @@ const Prescriptions = () => {
           <div className="mb-3 d-flex flex-wrap gap-3">
             {presc?.form?.map((item, index) => {
               const form = Object.entries(item);
-              console.log(form);
+              // console.log(form);
               return form?.map((field) => {
                 return (
                   <TextInput

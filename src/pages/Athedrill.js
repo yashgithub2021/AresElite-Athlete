@@ -28,11 +28,11 @@ const Athedrill = () => {
   const dispatch = useDispatch();
   const [drill_week_details, setDrillWeekDetails] = useState(null);
   const clientId = localStorage.getItem("userId");
-  console.log("Selected==>", selectedActivity);
+  // console.log("Selected==>", selectedActivity);
   const { appointment_id } = useParams();
 
   const { isFetching } = useSelector((state) => state.fetch_app);
-  console.log(isFetching);
+  // console.log(isFetching);
   const fetchDirlls = async () => {
     const params = { appointmentId: appointment_id, clientId, selectedWeek };
     const data = await GetDrillDetails(dispatch, params);
@@ -42,7 +42,7 @@ const Athedrill = () => {
       setTotalWeeks(data?.data?.totalWeeks);
       setSelectedActivity(data?.data?.weeks?.[0]?.drills?.[0]?.activities?.[0]);
     }
-    console.log(drill_week_details);
+    // console.log(drill_week_details);
   };
   useEffect(() => {
     fetchDirlls();
@@ -52,7 +52,7 @@ const Athedrill = () => {
     setimageurl(value);
   };
   const handleLabelClick = (activity, index, total) => {
-    console.log(activity);
+    // console.log(activity);
     setSelectedActivity(activity);
     setIndex(index);
     setTotal(total);

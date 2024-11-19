@@ -43,7 +43,6 @@ const ProfileCard = () => {
   useEffect(() => {
     const fetchProfileDetails = async () => {
       const data = await GetProfileDetails(dispatch);
-      console.log("user", data?.athlete);
 
       if (
         data &&
@@ -52,7 +51,6 @@ const ProfileCard = () => {
       ) {
         setImage(data.athlete.profilePic);
       }
-      console.log("No data");
     };
     fetchProfileDetails();
   }, [dispatch]);
