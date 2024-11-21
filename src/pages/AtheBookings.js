@@ -161,10 +161,20 @@ const AtheBookings = () => {
       } else if (isManual && !item.presId && item.status === "paid") {
         buttoncomp = (
           <NavLink>
-            <button className="fill">
+            <button className="fill p-2 h-auto">
               {item.service_status === "cancelled"
                 ? "Cancelled"
                 : "Prescription Upcoming"}
+            </button>
+          </NavLink>
+        );
+      }
+      if (item.service_status === "cancelled") {
+        buttoncomp = (
+          <NavLink>
+            <button className="fill">
+              {item.service_status?.charAt(0).toUpperCase() +
+                item.service_status?.slice(1)}
             </button>
           </NavLink>
         );
