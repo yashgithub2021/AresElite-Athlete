@@ -10,7 +10,7 @@ const AuthLayout = ({ children }) => {
     location.pathname == "/signin" ||
     location.pathname == "/forgot-password"
   ) {
-    url = SignInImage;
+    // url = SignInImage;
   } else {
     url = SignUpImage;
   }
