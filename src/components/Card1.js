@@ -1,7 +1,6 @@
 import React from "react";
 import { Progress } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
-import EHC_Vector from "../assets/EHC_Vector.jpeg";
 
 const Card1 = ({ data, datacomp }) => {
   const perc = (
@@ -195,7 +194,7 @@ const Card1 = ({ data, datacomp }) => {
             />
           </svg> */}
           <img
-            src={EHC_Vector}
+            src={"/EHC_Vector.jpeg"}
             alt={"EHC_Vector"}
             width="75"
             height="80"

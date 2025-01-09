@@ -1,8 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import EHC_Vector from "../../../assets/EHC_Vector.jpeg";
-
 const Card2 = ({ is_Online }) => {
   return (
     <div
@@ -191,7 +189,7 @@ const Card2 = ({ is_Online }) => {
           </svg> */}
 
           <img
-            src={EHC_Vector}
+            src={"/EHC_Vector.jpeg"}
             alt={"EHC_Vector"}
             width="75"
             height="80"

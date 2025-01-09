@@ -89,7 +89,7 @@ const AtheTransactions = () => {
 
   const makePayment = async (service_type, bookingid, transactionId) => {
     const stripe = await loadStripe(
-      "pk_test_51P1kZASAZ5IkC6u6AubbgH453E8NdLV1wAVeipaiZrHtY4PDfzPImUfquioLk924EBUtcYzgBLiMCd0hLDsWh4XY004V9N14x4"
+      "pk_live_51M2gqdEUqiekX2st8QKWZlX27Fhtn8IL6aIrP3aDbybnAnr41Y4rnqRNdbL8UIDosLon4yVP6DNUXnJeGdjDK49p00uGUN0qZW"
     );
     var body;
     if (service_type == "planPurchase") {
@@ -246,7 +246,7 @@ const AtheTransactions = () => {
             <button className={`${item.payment_status}`}>
               {freeServices?.indexOf(item.service_type) !== -1
                 ? "Free"
-                : item.payment_status}
+                : firstLetterUppercase(item.payment_status)}
             </button>
           ),
           status: <div>{btn}</div>,

@@ -1,7 +1,5 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import SignInImage from "../../assets/Signin.png";
-import SignUpImage from "../../assets/Signup.png";
 
 const AuthLayout = ({ children }) => {
   const location = useLocation();
@@ -12,7 +10,7 @@ const AuthLayout = ({ children }) => {
   ) {
     // url = SignInImage;
   } else {
-    url = SignUpImage;
+    url = "/Signup.png";
   }
 
   return (

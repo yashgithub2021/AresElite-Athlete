@@ -11,7 +11,6 @@ import BottomNav from "../BottomNav";
 import Sidenav from "../Sidenav";
 import Bottomnav from "./Bottomnav";
 import SideNav2 from "./Components/SideNav2";
-import Logo from "../../assets/Logo.png";
 
 const AtheleteMenu = ({ children }) => {
   const { isFetching, error, errMsg, token } = useSelector(
@@ -104,7 +103,7 @@ const AtheleteMenu = ({ children }) => {
             >
               {" "}
               <img
-                src={Logo}
+                src={"/Logo.png"}
                 alt="Logo"
                 style={{
                   maxWidth: "100%",

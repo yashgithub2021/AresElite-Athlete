@@ -24,8 +24,8 @@ const Notifications = () => {
   const fecthNoticiations = async () => {
     setLoading(true);
     const res = await GetNotifications();
-    setNotifs(res.notifications);
-    setUnreadCount(res.unreadCounts);
+    setNotifs(res?.notifications);
+    setUnreadCount(res?.unreadCounts);
     setLoading(false);
   };
   useEffect(() => {
@@ -89,7 +89,7 @@ const Notifications = () => {
         <Modal.Content
           style={{
             paddingTop: "0rem",
-            // paddingBottom: "7rem",
+            paddingBottom: "0.25rem",
             marginTop: "2rem",
             paddingLeft: "0.5rem",
             paddingRight: "0.4rem",

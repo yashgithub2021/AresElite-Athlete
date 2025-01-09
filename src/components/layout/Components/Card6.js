@@ -6,8 +6,6 @@ import {
 import { Modal, ActionIcon, CloseIcon } from "@mantine/core";
 import ViewDrill from "./ViewDrill";
 
-import Logo from "../../../assets/Logo.png";
-
 const Card6 = ({ drills }) => {
   const [selectedSession, setSelectedSession] = useState("Session 1");
   const [selectedDrills, setSelectedDrills] = useState([]);
@@ -83,7 +81,7 @@ const Card6 = ({ drills }) => {
             {/* <div style={{ width: "5rem", height: "5rem" }}>
               <img src="/images/Logo.png" />
             </div> */}
-            <img src={Logo} width="70" height="70" fill="none" />
+            <img src={"/Logo.png"} width="70" height="70" fill="none" />
 
             <h3>No drills found </h3>
           </div>

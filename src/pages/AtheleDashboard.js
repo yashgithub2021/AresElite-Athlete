@@ -25,13 +25,6 @@ import Loadercard from "../components/layout/Components/Loadercard";
 import Card5 from "../components/layout/Components/card5";
 import Card6 from "../components/layout/Components/Card6";
 
-import SportsVisionPerformanceEvaluation from "../assets/services/SportsVisionPerformanceEvaluation.jpeg";
-import PostConcussionEvaluation from "../assets/services/PostConcussionEvaluation.jpeg";
-import MedicalOfficeVisit from "../assets/services/MedicalOfficeVisit.jpeg";
-import ConsultationCall from "../assets/services/ConsultationCall.jpeg";
-import GlassesExam from "../assets/services/GlassesExam.jpeg";
-import ContactLens from "../assets/services/ContactLens.jpeg";
-
 const AtheleDashboard = () => {
   const name = useSelector((state) => state.auth.userName);
   const userId = useSelector((state) => state.auth.user);
@@ -47,7 +40,7 @@ const AtheleDashboard = () => {
   const [shiparray, setshiparray] = useState([]);
   function separateShipment(apiResponse) {
     // Extract the shipment part
-    const shipment = apiResponse.shipment;
+    const shipment = apiResponse?.shipment;
 
     // Remove the shipment part from the original response
     const { shipment: _, ...responseWithoutShipment } = apiResponse;
@@ -168,7 +161,7 @@ const AtheleDashboard = () => {
 
             {is_Online === "true" && (
               <Drillstats
-                data={userinfo.drillDetails}
+                data={userinfo?.drillDetails}
                 ispaid={userinfo?.userDetails?.plan_payment}
                 userId={userId}
               />
@@ -185,7 +178,7 @@ const AtheleDashboard = () => {
               >
                 <ServiceModal
                   service_type={"SportsVisionPerformanceEvaluation"}
-                  svg={SportsVisionPerformanceEvaluation}
+                  svg={"/services/SportsVisionPerformanceEvaluation.jpeg"}
                   icon={
                     <svg
                       width="24"
@@ -224,7 +217,7 @@ const AtheleDashboard = () => {
                 >
                   <ServiceModal
                     service_type={"GlassesExam"}
-                    svg={GlassesExam}
+                    svg={"/services/GlassesExam.jpeg"}
                     icon={
                       <svg
                         width="25"
@@ -257,7 +250,7 @@ const AtheleDashboard = () => {
                 >
                   <ServiceModal
                     service_type={"ContactLensExam"}
-                    svg={ContactLens}
+                    svg={"/services/ContactLens.jpeg"}
                     icon={
                       <svg
                         width="25"
@@ -289,7 +282,7 @@ const AtheleDashboard = () => {
               >
                 <ServiceModal
                   service_type={"Post-ConcussionEvaluation"}
-                  svg={PostConcussionEvaluation}
+                  svg={"/services/PostConcussionEvaluation.jpeg"}
                   icon={
                     <svg
                       width="24"
@@ -345,7 +338,7 @@ const AtheleDashboard = () => {
               >
                 <ServiceModal
                   service_type={"Medical/OfficeVisit"}
-                  svg={MedicalOfficeVisit}
+                  svg={"/services/MedicalOfficeVisit.jpeg"}
                   icon={
                     <svg
                       width="25"
@@ -376,7 +369,7 @@ const AtheleDashboard = () => {
               >
                 <ServiceModal
                   service_type={"ConsultationCall"}
-                  svg={ConsultationCall}
+                  svg={"/services/ConsultationCall.jpeg"}
                   icon={
                     <svg
                       width="25"
