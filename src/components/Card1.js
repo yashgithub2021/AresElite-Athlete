@@ -194,7 +194,7 @@ const Card1 = ({ data, datacomp }) => {
             />
           </svg> */}
           <img
-            src={"/EHC_Vector.jpeg"}
+            src={"/EHC_Vector.jpg"}
             alt={"EHC_Vector"}
             width="75"
             height="80"
