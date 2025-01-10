@@ -178,7 +178,7 @@ const AtheleDashboard = () => {
               >
                 <ServiceModal
                   service_type={"SportsVisionPerformanceEvaluation"}
-                  svg={"/services/SportsVisionPerformanceEvaluation.jpeg"}
+                  svg={"/services/SportsVisionPerformanceEvaluation.jpg"}
                   icon={
                     <svg
                       width="24"
@@ -217,7 +217,7 @@ const AtheleDashboard = () => {
                 >
                   <ServiceModal
                     service_type={"GlassesExam"}
-                    svg={"/services/GlassesExam.jpeg"}
+                    svg={"/services/GlassesExam.jpg"}
                     icon={
                       <svg
                         width="25"
@@ -250,7 +250,7 @@ const AtheleDashboard = () => {
                 >
                   <ServiceModal
                     service_type={"ContactLensExam"}
-                    svg={"/services/ContactLens.jpeg"}
+                    svg={"/services/ContactLens.jpg"}
                     icon={
                       <svg
                         width="25"
@@ -282,7 +282,7 @@ const AtheleDashboard = () => {
               >
                 <ServiceModal
                   service_type={"Post-ConcussionEvaluation"}
-                  svg={"/services/PostConcussionEvaluation.jpeg"}
+                  svg={"/services/PostConcussionEvaluation.jpg"}
                   icon={
                     <svg
                       width="24"
@@ -338,7 +338,7 @@ const AtheleDashboard = () => {
               >
                 <ServiceModal
                   service_type={"Medical/OfficeVisit"}
-                  svg={"/services/MedicalOfficeVisit.jpeg"}
+                  svg={"/services/MedicalOfficeVisit.jpg"}
                   icon={
                     <svg
                       width="25"
@@ -369,7 +369,7 @@ const AtheleDashboard = () => {
               >
                 <ServiceModal
                   service_type={"ConsultationCall"}
-                  svg={"/services/ConsultationCall.jpeg"}
+                  svg={"/services/ConsultationCall.jpg"}
                   icon={
                     <svg
                       width="25"
